@@ -25,42 +25,28 @@
 					<form:label path="nome" class="col-sm-2 control-label">Nome Completo: </form:label>
 					<div class="col-sm-10">
 						<form:input path="nome" type="text" class="form-control" />
-					</div>
-				</div>
-				<div class="form-group">
-					<form:label path="login" class="col-sm-2 control-label">Login: </form:label>
-					<div class="col-sm-10">
-						<form:input path="login" type="text" class="form-control" />
+						<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
 				<div class="form-group">
 					<form:label path="email" class="col-sm-2 control-label">Email: </form:label>
 					<div class="col-sm-10">
 						<form:input path="email" type="email" class="form-control" />
-					</div>
-				</div>
-				<div class="form-group">
-					<form:label path="password" class="col-sm-2 control-label">Senha: </form:label>
-					<div class="col-sm-10">
-						<form:input path="password" type="password" class="form-control" />
-					</div>
-				</div>
-				<div class="form-group">
-					<form:label path="telefone" class="col-sm-2 control-label">Telefone: </form:label>
-					<div class="col-sm-10">
-						<form:input path="telefone" type="text" class="form-control" />
+						<form:errors path="email" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
 				<div class="form-group">
 					<form:label path="celular" class="col-sm-2 control-label">Celular: </form:label>
 					<div class="col-sm-10">
 						<form:input path="celular" type="text" class="form-control" />
+						<form:errors path="celular" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
 				<div class="form-group">
 					<form:label path="endereco" class="col-sm-2 control-label">Endereço: </form:label>
 					<div class="col-sm-10">
 						<form:input path="endereco" type="text" class="form-control" />
+						<form:errors path="endereco" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
 				<div class="form-group">

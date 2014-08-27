@@ -23,9 +23,10 @@ import com.jolbox.bonecp.BoneCPDataSource;
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
         "br.com.discipular.service",
-        "br.com.discipular.repository"
+        "br.com.discipular.repository",
+        "br.com.discipular.validator"
 })
-@PropertySource("classpath:application.properties")
+@PropertySource({"classpath:application.properties", "classpath:i18n/messages_en_US.properties", "classpath:i18n/en_US"})
 public class ApplicationContext {
 
 	@Resource

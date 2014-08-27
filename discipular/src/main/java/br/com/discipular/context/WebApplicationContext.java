@@ -2,7 +2,6 @@ package br.com.discipular.context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -30,13 +30,7 @@ public class QUsuario extends EntityPathBase<Usuario> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final StringPath login = createString("login");
-
     public final StringPath nome = createString("nome");
-
-    public final StringPath password = createString("password");
-
-    public final StringPath telefone = createString("telefone");
 
     public QUsuario(String variable) {
         super(Usuario.class, forVariable(variable));
