@@ -26,7 +26,8 @@ public class UsuarioController {
 	private final static String VIEW_INDEX = "admin-usuario/index";
 	private final static String VIEW_FORM = "admin-usuario/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/usuario";
-	private final static int QTDE_PAGINAS = 7;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private int qtdePaginas;
 	private int marker = 0;
 	
 	@Autowired
@@ -46,9 +47,10 @@ public class UsuarioController {
 		
 		marker = 0;
 		
-		Page<Usuario> usuarios = service.buscarTodos(UsuarioPredicate.buscarPaginacao(0, QTDE_PAGINAS));
+		Page<Usuario> usuarios = service.buscarTodos(UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		qtdePaginas = usuarios.getTotalPages();
 		view.addObject("usuarios", usuarios.getContent());
-		view.addObject("pagina", QTDE_PAGINAS);
+		view.addObject("pagina", qtdePaginas);
 		
 		return view;
 	}
@@ -106,7 +108,7 @@ public class UsuarioController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> usuarios = service.buscarTodos(UsuarioPredicate.buscarPaginacao(--marker, QTDE_PAGINAS));
+		Page<Usuario> usuarios = service.buscarTodos(UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("usuarios", usuarios.getContent());
 		
 		return view;
@@ -116,7 +118,7 @@ public class UsuarioController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> usuarios = service.buscarTodos(UsuarioPredicate.buscarPaginacao(++marker, QTDE_PAGINAS));
+		Page<Usuario> usuarios = service.buscarTodos(UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("usuarios", usuarios.getContent());
 		
 		return view;
@@ -126,10 +128,10 @@ public class UsuarioController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Usuario> users = service.buscarTodos(UsuarioPredicate.buscarPorNome(nome), UsuarioPredicate.buscarPaginacao(0, QTDE_PAGINAS));
+		Page<Usuario> users = service.buscarTodos(UsuarioPredicate.buscarPorNome(nome), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		view.addObject("usuarios", users.getContent());
-		view.addObject("pagina", QTDE_PAGINAS);
+		view.addObject("pagina", qtdePaginas);
 		
 		return view;
 	}

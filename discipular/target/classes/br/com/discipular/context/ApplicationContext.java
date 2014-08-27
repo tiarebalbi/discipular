@@ -26,7 +26,7 @@ import com.jolbox.bonecp.BoneCPDataSource;
         "br.com.discipular.repository",
         "br.com.discipular.validator"
 })
-@PropertySource({"classpath:application.properties", "classpath:i18n/messages_en_US.properties", "classpath:i18n/en_US"})
+@PropertySource({"classpath:application.properties", "classpath:i18n/messages_pt_BR.properties"})
 public class ApplicationContext {
 
 	@Resource
