@@ -19,7 +19,7 @@
 			<strong>Cadastro de Usuário</strong>
 		</header>
 		<div class="panel-body">
-			<form:form commandName="usuario" action="${path}admin/usuario/salvar" method="post">
+			<form:form commandName="usuario" class="form-horizontal" action="${path}admin/usuario/salvar" method="post">
 				<form:hidden path="id" value="${usuario.id}"/>
 				<div class="form-group">
 					<form:label path="nome" class="col-sm-2 control-label">Nome Completo: </form:label>
@@ -28,6 +28,7 @@
 						<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
+				<div class="line line-dashed line-lg pull-in"></div>
 				<div class="form-group">
 					<form:label path="email" class="col-sm-2 control-label">Email: </form:label>
 					<div class="col-sm-10">
@@ -35,6 +36,7 @@
 						<form:errors path="email" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
+				<div class="line line-dashed line-lg pull-in"></div>
 				<div class="form-group">
 					<form:label path="celular" class="col-sm-2 control-label">Celular: </form:label>
 					<div class="col-sm-10">
@@ -42,6 +44,7 @@
 						<form:errors path="celular" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
+				<div class="line line-dashed line-lg pull-in"></div>
 				<div class="form-group">
 					<form:label path="endereco" class="col-sm-2 control-label">Endereço: </form:label>
 					<div class="col-sm-10">
@@ -51,7 +54,8 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-4 col-sm-offset-2">
-						<button type="submit" class="btn btn-primary">Salvar</button>
+						<a class="btn btn-default" href="${path}admin/usuario">Cancelar</a>
+						<button class="btn btn-info" type="submit">Salvar</button>
 					</div>
 				</div>
 			</form:form>
