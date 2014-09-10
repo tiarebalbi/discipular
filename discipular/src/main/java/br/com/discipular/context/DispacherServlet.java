@@ -11,6 +11,15 @@ import javax.servlet.ServletRegistration.Dynamic;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+/**
+ * Configuração inicial do projeto
+ * 
+ * @author Lucas Campos
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * 	08/09/2014 
+ */
 public class DispacherServlet extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override

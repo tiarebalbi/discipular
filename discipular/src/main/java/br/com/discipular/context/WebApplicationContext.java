@@ -23,6 +23,15 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+/**
+ * Configuração da parte WEB da sistema
+ * 
+ * @author Lucas Campos
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * 	08/09/2014 
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="br.com.discipular.controller")

@@ -18,6 +18,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 
+/**
+ * Configuração da aplicação
+ * 
+ * @author Lucas Campos
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * 	08/09/2014 
+ */
 @Configuration
 @EnableJpaRepositories("br.com.discipular.repository")
 @EnableTransactionManagement
