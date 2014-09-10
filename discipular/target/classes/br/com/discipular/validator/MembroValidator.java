@@ -5,14 +5,23 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import br.com.discipular.model.Usuario;
+import br.com.discipular.model.Membro;
 
+/**
+ * Validações realizadas no modelo {@link Membro}
+ * 
+ * @author Lucas Campos
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * 	08/09/2014 
+ */
 @Component
-public class UsuarioValidator implements Validator {
+public class MembroValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> classe) {
-		return Usuario.class.equals(classe);
+		return Membro.class.equals(classe);
 	}
 
 	@Override
