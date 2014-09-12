@@ -15,26 +15,26 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.model.Celula;
-import br.com.discipular.model.Membro;
-import br.com.discipular.predicate.MembroPredicate;
-import br.com.discipular.validator.MembroValidator;
+import br.com.discipular.predicate.CelulaPredicate;
+import br.com.discipular.service.CelulaService;
+import br.com.discipular.validator.CelulaValidator;
 
 /**
  * Controller do modelo {@link Celula}
  * 
  * @author Lucas Campos
- * @version 1.0.0
  * @since 1.0.0
+ * @version 1.0.0
  *
- * 	09/09/2014 
+ * 	Sep 09, 2014 
  */
 @Controller
-@RequestMapping(value = "/celula")
+@RequestMapping(value = "/admin/celula")
 public class CelulaController {
 
-	private final static String VIEW_INDEX = "celula/index";
-	private final static String VIEW_FORM = "celula/form";
-	private final static String VIEW_REDIRECT_INDEX = "redirect:/celula";
+	private final static String VIEW_INDEX = "admin-celula/index";
+	private final static String VIEW_FORM = "admin-celula/form";
+	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/celula";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -43,9 +43,9 @@ public class CelulaController {
 	private CelulaService service;
 
 	@Autowired
-	private MembroValidator validator;
+	private CelulaValidator validator;
 	
-	@InitBinder("usuario")
+	@InitBinder("celula")
 	public void a(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
@@ -56,9 +56,9 @@ public class CelulaController {
 		
 		marker = 0;
 		
-		Page<Membro> usuarios = service.buscarTodos(MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = usuarios.getTotalPages();
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		qtdePaginas = registros.getTotalPages();
+		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
@@ -66,19 +66,19 @@ public class CelulaController {
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Membro());
+		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Celula());
 		return view;
 	}
 	
 	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Membro usuario = service.buscarRegistro(id);
+		Celula usuario = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		return view;
 	}
 	
 	@RequestMapping(value = "salvar", method = RequestMethod.POST)
-	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Membro usuario, BindingResult errors, RedirectAttributes redirect) {
+	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Celula usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
@@ -117,8 +117,8 @@ public class CelulaController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> usuarios = service.buscarTodos(MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
@@ -127,8 +127,8 @@ public class CelulaController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> usuarios = service.buscarTodos(MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
@@ -137,9 +137,9 @@ public class CelulaController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Membro> users = service.buscarTodos(MembroPredicate.buscarPorNome(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltro(nome), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
-		view.addObject("usuarios", users.getContent());
+		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
