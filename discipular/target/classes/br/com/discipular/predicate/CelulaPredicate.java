@@ -29,4 +29,9 @@ public class CelulaPredicate {
 		return condicao.nome.startsWith(nome).or(condicao.nome.endsWith(nome));
 	}
 
+	public static Predicate buscarPorNome(String nome) {
+		QCelula condicao = QCelula.celula;
+		return condicao.nome.eq(nome);
+	}
+
 }

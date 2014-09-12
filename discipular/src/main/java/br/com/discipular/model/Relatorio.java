@@ -1,10 +1,14 @@
 package br.com.discipular.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Modelo que representa os relatórios das células
@@ -32,6 +36,12 @@ public class Relatorio extends AbstractModel {
 	
 	@NotNull
 	private int ask5;
+	
+	@Column(length = 50)
+	private String tema;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate data;
 	
 	@NotNull
 	@OneToMany
@@ -94,6 +104,22 @@ public class Relatorio extends AbstractModel {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+	public String getTema() {
+		return tema;
+	}
+
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 
 }

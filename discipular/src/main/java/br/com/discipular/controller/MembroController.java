@@ -27,6 +27,8 @@ import br.com.discipular.validator.MembroValidator;
  * @since 1.0.0
  *
  * 	08/09/2014 
+ * 
+ * TODO buscar por usuário logado
  */
 @Controller
 @RequestMapping(value = "/membro")

@@ -34,10 +34,14 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public final ListPath<Chamada, QChamada> chamadas = this.<Chamada, QChamada>createList("chamadas", Chamada.class, QChamada.class, PathInits.DIRECT2);
 
+    public final DatePath<java.time.LocalDate> data = createDate("data", java.time.LocalDate.class);
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final StringPath observacao = createString("observacao");
+
+    public final StringPath tema = createString("tema");
 
     public QRelatorio(String variable) {
         super(Relatorio.class, forVariable(variable));
