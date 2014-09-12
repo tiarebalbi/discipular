@@ -29,7 +29,7 @@ import br.com.discipular.validator.MembroValidator;
  * 	08/09/2014 
  */
 @Controller
-@RequestMapping(value = "/admin/usuario")
+@RequestMapping(value = "/membro")
 public class MembroController {
 
 	private final static String VIEW_INDEX = "admin-usuario/index";
@@ -45,7 +45,7 @@ public class MembroController {
 	@Autowired
 	private MembroValidator validator;
 	
-	@InitBinder("usuario")
+	@InitBinder("membro")
 	public void a(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
@@ -137,7 +137,7 @@ public class MembroController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Membro> users = service.buscarTodos(MembroPredicate.buscarPorNome(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> users = service.buscarTodos(MembroPredicate.buscarPorNomeComFiltro(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		view.addObject("usuarios", users.getContent());
 		view.addObject("pagina", qtdePaginas);

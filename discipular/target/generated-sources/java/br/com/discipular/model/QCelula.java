@@ -22,6 +22,8 @@ public class QCelula extends EntityPathBase<Celula> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
+    public final NumberPath<Integer> apagar = createNumber("apagar", Integer.class);
+
     public final EnumPath<br.com.discipular.enumerator.DiaSemana> dia = createEnum("dia", br.com.discipular.enumerator.DiaSemana.class);
 
     public final StringPath endereco = createString("endereco");

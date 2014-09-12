@@ -22,9 +22,14 @@ public class MembroPredicate {
 		return new PageRequest(pagina, tamanho);
 	}
 	
-	public static Predicate buscarPorNome(String nome) {
+	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QMembro condicao = QMembro.membro;
 		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome));
+	}
+
+	public static Predicate buscarPorNome(String text) {
+		QMembro condicao = QMembro.membro;
+		return condicao.nome.eq(text);
 	}	
 	
 }

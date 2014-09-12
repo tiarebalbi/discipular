@@ -33,12 +33,13 @@ public interface MembroService {
 	
 	public List<Membro> buscarTodos();
 	
+	public Page<Membro> buscarTodos(Pageable paginacao);
+
 	public List<Membro> buscarTodos(Predicate condicao);
 	
-	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
-	
 	public Page<Membro> buscarTodos(Predicate condicao, Pageable paginacao);
+	
+	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
 
-	public Page<Membro> buscarTodos(Pageable paginacao);
 	
 }
