@@ -95,4 +95,4 @@
 		</ul>
 	</div>
 </div>
-<script src="/discipular/usuario.js"> </script>
+<script src="${path}resources/usuario.js"></script>

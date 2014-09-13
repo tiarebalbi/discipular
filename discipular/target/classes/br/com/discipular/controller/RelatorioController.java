@@ -58,9 +58,9 @@ public class RelatorioController {
 		
 		marker = 0;
 		
-		Page<Relatorio> usuarios = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = usuarios.getTotalPages();
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		qtdePaginas = registros.getTotalPages();
+		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
@@ -68,31 +68,31 @@ public class RelatorioController {
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Relatorio());
+		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
 		return view;
 	}
 	
 	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Relatorio usuario = service.buscarRegistro(id);
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+		Relatorio relatorio = service.buscarRegistro(id);
+		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 		return view;
 	}
 	
 	@RequestMapping(value = "salvar", method = RequestMethod.POST)
-	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Relatorio usuario, BindingResult errors, RedirectAttributes redirect) {
+	public ModelAndView salvar(@ModelAttribute ("relatorio") @Validated Relatorio relatorio, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
-			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
 		} else {
 			try {
-				this.service.salvar(usuario);
+				this.service.salvar(relatorio);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
-				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}
@@ -119,8 +119,8 @@ public class RelatorioController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> usuarios = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
@@ -129,8 +129,8 @@ public class RelatorioController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> usuarios = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
@@ -141,11 +141,10 @@ public class RelatorioController {
 		
 		Page<Relatorio> users = service.buscarTodos(RelatorioPredicate.buscarPorNomeComFiltro(nome), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
-		view.addObject("usuarios", users.getContent());
+		view.addObject("registros", users.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
 	}
 	
 }
-

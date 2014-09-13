@@ -69,7 +69,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="/discipular/angular.min.js"></script>
+	<script type="text/javascript" src="${path}angular.min.js"></script>
 
 </body>
 </html>
