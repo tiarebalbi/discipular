@@ -26,5 +26,10 @@ public class UsuarioPredicate {
 		QUsuario condicao = QUsuario.usuario;
 		return condicao.login.startsWith(login).or(condicao.login.endsWith(login));
 	}
+
+	public static Predicate buscarPorLogin(String login) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.login.eq(login);
+	}
 	
 }

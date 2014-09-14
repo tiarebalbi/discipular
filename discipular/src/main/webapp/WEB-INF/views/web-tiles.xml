@@ -6,7 +6,11 @@
 <tiles-definitions>
     <definition name="admin" template="/WEB-INF/templates/admin-layout.jsp">
 	</definition>
+	
 	<definition name="novo" template="/WEB-INF/templates/novo-template.jsp">
+	</definition>
+	
+	<definition name="login" template="/WEB-INF/views/login/index.jsp">
 	</definition>
 	
 </tiles-definitions>
