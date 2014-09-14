@@ -1,14 +1,24 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<spring:url value="/" var="path"></spring:url>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="#">Home</a></li>
-					<li class="active"><span>Clientes</span></li>
+					<li class="active"><span>Células</span></li>
 				</ol>
 <!-- 								<h1> -->
 <!-- 									Lista de  <strong>Clientes</strong> -->
 <!-- 								</h1> -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<a type="button" class="btn btn-primary">Nova Célula</a>
+				<p></p>
 			</div>
 		</div>
 		<div class="row">
@@ -22,43 +32,25 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>Cliente</span></th>
-										<th class="text-center"><span>Dia de Vencimento</span></th>
-										<th class="text-center"><span>Status</span></th>
-										<th class="text-center"><span>Começou</span></th>
+										<th><span>Nome</span></th>
+										<th><span>Dia</span></th>
+										<th><span>Horário</span></th>
+										<th><span>Endereço</span></th>
+										<th><span>Número de Membros</span></th>
+										<th><span>Menu</span></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>Guilherme Machado</td>
-										<td class="text-center">5</td>
-										<td class="text-center"><span class="label label-danger">Devendo</span></td>
-										<td class="text-center">05/02/2014</td>
-									</tr>
-									<tr>
-										<td>Pedro Henrique</td>
-										<td class="text-center">13</td>
-										<td class="text-center"><span class="label label-warning">Pendente</span></td>
-										<td class="text-center">13/04/2013</td>
-									</tr>
-									<tr>
-										<td>Jéssica Morais</td>
-										<td class="text-center">25</td>
-										<td class="text-center"><span class="label label-danger">Devendo</span></td>
-										<td class="text-center">25/08/2013</td>
-									</tr>
-									<tr>
-										<td>Marlon Brando</td>
-										<td class="text-center">17</td>
-										<td class="text-center"><span class="label label-success">OK</span></td>
-										<td class="text-center">17/10/2013</td>
-									</tr>
-									<tr>
-										<td>Kevin Marques</td>
-										<td class="text-center">7</td>
-										<td class="text-center"><span class="label label-success">OK</span></td>
-										<td class="text-center">07/02/2013</td>
-									</tr>
+									<c:forEach items="${registros}" var="celula">
+										<tr>
+											<td>${celula.nome}</td>
+											<td class="text-center">${celula.dia}</td>
+											<td class="text-center">${celula.horario}</td>
+											<td class="text-center">${celula.endereco}</td>
+											<td class="text-center">${celula.membros.size()}</td>
+											<td>Menu</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>

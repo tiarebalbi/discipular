@@ -47,8 +47,6 @@ public class Celula extends AbstractModel {
 	@OneToMany
 	private List<Membro> membros;
 	
-	int apagar;
-
 	public String getNome() {
 		return nome;
 	}
@@ -97,12 +95,4 @@ public class Celula extends AbstractModel {
 		this.membros = membros;
 	}
 
-	public int getApagar() {
-		return apagar;
-	}
-
-	public void setApagar(int apagar) {
-		this.apagar = apagar;
-	}
-	
 }

@@ -28,6 +28,8 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     public final StringPath senha = createString("senha");
 
+    public final EnumPath<br.com.discipular.enumerator.TipoUsuario> tipo = createEnum("tipo", br.com.discipular.enumerator.TipoUsuario.class);
+
     public QUsuario(String variable) {
         super(Usuario.class, forVariable(variable));
     }

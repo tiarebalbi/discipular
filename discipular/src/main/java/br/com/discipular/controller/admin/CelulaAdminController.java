@@ -66,31 +66,31 @@ public class CelulaAdminController {
 	
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Celula());
+		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		return view;
 	}
 	
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Celula usuario = service.buscarRegistro(id);
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+		Celula celula = service.buscarRegistro(id);
+		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
 		return view;
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Celula usuario, BindingResult errors, RedirectAttributes redirect) {
+	public ModelAndView salvar(@ModelAttribute ("celula") @Validated Celula celula, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
-			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+			view = new ModelAndView(VIEW_FORM, "celula", celula);
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
 		} else {
 			try {
-				this.service.salvar(usuario);
+				this.service.salvar(celula);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
-				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}
