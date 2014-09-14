@@ -43,9 +43,8 @@ public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// TODO Implementar
-		// 16.16.6 Configuring Serving of Resources
-		// http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
+		super.addResourceHandlers(registry);
+		registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
 	}
 
 	@Override

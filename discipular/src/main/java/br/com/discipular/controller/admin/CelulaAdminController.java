@@ -1,4 +1,4 @@
-package br.com.discipular.controller;
+package br.com.discipular.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +30,7 @@ import br.com.discipular.validator.CelulaValidator;
  */
 @Controller
 @RequestMapping(value = "/admin/celula")
-public class CelulaController {
+public class CelulaAdminController {
 
 	private final static String VIEW_INDEX = "admin-celula/index";
 	private final static String VIEW_FORM = "admin-celula/form";
@@ -64,20 +64,20 @@ public class CelulaController {
 		return view;
 	}
 	
-	@RequestMapping(value = "novo", method = RequestMethod.GET)
+	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Celula());
 		return view;
 	}
 	
-	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Celula usuario = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		return view;
 	}
 	
-	@RequestMapping(value = "salvar", method = RequestMethod.POST)
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Celula usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
@@ -98,7 +98,7 @@ public class CelulaController {
 		return view;
 	}
 	
-	@RequestMapping(value = "excluir/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
@@ -113,7 +113,7 @@ public class CelulaController {
 		return view;
 	}
 	
-	@RequestMapping(value = "previous", method = RequestMethod.POST)
+	@RequestMapping(value = "/previous", method = RequestMethod.POST)
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
@@ -133,7 +133,7 @@ public class CelulaController {
 		return view;
 	}
 	
-	@RequestMapping(value = "find/{condicao}", method = RequestMethod.POST)
+	@RequestMapping(value = "/find/{condicao}", method = RequestMethod.POST)
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		

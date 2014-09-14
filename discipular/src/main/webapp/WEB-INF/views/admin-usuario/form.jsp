@@ -22,34 +22,18 @@
 			<form:form commandName="usuario" class="form-horizontal" action="${path}admin/usuario/salvar" method="post">
 				<form:hidden path="id" value="${usuario.id}"/>
 				<div class="form-group">
-					<form:label path="nome" class="col-sm-2 control-label">Nome Completo: </form:label>
+					<form:label path="login" class="col-sm-2 control-label">Login: </form:label>
 					<div class="col-sm-10">
-						<form:input path="nome" type="text" class="form-control" />
-						<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
+						<form:input path="login" placeholder="Ex. 98252-2233" type="text" class="form-control" />
+						<form:errors path="login" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
 				<div class="line line-dashed line-lg pull-in"></div>
 				<div class="form-group">
-					<form:label path="email" class="col-sm-2 control-label">Email: </form:label>
+					<form:label path="senha" class="col-sm-2 control-label">Senha: </form:label>
 					<div class="col-sm-10">
-						<form:input path="email" type="email" class="form-control" />
-						<form:errors path="email" style="color:#FFF" cssClass="label label-danger" element="span" />
-					</div>
-				</div>
-				<div class="line line-dashed line-lg pull-in"></div>
-				<div class="form-group">
-					<form:label path="celular" class="col-sm-2 control-label">Celular: </form:label>
-					<div class="col-sm-10">
-						<form:input path="celular" placeholder="Ex. 98252-2233" type="text" class="form-control" />
-						<form:errors path="celular" style="color:#FFF" cssClass="label label-danger" element="span" />
-					</div>
-				</div>
-				<div class="line line-dashed line-lg pull-in"></div>
-				<div class="form-group">
-					<form:label path="endereco" class="col-sm-2 control-label">Endereço: </form:label>
-					<div class="col-sm-10">
-						<form:input path="endereco" placeholder="Ex. Rua Tijuca nº 123" type="text" class="form-control" />
-						<form:errors path="endereco" style="color:#FFF" cssClass="label label-danger" element="span" />
+						<form:input path="senha" placeholder="Ex. Rua Tijuca nº 123" type="text" class="form-control" />
+						<form:errors path="senha" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>
 				</div>
 				<div class="form-group">

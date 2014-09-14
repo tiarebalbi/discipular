@@ -9,29 +9,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import br.com.discipular.model.Membro;
-import br.com.discipular.repository.MembroRepository;
-import br.com.discipular.service.MembroService;
+import br.com.discipular.model.Relatorio;
+import br.com.discipular.repository.RelatorioRepository;
+import br.com.discipular.service.RelatorioService;
 
 import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
- * Implementação dos métodos de consulta e manipulação do modelo {@link Membro}
+ * Implementação dos métodos de consulta e manipulação do modelo {@link Relatorio}
  * 
  * @author Lucas Campos
  * @since 1.0.0
  * @version 1.0.0
  *
- * 	08/09/2014 
+ * 	12/09/2014 
  */
 @Service
-public class MembroServiceImpl implements MembroService {
+public class RelatorioServiceImpl implements RelatorioService {
 
 	@Resource
-	private MembroRepository repository;
+	private RelatorioRepository repository;
 	
-	public Membro salvar(Membro usuario) {
+	public Relatorio salvar(Relatorio usuario) {
 		
 		Assert.notNull(usuario, "Usuário nulo, não foi possível salvar este registro.");
 		
@@ -39,7 +39,7 @@ public class MembroServiceImpl implements MembroService {
 		
 	}
 
-	public void excluir(Membro usuario) {
+	public void excluir(Relatorio usuario) {
 		Assert.notNull(usuario, "Usuário nulo, não foi possível excluir este registro.");
 		repository.delete(usuario);
 	}
@@ -49,34 +49,34 @@ public class MembroServiceImpl implements MembroService {
 		repository.delete(id);
 	}
 
-	public Membro buscarRegistro(Long id) {
+	public Relatorio buscarRegistro(Long id) {
 		return repository.findOne(id);
 	}
 
-	public Membro buscarRegistro(Predicate condicao) {
+	public Relatorio buscarRegistro(Predicate condicao) {
 		return repository.findOne(condicao);
 	}
 
-	public List<Membro> buscarTodos() {
+	public List<Relatorio> buscarTodos() {
 		return repository.findAll();
 	}
 
-	public List<Membro> buscarTodos(Predicate condicao) {
-		return (List<Membro>) repository.findAll(condicao);
+	public List<Relatorio> buscarTodos(Predicate condicao) {
+		return (List<Relatorio>) repository.findAll(condicao);
 	}
 
-	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Membro>) repository.findAll(condicao, ordem);
+	public List<Relatorio> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
+		return (List<Relatorio>) repository.findAll(condicao, ordem);
 	}
 
 	@Override
-	public Page<Membro> buscarTodos(Predicate condicao, Pageable paginacao) {
+	public Page<Relatorio> buscarTodos(Predicate condicao, Pageable paginacao) {
 		return repository.findAll(condicao, paginacao);
 	}
 	
 	@Override
-	public Page<Membro> buscarTodos(Pageable paginacao) {
+	public Page<Relatorio> buscarTodos(Pageable paginacao) {
 		return repository.findAll(paginacao);
-	}
-
+	}	
+	
 }

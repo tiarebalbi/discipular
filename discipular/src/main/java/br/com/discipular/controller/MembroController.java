@@ -27,14 +27,16 @@ import br.com.discipular.validator.MembroValidator;
  * @since 1.0.0
  *
  * 	08/09/2014 
+ * 
+ * TODO buscar por usuário logado
  */
 @Controller
 @RequestMapping(value = "/membro")
 public class MembroController {
 
-	private final static String VIEW_INDEX = "admin-usuario/index";
-	private final static String VIEW_FORM = "admin-usuario/form";
-	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/usuario";
+	private final static String VIEW_INDEX = "membro/index";
+	private final static String VIEW_FORM = "membro/form";
+	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -56,9 +58,9 @@ public class MembroController {
 		
 		marker = 0;
 		
-		Page<Membro> usuarios = service.buscarTodos(MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = usuarios.getTotalPages();
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		qtdePaginas = registros.getTotalPages();
+		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
@@ -66,31 +68,31 @@ public class MembroController {
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Membro());
+		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", new Membro());
 		return view;
 	}
 	
 	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Membro usuario = service.buscarRegistro(id);
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+		Membro membro = service.buscarRegistro(id);
+		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", membro);
 		return view;
 	}
 	
 	@RequestMapping(value = "salvar", method = RequestMethod.POST)
-	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Membro usuario, BindingResult errors, RedirectAttributes redirect) {
+	public ModelAndView salvar(@ModelAttribute ("membro") @Validated Membro membro, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
-			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+			view = new ModelAndView(VIEW_FORM, "membro", membro);
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
 		} else {
 			try {
-				this.service.salvar(usuario);
+				this.service.salvar(membro);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
-				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+				view = new ModelAndView(VIEW_FORM, "membro", membro);
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}
@@ -117,8 +119,8 @@ public class MembroController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> usuarios = service.buscarTodos(MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
@@ -127,8 +129,8 @@ public class MembroController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> usuarios = service.buscarTodos(MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("usuarios", usuarios.getContent());
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
@@ -139,7 +141,7 @@ public class MembroController {
 		
 		Page<Membro> users = service.buscarTodos(MembroPredicate.buscarPorNomeComFiltro(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
-		view.addObject("usuarios", users.getContent());
+		view.addObject("registros", users.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
