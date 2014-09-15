@@ -8,7 +8,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<title>Barra Fitness {{2 + 2}}</title>
+	<title>Discipular {{2 + 2}}</title>
 
 	<link rel="stylesheet" href="${path}resources/login/css/login-bootstrap.css" />
 	<link rel="stylesheet" href="${path}resources/login/css/login-layout.css" />
@@ -27,7 +27,7 @@
 						<div class="col-xs-12">
 							<header id="login-header">
 								<div id="login-logo">
-									<img src="${path}resources/tested.png" alt="" />
+<%-- 									<img src="${path}resources/tested.png" alt="" /> --%>
 <!-- 									<img src="http://centaurus.adbee.technology/img/logo.png" alt="" /> -->
 								</div>
 							</header>

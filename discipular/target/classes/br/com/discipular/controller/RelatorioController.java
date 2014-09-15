@@ -47,7 +47,7 @@ public class RelatorioController {
 	@Autowired
 	private RelatorioValidator validator;
 	
-	@InitBinder("Relatorio")
+	@InitBinder("relatorio")
 	public void a(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}

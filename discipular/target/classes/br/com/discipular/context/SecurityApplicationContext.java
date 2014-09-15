@@ -80,7 +80,7 @@ public class SecurityApplicationContext extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	    http.csrf().disable()
 	        .authorizeRequests()
-	        	.antMatchers("/resources/**", "/login/install").permitAll()    
+	        	.antMatchers("/resources/**", "/login/**").permitAll()    
 	            .anyRequest().authenticated()
 	            .and()
 	        .formLogin()
