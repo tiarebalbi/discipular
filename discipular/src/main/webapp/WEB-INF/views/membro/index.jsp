@@ -35,30 +35,6 @@
 										<td class="text-center"><span class="label label-danger">Devendo</span></td>
 										<td class="text-center">05/02/2014</td>
 									</tr>
-									<tr>
-										<td>Pedro Henrique</td>
-										<td class="text-center">13</td>
-										<td class="text-center"><span class="label label-warning">Pendente</span></td>
-										<td class="text-center">13/04/2013</td>
-									</tr>
-									<tr>
-										<td>Jéssica Morais</td>
-										<td class="text-center">25</td>
-										<td class="text-center"><span class="label label-danger">Devendo</span></td>
-										<td class="text-center">25/08/2013</td>
-									</tr>
-									<tr>
-										<td>Marlon Brando</td>
-										<td class="text-center">17</td>
-										<td class="text-center"><span class="label label-success">OK</span></td>
-										<td class="text-center">17/10/2013</td>
-									</tr>
-									<tr>
-										<td>Kevin Marques</td>
-										<td class="text-center">7</td>
-										<td class="text-center"><span class="label label-success">OK</span></td>
-										<td class="text-center">07/02/2013</td>
-									</tr>
 								</tbody>
 							</table>
 						</div>

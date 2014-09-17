@@ -2,6 +2,8 @@ package br.com.discipular.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.TipoUsuario;
@@ -23,9 +25,9 @@ public class Usuario extends AbstractModel {
 	private String login;
 	
 	@NotNull
-	@Column(length = 50)
 	private String senha;
 	
+	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
 
 	public String getLogin() {

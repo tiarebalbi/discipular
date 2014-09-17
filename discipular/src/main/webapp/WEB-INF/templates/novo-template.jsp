@@ -16,6 +16,13 @@
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/elements.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/daterangerpicker.css"	/>
 	
+	<!-- 	FORM	 -->
+	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/bootstrap-timepicker.css" />
+	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/datepicker.css" />
+	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/select2.css" />
+	<!-- 	FIM FORM -->
+	
+	
 	<link type="image/x-icon" href="favicon.png" rel="shortcut icon" />
 </head>
 <body>
@@ -111,52 +118,15 @@
 	<script src="${path}resources/templates/centaurus/js/moment.min.js"></script>
 	<script src="${path}resources/templates/centaurus/js/daterangerpicker.js"></script>
 	<script src="${path}resources/templates/centaurus/js/scripts.js"></script>
-
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#reportrange').daterangepicker({
-			startDate: moment().subtract('days', 29),
-			endDate: moment(),
-			minDate: '01/01/2012',
-			maxDate: '12/31/2014',
-			dateLimit: { days: 60 },
-			showDropdowns: true,
-			showWeekNumbers: true,
-			timePicker: false,
-			timePickerIncrement: 1,
-			timePicker12Hour: true,
-			ranges: {
-				'Today': [moment(), moment()],
-				'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-				'Last 7 Days': [moment().subtract('days', 6), moment()],
-				'Last 30 Days': [moment().subtract('days', 29), moment()],
-				'This Month': [moment().startOf('month'), moment().endOf('month')],
-				'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-			},
-			opens: 'left',
-			buttonClasses: ['btn btn-default'],
-			applyClass: 'btn-small btn-primary',
-			cancelClass: 'btn-small',
-			format: 'MM/DD/YYYY',
-			separator: ' to ',
-			locale: {
-				applyLabel: 'Submit',
-				fromLabel: 'From',
-				toLabel: 'To',
-				customRangeLabel: 'Custom Range',
-				daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-				monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-				firstDay: 1
-			}
-		 },
-		 function(start, end) {
-		  console.log("Callback has been called!");
-		  $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-		 }
-	  );
-	  //Set the initial state of the picker label
-	  $('#reportrange span').html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-	});
-	</script>
+	
+	<!-- 	FORM	 -->
+	<script src="${path}resources/templates/centaurus/js/bootstrap-datepicker.js"></script>
+	<script src="${path}resources/templates/centaurus/js/bootstrap-timepicker.min.js"></script>
+	<script src="${path}resources/templates/centaurus/js/hogan.js"></script>
+	<script src="${path}resources/templates/centaurus/js/jquery.maskedinput.min.js"></script>
+	<script src="${path}resources/templates/centaurus/js/jquery.pwstrength.js"></script>
+	<script src="${path}resources/templates/centaurus/js/select2.js"></script>
+	<script src="${path}resources/templates/centaurus/js/typeahead.min.js"></script>
+	<!-- 	FIM FORM -->
 </body>
 </html>

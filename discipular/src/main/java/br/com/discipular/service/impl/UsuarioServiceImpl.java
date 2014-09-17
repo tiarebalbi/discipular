@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.repository.UsuarioRepository;
 import br.com.discipular.service.UsuarioService;
@@ -31,14 +32,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	
 	@Override
-	public Usuario salvar(Usuario Usuario) {
+	public Usuario salvar(Usuario entidade) {
 		
-		return this.repository.save(Usuario);
+		if(entidade.getSenha() != null) {
+			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
+		}
+		
+		return this.repository.save(entidade);
 	}
 
 	@Override
-	public void excluir(Usuario Usuario) {
-		this.repository.delete(Usuario);
+	public void excluir(Usuario entidade) {
+		this.repository.delete(entidade);
 	}
 
 	@Override
