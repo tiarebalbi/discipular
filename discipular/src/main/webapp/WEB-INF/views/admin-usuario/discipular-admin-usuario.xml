@@ -4,13 +4,13 @@
 		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="admin-usuario/index" extends="admin">
-		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/index.jsp" />
-		<put-attribute name="titulo" value="Discipular" />
+	<definition name="admin-usuario/index" extends="novo">
+		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/index2.jsp" />
+<!-- 		<put-attribute name="titulo" value="Discipular" /> -->
 	</definition>
 	
-	<definition name="admin-usuario/form" extends="admin">
-		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/form.jsp" />
-		<put-attribute name="titulo" value="Discipular" />
+	<definition name="admin-usuario/form" extends="novo">
+		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/form2.jsp" />
+<!-- 		<put-attribute name="titulo" value="Discipular" /> -->
 	</definition>
 </tiles-definitions>

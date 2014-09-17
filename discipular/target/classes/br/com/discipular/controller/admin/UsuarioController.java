@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.UsuarioService;
@@ -64,20 +65,22 @@ public class UsuarioController {
 		return view;
 	}
 	
-	@RequestMapping(value = "novo", method = RequestMethod.GET)
+	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
+		view.addObject("tipos", TipoUsuario.values());
 		return view;
 	}
 	
-	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Usuario usuario = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+		view.addObject("tipos", TipoUsuario.values());
 		return view;
 	}
 	
-	@RequestMapping(value = "salvar", method = RequestMethod.POST)
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Usuario usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
@@ -98,7 +101,7 @@ public class UsuarioController {
 		return view;
 	}
 	
-	@RequestMapping(value = "excluir/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
@@ -113,7 +116,7 @@ public class UsuarioController {
 		return view;
 	}
 	
-	@RequestMapping(value = "previous", method = RequestMethod.POST)
+	@RequestMapping(value = "/previous", method = RequestMethod.POST)
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
@@ -123,7 +126,7 @@ public class UsuarioController {
 		return view;
 	}
 	
-	@RequestMapping(value = "next", method = RequestMethod.POST)
+	@RequestMapping(value = "/next", method = RequestMethod.POST)
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
@@ -133,7 +136,7 @@ public class UsuarioController {
 		return view;
 	}
 	
-	@RequestMapping(value = "find/{condicao}", method = RequestMethod.POST)
+	@RequestMapping(value = "/find/{condicao}", method = RequestMethod.POST)
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
