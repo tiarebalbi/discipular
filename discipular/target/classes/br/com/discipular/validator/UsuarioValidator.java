@@ -7,6 +7,15 @@ import org.springframework.validation.Validator;
 
 import br.com.discipular.model.Usuario;
 
+/**
+ * Validações realizadas no modelo {@link Usuario}
+ * 
+ * @author Lucas Campos
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * 	10/09/2014 
+ */
 @Component
 public class UsuarioValidator implements Validator {
 
@@ -16,11 +25,8 @@ public class UsuarioValidator implements Validator {
 	}
 
 	@Override
-	public void validate(Object object, Errors e) {
-		ValidationUtils.rejectIfEmpty(e, "nome", "campo.nulo","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmpty(e, "email", "campo.nulo", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmpty(e, "celular", "campo.nulo", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmpty(e, "endereco", "campo.nulo", "Este campo é obrigatório");
+	public void validate(Object target, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "login", "erro.login", "Este campo é obrigatório");
 	}
 
 }

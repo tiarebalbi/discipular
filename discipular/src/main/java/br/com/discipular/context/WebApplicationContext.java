@@ -3,10 +3,12 @@ package br.com.discipular.context;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.ViewResolver;
@@ -21,10 +23,19 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+/**
+ * Configuração da parte WEB da sistema
+ * 
+ * @author Lucas Campos
+ * @version 1.0.0
+ * @since 1.0.0
+ *
+ * 	08/09/2014 
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="br.com.discipular.controller")
-@PropertySource("classpath:application.properties")
+@PropertySource({"classpath:application.properties", "classpath:i18n/messages_pt_BR.properties"})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
 	private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/views/";
@@ -32,9 +43,8 @@ public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// TODO Implementar
-		// 16.16.6 Configuring Serving of Resources
-		// http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
+		super.addResourceHandlers(registry);
+		registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
 	}
 
 	@Override
@@ -117,5 +127,18 @@ public class WebApplicationContext extends WebMvcConfigurerAdapter {
 	public JsonViewResolver jsonViewResolver() {
 		return new JsonViewResolver();
 	}
+	
+	/**
+	 * Bean de configuração da internacionalização
+	 * @return {@link MessageSource}
+	 */
+	@Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasenames("i18n/messages_pt_BR", "i18n/messages_en_US");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
 	
 }

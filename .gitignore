@@ -19,3 +19,4 @@ RemoteSystemsTempFiles
 .project
 .classpath
 .settings
+rebel.xml

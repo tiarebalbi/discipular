@@ -56,12 +56,9 @@
 								Opções <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="${path}admin/usuario/editar/${usuario.id}"><i
-										class="fa fa-pencil-square-o"></i> Editar</a></li>
+								<li><a href="${path}admin/usuario/editar/${usuario.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
 								<li class="divider"></li>
-								<li><a data-toggle="modal"
-									data-target="#excluir-${usuario.id}"><i
-										class="fa fa-trash-o"></i> Excluir</a></li>
+								<li><a data-toggle="modal" data-target="#excluir-${usuario.id}"><i class="fa fa-trash-o"></i> Excluir</a></li>
 							</ul>
 						</div>
 						<div class="modal fade" id="excluir-${usuario.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -98,4 +95,4 @@
 		</ul>
 	</div>
 </div>
-<script src="/discipular/usuario.js"> </script>
+<script src="${path}resources/usuario.js"></script>

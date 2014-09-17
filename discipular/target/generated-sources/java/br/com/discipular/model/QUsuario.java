@@ -21,16 +21,14 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
-    public final StringPath celular = createString("celular");
-
-    public final StringPath email = createString("email");
-
-    public final StringPath endereco = createString("endereco");
-
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final StringPath nome = createString("nome");
+    public final StringPath login = createString("login");
+
+    public final StringPath senha = createString("senha");
+
+    public final EnumPath<br.com.discipular.enumerator.TipoUsuario> tipo = createEnum("tipo", br.com.discipular.enumerator.TipoUsuario.class);
 
     public QUsuario(String variable) {
         super(Usuario.class, forVariable(variable));

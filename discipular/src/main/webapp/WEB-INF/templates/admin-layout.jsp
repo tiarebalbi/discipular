@@ -3,12 +3,10 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <spring:url value="/" var="path"></spring:url>
 <!DOCTYPE html>
-<html ng-app>
+<html lang="pt-br">
 <head>
 	<meta name="author" content="LucasCampos">
-	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta charset="UTF-8">
 
 	<tiles:importAttribute name="titulo" />
 	<title>${titulo}</title>
@@ -27,7 +25,7 @@
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 </head>
 <!-- <body style="background-color: #f3f5f9;"> -->
-<body style="background-color: #000000;" data-url="${path}">
+<body ng-app style="background-color: #000000;" data-url="${path}">
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -71,7 +69,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="/discipular/angular.min.js"></script>
+	<script type="text/javascript" src="${path}angular.min.js"></script>
 
 </body>
 </html>
