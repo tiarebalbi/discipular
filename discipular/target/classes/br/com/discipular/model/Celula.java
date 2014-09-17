@@ -10,6 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 
@@ -45,6 +48,7 @@ public class Celula extends AbstractModel {
 	private Horario horario;
 	
 	@OneToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Membro> membros;
 	
 	public String getNome() {

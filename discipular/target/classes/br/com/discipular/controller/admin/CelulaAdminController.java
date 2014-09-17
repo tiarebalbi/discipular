@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.enumerator.DiaSemana;
+import br.com.discipular.enumerator.Horario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.service.CelulaService;
@@ -67,6 +69,8 @@ public class CelulaAdminController {
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
+		view.addObject("dias", DiaSemana.values());
+		view.addObject("horarios", Horario.values());
 		return view;
 	}
 	
