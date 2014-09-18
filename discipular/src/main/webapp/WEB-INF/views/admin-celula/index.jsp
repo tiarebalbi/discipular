@@ -41,7 +41,7 @@
 											<td>${registro.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario}</td>
-											<td>${registro.membros.size()}</td>
+											<td>Quantidade de membros</td>
 											<td>Opções</td>
 										</tr>
 									</c:forEach>
