@@ -2,6 +2,7 @@ package br.com.discipular.predicate;
 
 import org.springframework.data.domain.PageRequest;
 
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Membro;
 import br.com.discipular.model.QMembro;
 
@@ -30,6 +31,11 @@ public class MembroPredicate {
 	public static Predicate buscarPorNome(String text) {
 		QMembro condicao = QMembro.membro;
 		return condicao.nome.eq(text);
+	}
+
+	public static Predicate buscarPorCelula(Celula celula) {
+		QMembro condicao = QMembro.membro;
+		return condicao.celula.eq(celula);
 	}	
 	
 }

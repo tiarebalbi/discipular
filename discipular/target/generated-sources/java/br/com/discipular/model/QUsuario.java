@@ -7,6 +7,7 @@ import com.mysema.query.types.path.*;
 import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
 import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -17,9 +18,13 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     private static final long serialVersionUID = 1486133770L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QUsuario usuario = new QUsuario("usuario");
 
     public final QAbstractModel _super = new QAbstractModel(this);
+
+    public final QCelula celula;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -31,15 +36,24 @@ public class QUsuario extends EntityPathBase<Usuario> {
     public final EnumPath<br.com.discipular.enumerator.TipoUsuario> tipo = createEnum("tipo", br.com.discipular.enumerator.TipoUsuario.class);
 
     public QUsuario(String variable) {
-        super(Usuario.class, forVariable(variable));
+        this(Usuario.class, forVariable(variable), INITS);
     }
 
     public QUsuario(Path<? extends Usuario> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QUsuario(PathMetadata<?> metadata) {
-        super(Usuario.class, metadata);
+        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
+    }
+
+    public QUsuario(PathMetadata<?> metadata, PathInits inits) {
+        this(Usuario.class, metadata, inits);
+    }
+
+    public QUsuario(Class<? extends Usuario> type, PathMetadata<?> metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
     }
 
 }

@@ -1,11 +1,12 @@
 package br.com.discipular.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.TipoMembro;
@@ -21,13 +22,12 @@ import br.com.discipular.enumerator.TipoMembro;
  */
 @Entity
 public class Membro extends AbstractModel {
-	//TODO verificar se é necessário ter a variável célula
+
 	@NotNull
 	@Column(length = 50)
 	private String nome;
-
-	@NotNull
-	private LocalDate nascimento;
+	
+	private Date nascimento;
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -41,6 +41,10 @@ public class Membro extends AbstractModel {
 	
 	@Column(length = 100)
 	private String endereco;
+	
+	@NotNull
+	@ManyToOne
+	private Celula celula;
 
 	public String getNome() {
 		return nome;
@@ -82,12 +86,20 @@ public class Membro extends AbstractModel {
 		this.tipo = tipo;
 	}
 
-	public LocalDate getNascimento() {
+	public Date getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(LocalDate nascimento) {
+	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
+	}
+	
+	public Celula getCelula() {
+		return celula;
+	}
+
+	public void setCelula(Celula celula) {
+		this.celula = celula;
 	}
 	
 }

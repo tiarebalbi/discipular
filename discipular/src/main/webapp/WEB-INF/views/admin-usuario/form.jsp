@@ -4,7 +4,6 @@
 
 <spring:url var="path" value="/"></spring:url>
 
-<!-- style="margin: 35px 25px 20px 25px;" -->
 <div>
 	<ul class="breadcrumb">
 		<li><a href="${path}"><i class="fa fa-home"></i> Discipular</a></li>

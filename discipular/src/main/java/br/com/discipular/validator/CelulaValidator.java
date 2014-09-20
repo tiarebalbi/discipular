@@ -26,7 +26,11 @@ public class CelulaValidator implements Validator {
 
 	@Override
 	public void validate(Object object, Errors e) {
-		ValidationUtils.rejectIfEmpty(e, "nome", "campo.nulo","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "nome", "campo.vazio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "endereco", "campo.vazio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dia", "campo.vazio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "horario", "campo.vazio","Este campo é obrigatório");
+		//TODO faltando data de nascimento
 	}
 
 }

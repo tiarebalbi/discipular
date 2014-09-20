@@ -25,15 +25,24 @@
 			<div class="form-group">
 				<form:label path="login">Login</form:label> 
 				<form:input path="login" class="form-control" />
+				<form:errors path="login" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="senha">Senha</form:label> 
 				<form:input type="password" path="senha" class="form-control" />
+				<form:errors path="senha" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="tipo">Tipo do Usuário</form:label>
 				<form:select class="form-control" path="tipo" items="${tipos}">
 				</form:select>
+				<form:errors path="tipo" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="celula">Célula</form:label>
+				<form:select class="form-control" path="celula" items="${celulas}" itemLabel="nome" itemValue="nome">
+				</form:select>
+				<form:errors path="celula" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

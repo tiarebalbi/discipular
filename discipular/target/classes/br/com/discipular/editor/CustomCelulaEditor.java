@@ -26,7 +26,6 @@ public class CustomCelulaEditor extends PropertiesEditor {
 	
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		super.setAsText(text);
 		Celula registro;
 		if(StringUtils.isNumeric(text)) {
 			Long id = new Long(text);

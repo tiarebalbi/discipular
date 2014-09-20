@@ -1,26 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li class="active"><span>Células</span></li>
+					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
+					<li class="active"><i class="fa fa-sitemap"></i> Células</li>
 				</ol>
-<!-- 								<h1> -->
-<!-- 									Lista de  <strong>Clientes</strong> -->
-<!-- 								</h1> -->
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<a type="button" class="btn btn-primary">Nova Célula</a>
-				<p></p>
-			</div>
-		</div>
+		<a type="button" href="${path}admin/celula/novo" class="btn btn-primary btn-lg">
+			<span class="fa fa-plus-circle"></span> Nova Célula
+		</a>
+		<p></p>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="main-box clearfix">
@@ -35,20 +31,18 @@
 										<th><span>Nome</span></th>
 										<th><span>Dia</span></th>
 										<th><span>Horário</span></th>
-										<th><span>Endereço</span></th>
-										<th><span>Número de Membros</span></th>
+										<th><span>Números de Membros</span></th>
 										<th><span>Menu</span></th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${registros}" var="celula">
+									<c:forEach items="${registros}" var="registro">
 										<tr>
-											<td>${celula.nome}</td>
-											<td class="text-center">${celula.dia}</td>
-											<td class="text-center">${celula.horario}</td>
-											<td class="text-center">${celula.endereco}</td>
-											<td class="text-center">${celula.membros.size()}</td>
-											<td>Menu</td>
+											<td>${registro.nome}</td>
+											<td>${registro.dia}</td>
+											<td>${registro.horario}</td>
+											<td>Quantidade de membros</td>
+											<td>Opções</td>
 										</tr>
 									</c:forEach>
 								</tbody>

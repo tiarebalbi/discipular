@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.enumerator.TipoMembro;
 import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
+import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.validator.MembroValidator;
 
@@ -32,7 +34,7 @@ import br.com.discipular.validator.MembroValidator;
  */
 @Controller
 @RequestMapping(value = "/membro")
-public class MembroController {
+public class MembroController extends AbstractController {
 
 	private final static String VIEW_INDEX = "membro/index";
 	private final static String VIEW_FORM = "membro/form";
@@ -43,6 +45,9 @@ public class MembroController {
 	
 	@Autowired
 	private MembroService service;
+	
+	@Autowired
+	private CelulaService celulaService;
 
 	@Autowired
 	private MembroValidator validator;
@@ -58,9 +63,10 @@ public class MembroController {
 		
 		marker = 0;
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
 		view.addObject("registros", registros.getContent());
+		view.addObject("celula", getCurrentUser().getCelula().getNome());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
@@ -69,6 +75,7 @@ public class MembroController {
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", new Membro());
+		view.addObject("tipos", TipoMembro.values());
 		return view;
 	}
 	
@@ -76,6 +83,7 @@ public class MembroController {
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Membro membro = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", membro);
+		view.addObject("tipos", TipoMembro.values());
 		return view;
 	}
 	
@@ -86,13 +94,16 @@ public class MembroController {
 			view = new ModelAndView(VIEW_FORM, "membro", membro);
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
+			view.addObject("tipos", TipoMembro.values());
 		} else {
 			try {
+				membro.setCelula(getCurrentUser().getCelula());
 				this.service.salvar(membro);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "membro", membro);
+				view.addObject("tipos", TipoMembro.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}
