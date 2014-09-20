@@ -1,6 +1,7 @@
 package br.com.discipular.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.TipoChamada;
@@ -24,6 +25,9 @@ public class Chamada extends AbstractModel {
 	private TipoChamada tipo;
 	
 	private String observacao;
+	
+	@ManyToOne
+	private Relatorio relatorio;
 
 	public String getNome() {
 		return nome;

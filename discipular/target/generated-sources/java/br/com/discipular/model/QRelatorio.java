@@ -18,6 +18,8 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     private static final long serialVersionUID = 1052732081L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QRelatorio relatorio = new QRelatorio("relatorio");
 
     public final QAbstractModel _super = new QAbstractModel(this);
@@ -32,7 +34,9 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public final NumberPath<Integer> ask5 = createNumber("ask5", Integer.class);
 
-    public final ListPath<Chamada, QChamada> chamadas = this.<Chamada, QChamada>createList("chamadas", Chamada.class, QChamada.class, PathInits.DIRECT2);
+    public final QCelula celula;
+
+    public final ListPath<Chamada, QChamada> chamada = this.<Chamada, QChamada>createList("chamada", Chamada.class, QChamada.class, PathInits.DIRECT2);
 
     public final DatePath<java.time.LocalDate> data = createDate("data", java.time.LocalDate.class);
 
@@ -44,15 +48,24 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
     public final StringPath tema = createString("tema");
 
     public QRelatorio(String variable) {
-        super(Relatorio.class, forVariable(variable));
+        this(Relatorio.class, forVariable(variable), INITS);
     }
 
     public QRelatorio(Path<? extends Relatorio> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QRelatorio(PathMetadata<?> metadata) {
-        super(Relatorio.class, metadata);
+        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
+    }
+
+    public QRelatorio(PathMetadata<?> metadata, PathInits inits) {
+        this(Relatorio.class, metadata, inits);
+    }
+
+    public QRelatorio(Class<? extends Relatorio> type, PathMetadata<?> metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
     }
 
 }

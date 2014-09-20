@@ -7,7 +7,6 @@ import com.mysema.query.types.path.*;
 import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -30,8 +29,6 @@ public class QCelula extends EntityPathBase<Celula> {
 
     //inherited
     public final NumberPath<Long> id = _super.id;
-
-    public final ListPath<Membro, QMembro> membros = this.<Membro, QMembro>createList("membros", Membro.class, QMembro.class, PathInits.DIRECT2);
 
     public final DatePath<java.time.LocalDate> nascimento = createDate("nascimento", java.time.LocalDate.class);
 

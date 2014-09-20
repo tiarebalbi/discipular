@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.enumerator.TipoChamada;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
+import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.validator.RelatorioValidator;
 
@@ -32,7 +35,7 @@ import br.com.discipular.validator.RelatorioValidator;
  */ 
 @Controller
 @RequestMapping(value = "/relatorio")
-public class RelatorioController {
+public class RelatorioController extends AbstractController {
 
 	private final static String VIEW_INDEX = "relatorio/index";
 	private final static String VIEW_FORM = "relatorio/form";
@@ -43,6 +46,9 @@ public class RelatorioController {
 	
 	@Autowired
 	private RelatorioService service;
+	
+	@Autowired
+	private MembroService membroService;
 
 	@Autowired
 	private RelatorioValidator validator;
@@ -69,6 +75,8 @@ public class RelatorioController {
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+		view.addObject("chamadas", TipoChamada.values());
 		return view;
 	}
 	
@@ -88,6 +96,7 @@ public class RelatorioController {
 			view.addObject("status", "error");
 		} else {
 			try {
+				relatorio.setCelula(getCurrentUser().getCelula());
 				this.service.salvar(relatorio);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");

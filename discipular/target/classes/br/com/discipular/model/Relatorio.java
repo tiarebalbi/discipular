@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -44,12 +45,15 @@ public class Relatorio extends AbstractModel {
 	private LocalDate data;
 	
 	@NotNull
-	@OneToMany
-	private List<Chamada> chamadas;
-	
-	@NotNull
+	@Column(length = 500)
 	private String observacao;
-
+	
+	@ManyToOne
+	private Celula celula;
+	
+	@OneToMany(mappedBy = "relatorio")
+	private List<Chamada> chamada;
+	
 	public int getAsk1() {
 		return ask1;
 	}
@@ -90,14 +94,6 @@ public class Relatorio extends AbstractModel {
 		this.ask5 = ask5;
 	}
 
-	public List<Chamada> getChamadas() {
-		return chamadas;
-	}
-
-	public void setChamadas(List<Chamada> chamadas) {
-		this.chamadas = chamadas;
-	}
-
 	public String getObservacao() {
 		return observacao;
 	}
@@ -120,6 +116,22 @@ public class Relatorio extends AbstractModel {
 
 	public void setTema(String tema) {
 		this.tema = tema;
+	}
+
+	public Celula getCelula() {
+		return celula;
+	}
+
+	public void setCelula(Celula celula) {
+		this.celula = celula;
+	}
+
+	public List<Chamada> getChamada() {
+		return chamada;
+	}
+
+	public void setChamada(List<Chamada> chamada) {
+		this.chamada = chamada;
 	}
 
 }

@@ -1,14 +1,11 @@
 package br.com.discipular.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.DiaSemana;
@@ -30,7 +27,6 @@ public class Celula extends AbstractModel {
 	@Column(length = 50)
 	private String nome;
 	
-	@NotNull
 	private LocalDate nascimento;
 	
 	@NotNull
@@ -44,9 +40,6 @@ public class Celula extends AbstractModel {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Horario horario;
-	
-	@OneToMany
-	private List<Membro> membros = new ArrayList<>();
 	
 	public String getNome() {
 		return nome;
@@ -86,14 +79,6 @@ public class Celula extends AbstractModel {
 
 	public void setHorario(Horario horario) {
 		this.horario = horario;
-	}
-
-	public List<Membro> getMembros() {
-		return membros;
-	}
-
-	public void setMembros(List<Membro> membros) {
-		this.membros = membros;
 	}
 
 }

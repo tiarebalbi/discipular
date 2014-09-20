@@ -11,17 +11,8 @@
 	
 	<link rel="stylesheet" href="${path}resources/font-awesome-4.1.0/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/bootstrap.min.css"  />
-	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/nanoscroller.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/layout.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/elements.css" />
-	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/daterangerpicker.css"	/>
-	
-	<!-- 	FORM	 -->
-	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/bootstrap-timepicker.css" />
-	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/datepicker.css" />
-	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/select2.css" />
-	<!-- 	FIM FORM -->
-	
 	
 	<link type="image/x-icon" href="favicon.png" rel="shortcut icon" />
 </head>
@@ -103,30 +94,15 @@
 				
 				<footer id="footer-bar" class="row">
 					<p id="footer-copyright" class="col-xs-12">
-						&copy; 2014 <a href="http://www.adbee.sk/" target="_blank">Adbee digital</a>. Powered by Centaurus Theme.
+						&copy; 2014 <a href="//www.twitter.com/lucsgcampos" target="_blank">Lucas Campos</a>.
 					</p>
 				</footer>
 			</div>
 		</div>
 	</div>
 
-	<script src="${path}resources/templates/centaurus/js/demo-skin-changer.js"></script>
+	<script src="${path}resources/templates/centaurus/js/header.js"></script>
 	<script src="${path}resources/templates/centaurus/js/jquery.js"></script>
 	<script src="${path}resources/templates/centaurus/js/bootstrap.js"></script>
-	<script src="${path}resources/templates/centaurus/js/jquery.nanoscroller.min.js"></script>
-	<script src="${path}resources/templates/centaurus/js/demo.js"></script>
-	<script src="${path}resources/templates/centaurus/js/moment.min.js"></script>
-	<script src="${path}resources/templates/centaurus/js/daterangerpicker.js"></script>
-	<script src="${path}resources/templates/centaurus/js/scripts.js"></script>
-	
-	<!-- 	FORM	 -->
-	<script src="${path}resources/templates/centaurus/js/bootstrap-datepicker.js"></script>
-	<script src="${path}resources/templates/centaurus/js/bootstrap-timepicker.min.js"></script>
-	<script src="${path}resources/templates/centaurus/js/hogan.js"></script>
-	<script src="${path}resources/templates/centaurus/js/jquery.maskedinput.min.js"></script>
-	<script src="${path}resources/templates/centaurus/js/jquery.pwstrength.js"></script>
-	<script src="${path}resources/templates/centaurus/js/select2.js"></script>
-	<script src="${path}resources/templates/centaurus/js/typeahead.min.js"></script>
-	<!-- 	FIM FORM -->
 </body>
 </html>
