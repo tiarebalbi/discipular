@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.annotations.Administrador;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.model.Celula;
@@ -31,6 +32,7 @@ import br.com.discipular.validator.CelulaValidator;
  * 	Sep 09, 2014 
  */
 @Controller
+@Administrador
 @RequestMapping(value = "/admin/celula")
 public class CelulaAdminController {
 
