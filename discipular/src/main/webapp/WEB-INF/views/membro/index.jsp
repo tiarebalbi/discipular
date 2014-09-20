@@ -9,7 +9,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-					<li class="active"><i class="fa fa-users"></i> Membros</li>
+					<li class="active"><i class="fa fa-child"></i> Membros</li>
 				</ol>
 			</div>
 		</div>
@@ -18,7 +18,7 @@
 		</a>
 		<p></p>
 		<h1>
-			<strong>Fonte de Graça</strong>
+			<strong>${celula}</strong>
 		</h1>
 		<div class="row">
 			<div class="col-lg-12">

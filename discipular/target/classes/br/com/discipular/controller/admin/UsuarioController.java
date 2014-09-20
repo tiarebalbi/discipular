@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.editor.CustomCelulaEditor;
 import br.com.discipular.enumerator.TipoUsuario;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
+import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.UsuarioValidator;
 
@@ -42,12 +45,16 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService service;
+	
+	@Autowired
+	private CelulaService celulaService;
 
 	@Autowired
 	private UsuarioValidator validator;
 	
-	@InitBinder("Usuario")
+	@InitBinder("usuario")
 	public void a(WebDataBinder binder) {
+		binder.registerCustomEditor(Celula.class, new CustomCelulaEditor(celulaService));
 		binder.setValidator(validator);
 	}
 	
@@ -69,6 +76,7 @@ public class UsuarioController {
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
 		view.addObject("tipos", TipoUsuario.values());
+		view.addObject("celulas", celulaService.buscarTodos());
 		return view;
 	}
 	
@@ -77,6 +85,7 @@ public class UsuarioController {
 		Usuario usuario = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		view.addObject("tipos", TipoUsuario.values());
+		view.addObject("celulas", celulaService.buscarTodos());
 		return view;
 	}
 	
@@ -85,6 +94,8 @@ public class UsuarioController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+			view.addObject("tipos", TipoUsuario.values());
+			view.addObject("celulas", celulaService.buscarTodos());
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
 		} else {
@@ -94,6 +105,8 @@ public class UsuarioController {
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+				view.addObject("tipos", TipoUsuario.values());
+				view.addObject("celulas", celulaService.buscarTodos());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}

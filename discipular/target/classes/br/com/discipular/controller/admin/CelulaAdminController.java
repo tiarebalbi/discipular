@@ -78,6 +78,8 @@ public class CelulaAdminController {
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Celula celula = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
+		view.addObject("dias", DiaSemana.values());
+		view.addObject("horarios", Horario.values());
 		return view;
 	}
 	
@@ -88,6 +90,8 @@ public class CelulaAdminController {
 			view = new ModelAndView(VIEW_FORM, "celula", celula);
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
+			view.addObject("dias", DiaSemana.values());
+			view.addObject("horarios", Horario.values());
 		} else {
 			try {
 				this.service.salvar(celula);
@@ -95,6 +99,8 @@ public class CelulaAdminController {
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
+				view.addObject("dias", DiaSemana.values());
+				view.addObject("horarios", Horario.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}

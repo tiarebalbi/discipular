@@ -26,10 +26,9 @@ public class MembroValidator implements Validator {
 
 	@Override
 	public void validate(Object object, Errors e) {
-		ValidationUtils.rejectIfEmpty(e, "nome", "campo.nulo","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmpty(e, "email", "campo.nulo", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmpty(e, "celular", "campo.nulo", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmpty(e, "endereco", "campo.nulo", "Este campo é obrigatório");
+			ValidationUtils.rejectIfEmptyOrWhitespace(e, "nome", "campo.vazio","Este campo é obrigatório");
+			ValidationUtils.rejectIfEmptyOrWhitespace(e, "tipo", "campo.vazio","Este campo é obrigatório");
+		//TODO faltando data de nascimento
 	}
 
 }

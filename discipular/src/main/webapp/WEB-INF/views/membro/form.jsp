@@ -8,7 +8,7 @@
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-			<li><a href="${path}membro"><i class="fa fa-users"></i>
+			<li><a href="${path}membro"><i class="fa fa-child"></i>
 					Membros</a></li>
 			<li class="active"><span><i class="fa fa-plus-circle"></i>
 					Novo Membro</span></li>
@@ -28,6 +28,7 @@
 			<div class="form-group">
 				<form:label path="nome">Nome</form:label>
 				<form:input path="nome" class="form-control" />
+				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="email">Email</form:label>
@@ -45,15 +46,12 @@
 				<form:label path="tipo">Tipo do Membro</form:label>
 				<form:select class="form-control" path="tipo" items="${tipos}">
 				</form:select>
+				<form:errors path="tipo" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:label path="nascimento">Data de Nascimento</form:label> --%>
-<%-- 				<form:input type="date" path="nascimento" class="form-control" /> --%>
-<!-- 			</div> -->
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right"
 					style="margin-left: 20px;">Salvar</button>
-				<a type="button" href="${path}admin/membro" class="btn btn-danger btn-lg pull-right">Cancelar</a>
+				<a type="button" href="${path}membro" class="btn btn-danger btn-lg pull-right">Cancelar</a>
 			</div>
 		</form:form>
 	</div>

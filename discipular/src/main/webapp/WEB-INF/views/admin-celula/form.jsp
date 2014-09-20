@@ -7,7 +7,7 @@
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-			<li><a href="${path}admin/celula"><i class="fa fa-users"></i> Células</a></li>
+			<li><a href="${path}admin/celula"><i class="fa fa-sitemap"></i> Células</a></li>
 			<li class="active"><span><i class="fa fa-plus-circle"></i> Novo Célula</span></li>
 		</ol>
 		<h1>
@@ -25,20 +25,24 @@
 			<div class="form-group">
 				<form:label path="nome">Nome</form:label> 
 				<form:input path="nome" class="form-control" />
+				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="endereco">Endereço</form:label> 
 				<form:input path="endereco" class="form-control" />
+				<form:errors path="endereco" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="dia">Dia</form:label> 
 				<form:select class="form-control" path="dia" items="${dias}">
 				</form:select>
+				<form:errors path="dia" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="horario">Horário</form:label> 
 				<form:select class="form-control" path="horario" items="${horarios}">
 				</form:select>
+				<form:errors path="horario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

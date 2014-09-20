@@ -8,7 +8,7 @@
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-			<li><a href="${path}relatorio"><i class="fa fa-users"></i>
+			<li><a href="${path}relatorio"><i class="fa fa-file-text-o"></i>
 					Relatórios</a></li>
 			<li class="active"><span><i class="fa fa-plus-circle"></i>
 					Novo Relatório</span></li>
@@ -29,26 +29,32 @@
 			<div class="form-group">
 				<form:label path="tema"><span>Tema</span></form:label>
 				<form:input path="tema" class="form-control" />
+				<form:errors path="tema" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask1"><span>1) De um modo geral como foi a Célula "HOJE"?</span></form:label>
 				<form:input type="number" min="0" max="5" path="ask1" class="form-control" />
+				<form:errors path="ask1" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask2"><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega) </span></form:label>
 				<form:input type="number" min="0" max="5" path="ask2" class="form-control" />
+				<form:errors path="ask2" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask3"><span>3) Como foi a participação dos membros?</span></form:label>
 				<form:input type="number" min="0" max="5" path="ask3" class="form-control" />
+				<form:errors path="ask3" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask4"><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?</span></form:label>
 				<form:input type="number" min="0" max="5" path="ask4" class="form-control" />
+				<form:errors path="ask4" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask5"><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?</span></form:label>
 				<form:input type="number" min="0" max="5" path="ask5" class="form-control" />
+				<form:errors path="ask5" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="observacao"><span>Observação</span></form:label>
@@ -71,15 +77,15 @@
 						</div>
 					</div>
 					<div class="col-lg-4">
-						<select class="form-control membro-chamada" onshow="chamadak()" onchange="chamadak()"> 
+						<select class="form-control membro-chamada${i.count}" onchange="chamadak()"> 
 							<option value="presente">Presente</option>
 							<option value="ausente">Ausênte</option>
 							<option value="justificado">Justificado</option>
 						</select>
 					</div>
 				</div>
+				<form:hidden path="chamada" id="chamada"/>
 			</c:forEach>
-			<form:hidden path="chamada" id="chamada"/>
 			
 <!-- 			<div class="form-group"> -->
 <%-- 				<form:label path="tipo">Tipo do Membro</form:label> --%>
@@ -87,8 +93,7 @@
 <%-- 				</form:select> --%>
 <!-- 			</div> -->
 			<div class="col-lg-12">
-				<button type="submit" class="btn btn-primary btn-lg pull-right"
-					style="margin-left: 20px;">Salvar</button>
+				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}relatorio" class="btn btn-danger btn-lg pull-right">Cancelar</a>
 			</div>
 		</form:form>

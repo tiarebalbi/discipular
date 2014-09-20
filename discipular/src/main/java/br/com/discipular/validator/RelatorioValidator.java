@@ -2,6 +2,7 @@ package br.com.discipular.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import br.com.discipular.model.Relatorio;
@@ -25,6 +26,13 @@ public class RelatorioValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask1", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask2", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask3", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask4", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask5", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tema", "campo.vazio", "Este campo é obrigatório");
+		//TODO faltando data
 	}
 
 }

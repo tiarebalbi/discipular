@@ -26,8 +26,7 @@
 						<div class="col-xs-12">
 							<header id="login-header">
 								<div id="login-logo">
-<%-- 									<img src="${path}resources/tested.png" alt="" /> --%>
-<!-- 									<img src="http://centaurus.adbee.technology/img/logo.png" alt="" /> -->
+									<img src="${path}resources/imagens/discipular-logo8.png" alt="" />
 								</div>
 							</header>
 							<div id="login-box-inner">
