@@ -68,30 +68,24 @@
 					<label><span>Chamada</span></label>
 				</div>
 			</div>
-					
 			<c:forEach items="${membros}" var="membro" varStatus="i">
 				<div class="col-lg-12">
 					<div class="col-lg-4">
 						<div class="form-group">
-							<input disabled value="${membro.nome}" data-nome="${membro.nome}" class="form-control membro-nome${i.count}" />
+							<input value="${membro.nome}" class="form-control" />
+							<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 						</div>
 					</div>
 					<div class="col-lg-4">
-						<select class="form-control membro-chamada${i.count}" onchange="chamadak()"> 
-							<option value="presente">Presente</option>
-							<option value="ausente">Ausênte</option>
-							<option value="justificado">Justificado</option>
-						</select>
+						<form:select path="chamada[${i.count - 1}].tipo" class="form-control"> 
+							<option value="PRESENTE">Presente</option>
+							<option value="AUSENTE">Ausênte</option>
+							<option value="JUSTIFICADO">Justificado</option>
+						</form:select>
 					</div>
 				</div>
 				<form:hidden path="chamada" id="chamada"/>
 			</c:forEach>
-			
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:label path="tipo">Tipo do Membro</form:label> --%>
-<%-- 				<form:select class="form-control" path="tipo" items="${tipos}"> --%>
-<%-- 				</form:select> --%>
-<!-- 			</div> -->
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}relatorio" class="btn btn-danger btn-lg pull-right">Cancelar</a>
@@ -100,4 +94,3 @@
 	</div>
 </div>
 <script src="${path}resources/templates/centaurus/js/jquery.js"></script>
-<script src="${path}resources/teste.js"></script>
