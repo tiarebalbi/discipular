@@ -149,9 +149,11 @@
 	<script src="${path}resources/templates/centaurus/js/jquery.js"></script>
 	<script src="${path}resources/templates/centaurus/js/scripts.js"></script>
 	<script src="${path}resources/templates/centaurus/js/header.js"></script>
+	
 	<script src="${path}resources/templates/centaurus/js/bootstrap.js"></script>
 	<script src="${path}resources/templates/centaurus/js/bootstrap-wizard.js"></script>
 	<script src="${path}resources/templates/centaurus/js/select2.min.js"></script>
+	
 	
 	<script type="text/javascript">
 	function setServerName(card) {

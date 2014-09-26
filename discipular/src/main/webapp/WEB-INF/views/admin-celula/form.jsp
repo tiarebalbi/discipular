@@ -22,6 +22,7 @@
 	</header>
 	<div class="main-box-body clearfix">
 		<form:form role="form" action="${path}admin/celula/salvar" method="post" modelAttribute="celula">
+			<form:hidden path="id" value="${celula.id}"/>
 			<div class="form-group">
 				<form:label path="nome">Nome</form:label> 
 				<form:input path="nome" class="form-control" />
