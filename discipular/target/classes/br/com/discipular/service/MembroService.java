@@ -41,5 +41,7 @@ public interface MembroService {
 	
 	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
 
+	long count(Predicate condicao);
+
 	
 }

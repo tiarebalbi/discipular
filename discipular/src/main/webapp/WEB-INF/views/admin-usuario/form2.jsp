@@ -22,6 +22,7 @@
 	</header>
 	<div class="main-box-body clearfix">
 		<form:form role="form" action="${path}admin/usuario/salvar" method="post" modelAttribute="usuario">
+			<form:hidden path="id" value="${usuario.id}"/>
 			<div class="form-group">
 				<form:label path="login">Login</form:label> 
 				<form:input path="login" class="form-control" />

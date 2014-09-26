@@ -1,6 +1,6 @@
 package br.com.discipular.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.discipular.enumerator.TipoMembro;
 
@@ -27,7 +29,9 @@ public class Membro extends AbstractModel {
 	@Column(length = 50)
 	private String nome;
 	
-	private Date nascimento;
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataNascimento;
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -85,15 +89,15 @@ public class Membro extends AbstractModel {
 	public void setTipo(TipoMembro tipo) {
 		this.tipo = tipo;
 	}
-
-	public Date getNascimento() {
-		return nascimento;
-	}
-
-	public void setNascimento(Date nascimento) {
-		this.nascimento = nascimento;
-	}
 	
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
 	public Celula getCelula() {
 		return celula;
 	}

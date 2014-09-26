@@ -22,6 +22,7 @@
 	</header>
 	<div class="main-box-body clearfix">
 		<form:form role="form" action="${path}admin/celula/salvar" method="post" modelAttribute="celula">
+			<form:hidden path="id" value="${celula.id}"/>
 			<div class="form-group">
 				<form:label path="nome">Nome</form:label> 
 				<form:input path="nome" class="form-control" />
@@ -43,6 +44,11 @@
 				<form:select class="form-control" path="horario" items="${horarios}">
 				</form:select>
 				<form:errors path="horario" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="horario">Data de Nascimento</form:label> 
+				<form:input class="form-control" path="data" />
+				<form:errors path="data" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

@@ -30,7 +30,7 @@ public class CelulaValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "endereco", "campo.vazio","Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dia", "campo.vazio","Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "horario", "campo.vazio","Este campo é obrigatório");
-		//TODO faltando data de nascimento
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dataNascimento", "campo.vazio","Este campo é obrigatório");
 	}
 
 }
