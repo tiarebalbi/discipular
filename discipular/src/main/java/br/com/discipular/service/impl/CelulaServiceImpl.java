@@ -1,6 +1,5 @@
 package br.com.discipular.service.impl;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +32,6 @@ public class CelulaServiceImpl implements CelulaService {
 	
 	@Override
 	public Celula salvar(Celula celula) {
-
-		if(celula.getNascimento() == null) {
-			celula.setNascimento(LocalDate.now());
-		}
-		
 		return this.repository.save(celula);
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import br.com.discipular.model.Membro;
+import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.repository.MembroRepository;
 import br.com.discipular.service.MembroService;
 
@@ -31,17 +32,21 @@ public class MembroServiceImpl implements MembroService {
 	@Resource
 	private MembroRepository repository;
 	
-	public Membro salvar(Membro usuario) {
+	public Membro salvar(Membro entidade) {
 		
-		Assert.notNull(usuario, "Usuário nulo, não foi possível salvar este registro.");
+		Assert.notNull(entidade, "Registro nulo, não foi possível salvar este registro.");
 		
-		return repository.save(usuario);
+		long qtdeMembros = this.count(MembroPredicate.buscarPorCelula(entidade.getCelula()));
+		
+		Assert.state(qtdeMembros < 14, "Está célula já está cheia!");
+		
+		return repository.save(entidade);
 		
 	}
 
-	public void excluir(Membro usuario) {
-		Assert.notNull(usuario, "Usuário nulo, não foi possível excluir este registro.");
-		repository.delete(usuario);
+	public void excluir(Membro entidade) {
+		Assert.notNull(entidade, "Registro nulo, não foi possível excluir este registro.");
+		repository.delete(entidade);
 	}
 	
 	public void excluir(Long id) {
@@ -77,6 +82,11 @@ public class MembroServiceImpl implements MembroService {
 	@Override
 	public Page<Membro> buscarTodos(Pageable paginacao) {
 		return repository.findAll(paginacao);
+	}
+	
+	@Override
+	public long count(Predicate condicao) {
+		return repository.count(condicao);
 	}
 
 }

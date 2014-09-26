@@ -39,15 +39,17 @@ public class Relatorio extends AbstractModel {
 	private int ask5;
 	
 	@Column(length = 50)
+	@NotNull
 	private String tema;
 	
+	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data;
 	
-	@NotNull
 	@Column(length = 500)
 	private String observacao;
 	
+	@NotNull
 	@ManyToOne
 	private Celula celula;
 	

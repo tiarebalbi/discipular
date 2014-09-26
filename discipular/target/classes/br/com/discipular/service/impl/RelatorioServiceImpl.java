@@ -31,17 +31,17 @@ public class RelatorioServiceImpl implements RelatorioService {
 	@Resource
 	private RelatorioRepository repository;
 	
-	public Relatorio salvar(Relatorio usuario) {
+	public Relatorio salvar(Relatorio relatorio) {
 		
-		Assert.notNull(usuario, "Usuário nulo, não foi possível salvar este registro.");
+		Assert.notNull(relatorio, "Registro nulo, não foi possível salvar este registro.");
 		
-		return repository.save(usuario);
+		return repository.save(relatorio);
 		
 	}
 
-	public void excluir(Relatorio usuario) {
-		Assert.notNull(usuario, "Usuário nulo, não foi possível excluir este registro.");
-		repository.delete(usuario);
+	public void excluir(Relatorio relatorio) {
+		Assert.notNull(relatorio, "Registro nulo, não foi possível excluir este registro.");
+		repository.delete(relatorio);
 	}
 	
 	public void excluir(Long id) {
