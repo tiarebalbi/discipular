@@ -14,7 +14,6 @@ import br.com.discipular.service.UsuarioService;
 public class DashboardController extends AbstractController {
 	
 	private final static String VIEW_INDEX = "dashboard/index";
-	private final static String REDIRECT_VIEW_INDEX = "redirect:/";
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -25,12 +24,16 @@ public class DashboardController extends AbstractController {
 		return view;
 	}
 	
-	@RequestMapping(value = "/trocar-senha/{senha}")
-	public ModelAndView trocarSenha(@PathVariable ("senha") String senha) {
-		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
+	@RequestMapping(value = "/trocar-senha/{senha}/{confirm}")
+	public ModelAndView trocarSenha(@PathVariable ("senha") String senha, @PathVariable ("confirm") String confirm) {
+		ModelAndView view = new ModelAndView();
 		Usuario usuario = getCurrentUser();
-		usuario.setSenha(senha);
-		usuarioService.salvar(usuario);
+		
+		if(senha.equals(confirm)) {
+			usuario.setSenha(senha);
+			usuarioService.salvar(usuario);
+		}
+		
 		return view;
 	}
 

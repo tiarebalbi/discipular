@@ -21,7 +21,7 @@ import com.mysema.query.types.Predicate;
  */
 public interface UsuarioService {
 
-	public Usuario salvar(Usuario usuario);
+	public Usuario salvar(Usuario usuario) throws Exception;
 	
 	public void excluir(Usuario usuario);
 	
