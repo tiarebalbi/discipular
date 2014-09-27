@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 <!DOCTYPE html>
 <html>
@@ -35,16 +36,14 @@
 				</button>
 				<div class="nav-no-collapse pull-right" id="header-nav">
 					<ul class="nav navbar-nav pull-right">
-						<li class="dropdown profile-dropdown">
+						<li class="dropdown profile-dropdown" style="margin-right:50px;">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
 <!-- 							<img src="img/samples/scarlet-159.png" alt="" />  -->
 								<span class="hidden-xs">${username}</span> <b class="caret"></b>
 							</a>	
 							<ul class="dropdown-menu">
-								<li><a data-toggle="modal" data-target="#trocar-senha"><i class="fa fa-key"></i>Trocar Senha</a></li>
-								
+								<li><a data-toggle="modal" data-target="#trocar-senha" ><i class="fa fa-key"></i>Alterar Senha</a></li>
 								<li><a href="${path}logout"><i class="fa fa-power-off"></i>Logout</a></li>
-								<li><button id="open-wizard" class="btn btn-primary">Open wizard</button></li>
 							</ul>
 						</li>
 					</ul>
@@ -115,7 +114,13 @@
 				</section>
 			</div>
 			<div id="content-wrapper">
-			
+				<c:if test="${mensagem != null}">
+					<div class="alert alert-${status} fade in">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<i class="fa fa-${icon}-circle fa-fw fa-lg"></i>
+						${mensagem}
+					</div>
+				</c:if>
 				<tiles:insertAttribute name="conteudo" />
 				
 				<footer id="footer-bar" class="row">

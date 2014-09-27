@@ -25,7 +25,7 @@
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 </head>
 <!-- <body style="background-color: #f3f5f9;"> -->
-<body ng-app style="background-color: #000000;" data-url="${path}">
+<body style="background-color: #000000;" data-url="${path}">
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">

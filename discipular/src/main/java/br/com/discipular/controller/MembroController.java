@@ -94,6 +94,7 @@ public class MembroController extends AbstractController {
 			view = new ModelAndView(VIEW_FORM, "membro", membro);
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
+			view.addObject("icon", "danger");
 			view.addObject("tipos", TipoMembro.values());
 		} else {
 			try {
@@ -101,11 +102,13 @@ public class MembroController extends AbstractController {
 				this.service.salvar(membro);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
+				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "membro", membro);
 				view.addObject("tipos", TipoMembro.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
+				view.addObject("icon", "danger");
 			}
 		}
 		return view;
@@ -118,9 +121,11 @@ public class MembroController extends AbstractController {
 			this.service.excluir(id);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "check");
 		} catch(Exception e) {
 			redirect.addFlashAttribute("mensagem", e.getMessage());
 			redirect.addFlashAttribute("status", "error");
+			redirect.addFlashAttribute("icon", "danger");
 		}
 		
 		return view;

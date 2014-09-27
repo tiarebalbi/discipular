@@ -22,21 +22,21 @@ import com.mysema.query.types.Predicate;
 public interface UsuarioService {
 
 	public Usuario salvar(Usuario usuario) throws Exception;
-	
+
 	public void excluir(Usuario usuario);
-	
+
 	public void excluir(Long id);
-	
+
 	public Usuario buscarRegistro(Long id);
-	
+
 	public Usuario buscarRegistro(Predicate condicao);
-	
+
 	public List<Usuario> buscarTodos();
-	
+
 	public Page<Usuario> buscarTodos(Pageable paginacao);
-	
+
 	public List<Usuario> buscarTodos(Predicate condicao);
-	
+
 	public Page<Usuario> buscarTodos(Predicate condicao, Pageable paginacao);
 
 	public List<Usuario> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
