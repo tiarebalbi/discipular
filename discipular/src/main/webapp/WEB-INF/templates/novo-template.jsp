@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/elements.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/bootstrap-wizard.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/select2.css" />
-	
+	<script src="${path}resources/templates/centaurus/js/jquery.js"></script>
 	<link type="image/x-icon" href="${path}resources/imagens/logo-discipular.png" rel="shortcut icon" />
 </head>
 <sec:authentication property="principal.username" var="username" />
@@ -132,8 +132,6 @@
 		</div>
 	</div>
 
-	<!-- FIM MODAL -->
-	<script src="${path}resources/templates/centaurus/js/jquery.js"></script>
 	<script src="${path}resources/templates/centaurus/js/scripts.js"></script>
 	<script src="${path}resources/templates/centaurus/js/header.js"></script>
 	

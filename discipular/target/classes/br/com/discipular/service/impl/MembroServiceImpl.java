@@ -38,7 +38,7 @@ public class MembroServiceImpl implements MembroService {
 			throw new Exception("Está célula já está lotada, favor encaminhar o membro para outra célula.");
 		}
 		
-		if(isNomeValido(entidade)) {
+		if(!isNomeValido(entidade)) {
 			throw new Exception("Este nome já está cadastrado, favor utilizar outro nome.");
 		}
 		
@@ -93,7 +93,7 @@ public class MembroServiceImpl implements MembroService {
 	
 	private boolean isFull(Membro membro)  {
 		long qtdeMembros = this.count(MembroPredicate.buscarPorCelula(membro.getCelula()));
-		return qtdeMembros < 14; 
+		return qtdeMembros >= 14; 
 	}
 	
 	private boolean isNomeValido(Membro membro) {

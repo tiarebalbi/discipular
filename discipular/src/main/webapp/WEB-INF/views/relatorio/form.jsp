@@ -32,6 +32,11 @@
 				<form:errors path="tema" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
+				<form:label path="data">Data</form:label> 
+				<form:input path="data" class="form-control" />
+				<form:errors path="data" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
 				<form:label path="ask1"><span>1) De um modo geral como foi a Célula "HOJE"?</span></form:label>
 				<form:input type="number" min="0" max="5" path="ask1" class="form-control" />
 				<form:errors path="ask1" style="color:#FFF" cssClass="label label-danger" element="span" />
@@ -72,7 +77,7 @@
 				<div class="col-lg-12">
 					<div class="col-lg-4">
 						<div class="form-group">
-							<input value="${membro.nome}" class="form-control" />
+							<input disabled value="${membro.nome}" class="form-control" />
 							<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 						</div>
 					</div>

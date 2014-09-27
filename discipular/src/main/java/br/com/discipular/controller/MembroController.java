@@ -19,6 +19,7 @@ import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
+import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
 /**
@@ -39,7 +40,7 @@ public class MembroController extends AbstractController {
 	private final static String VIEW_INDEX = "membro/index";
 	private final static String VIEW_FORM = "membro/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 14;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -65,6 +66,9 @@ public class MembroController extends AbstractController {
 		
 		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
+		
+		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+		
 		view.addObject("registros", registros.getContent());
 		view.addObject("celula", getCurrentUser().getCelula().getNome());
 		view.addObject("pagina", qtdePaginas);
@@ -93,8 +97,8 @@ public class MembroController extends AbstractController {
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "membro", membro);
 			view.addObject("mensagem", "Reveja os campos");
-			view.addObject("status", "error");
-			view.addObject("icon", "danger");
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 			view.addObject("tipos", TipoMembro.values());
 		} else {
 			try {
@@ -107,8 +111,8 @@ public class MembroController extends AbstractController {
 				view = new ModelAndView(VIEW_FORM, "membro", membro);
 				view.addObject("tipos", TipoMembro.values());
 				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "error");
-				view.addObject("icon", "danger");
+				view.addObject("status", "danger");
+				view.addObject("icon", "times");
 			}
 		}
 		return view;
@@ -124,8 +128,8 @@ public class MembroController extends AbstractController {
 			redirect.addFlashAttribute("icon", "check");
 		} catch(Exception e) {
 			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "error");
-			redirect.addFlashAttribute("icon", "danger");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
 		}
 		
 		return view;

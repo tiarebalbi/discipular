@@ -28,7 +28,6 @@ public class MembroValidator implements Validator {
 	public void validate(Object object, Errors e) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "nome", "campo.vazio","Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "tipo", "campo.vazio","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "celula", "campo.vazio","Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dataNascimento", "campo.vazio","Este campo é obrigatório");
 	}
 
