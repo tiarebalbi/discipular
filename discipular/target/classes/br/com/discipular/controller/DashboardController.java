@@ -29,9 +29,13 @@ public class DashboardController extends AbstractController {
 		ModelAndView view = new ModelAndView();
 		Usuario usuario = getCurrentUser();
 		
-		if(senha.equals(confirm)) {
-			usuario.setSenha(senha);
-			usuarioService.salvar(usuario);
+		try {
+			if(senha.equals(confirm)) {
+				usuario.setSenha(senha);
+				usuarioService.salvar(usuario);
+			}
+		} catch (Exception e) {
+			
 		}
 		
 		return view;

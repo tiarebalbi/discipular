@@ -35,7 +35,10 @@ public class LoginController {
 		usuario.setSenha("123");
 		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
 
-		usuarioService.salvar(usuario);
+		try {
+			usuarioService.salvar(usuario);
+		} catch (Exception e) {
+		}
 		
 		return view;
 	}

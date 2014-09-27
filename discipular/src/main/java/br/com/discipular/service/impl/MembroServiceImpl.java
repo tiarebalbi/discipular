@@ -32,13 +32,15 @@ public class MembroServiceImpl implements MembroService {
 	@Resource
 	private MembroRepository repository;
 	
-	public Membro salvar(Membro entidade) {
+	public Membro salvar(Membro entidade) throws Exception {
 		
-		Assert.notNull(entidade, "Registro nulo, não foi possível salvar este registro.");
+		if(isFull(entidade)) {
+			throw new Exception("Está célula já está lotada, favor encaminhar o membro para outra célula.");
+		}
 		
-		long qtdeMembros = this.count(MembroPredicate.buscarPorCelula(entidade.getCelula()));
-		
-		Assert.state(qtdeMembros < 14, "Está célula já está cheia!");
+		if(isNomeValido(entidade)) {
+			throw new Exception("Este nome já está cadastrado, favor utilizar outro nome.");
+		}
 		
 		return repository.save(entidade);
 		
@@ -87,6 +89,23 @@ public class MembroServiceImpl implements MembroService {
 	@Override
 	public long count(Predicate condicao) {
 		return repository.count(condicao);
+	}
+	
+	private boolean isFull(Membro membro)  {
+		long qtdeMembros = this.count(MembroPredicate.buscarPorCelula(membro.getCelula()));
+		return qtdeMembros < 14; 
+	}
+	
+	private boolean isNomeValido(Membro membro) {
+		long qtdeUsuarios = this.count(MembroPredicate.buscarPorNome(membro.getNome()));
+	
+		if(qtdeUsuarios == 0) {
+			return true;
+		} 
+		
+		Membro retorno = this.buscarRegistro(MembroPredicate.buscarPorNome(membro.getNome()));
+		
+		return membro.getId() != null && membro.getId().equals(retorno.getId());
 	}
 
 }

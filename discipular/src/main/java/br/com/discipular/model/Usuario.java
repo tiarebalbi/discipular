@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.TipoUsuario;
@@ -32,7 +32,7 @@ public class Usuario extends AbstractModel {
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
 	
-	@ManyToOne
+	@OneToOne
 	private Celula celula;
 
 	public String getLogin() {

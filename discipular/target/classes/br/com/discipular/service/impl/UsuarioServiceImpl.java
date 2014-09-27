@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.model.Usuario;
@@ -41,7 +40,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		if(!isLoginValido(entidade)) {
-				throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+		}
+		
+		if(!isCelulaOk(entidade.getCelula().getNome())) {
+			throw new Exception("Está célula já tem um líder cadastrado.");
 		}
 		
 		return this.repository.save(entidade);
@@ -106,6 +109,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 		
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
+	}
+	
+	private boolean isCelulaOk(String celula) {
+		return this.count(UsuarioPredicate.buscarPorCelula(celula)) == 0;
 	}
 
 }

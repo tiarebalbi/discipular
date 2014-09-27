@@ -1,5 +1,7 @@
 package br.com.discipular.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import br.com.discipular.editor.CustomCelulaEditor;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
+import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.UsuarioService;
@@ -78,7 +81,8 @@ public class UsuarioController {
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
 		view.addObject("tipos", TipoUsuario.values());
-		view.addObject("celulas", celulaService.buscarTodos());
+		List<Celula> celulas = celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo());
+		view.addObject("celulas", celulas);
 		return view;
 	}
 	
@@ -102,7 +106,8 @@ public class UsuarioController {
 			view.addObject("status", "error");
 		} else {
 			try {
-				this.service.salvar(usuario);
+				usuario.getCelula().setUsuario(this.service.salvar(usuario));
+				celulaService.salvar(usuario.getCelula());
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch(Exception e) {
