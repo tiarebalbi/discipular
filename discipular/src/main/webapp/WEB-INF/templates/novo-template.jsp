@@ -21,7 +21,7 @@
 </head>
 <sec:authentication property="principal.username" var="username" />
 <sec:authentication property="principal" var="principal" />
-<body class="theme-red">
+<body class="theme-red" data-url="${path}">
 	<header class="navbar" id="header-navbar">
 		<div class="container">
 			<a href="${path}" id="logo" class="navbar-brand"> 
@@ -65,20 +65,18 @@
 					<div class="text-center">
 						<i class="fa fa-lock fa-5x"></i>
 					</div>
-					
-					
 					<div class="form-group">
 						<label>Nova Senha</label> 
-						<input class="form-control" />
+						<input class="form-control" id="nova-senha" />
 					</div>
 					<div class="form-group">
 						<label>Confirmar Nova Senha</label> 
-						<input class="form-control" />
+						<input class="form-control" id="confirm-senha" />
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					<a href="${path}trocar-senha" class="btn btn-danger">Salvar</a>
+					<button type="button" class="btn btn-danger alterar-senha" data-dismiss="modal">Salvar</button>
 				</div>
 			</div>
 		</div>
@@ -137,6 +135,7 @@
 	<script src="${path}resources/templates/centaurus/js/bootstrap.js"></script>
 	<script src="${path}resources/templates/centaurus/js/bootstrap-wizard.js"></script>
 	<script src="${path}resources/templates/centaurus/js/select2.min.js"></script>
+	<script src="${path}resources/alterar-senha.js"></script>
 	
 </body>
 </html>

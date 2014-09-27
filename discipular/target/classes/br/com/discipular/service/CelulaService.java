@@ -21,7 +21,7 @@ import com.mysema.query.types.Predicate;
  */
 public interface CelulaService {
 
-	public Celula salvar(Celula usuario);
+	public Celula salvar(Celula usuario) throws Exception;
 	
 	public void excluir(Celula usuario);
 	
@@ -40,5 +40,7 @@ public interface CelulaService {
 	public Page<Celula> buscarTodos(Predicate condicao, Pageable paginacao);
 
 	public List<Celula> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
+
+	long count(Predicate condicao);
 	
 }
