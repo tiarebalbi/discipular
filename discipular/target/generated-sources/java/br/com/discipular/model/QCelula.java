@@ -7,7 +7,6 @@ import com.mysema.query.types.path.*;
 import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
 import com.mysema.query.types.Path;
-import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -17,8 +16,6 @@ import com.mysema.query.types.path.PathInits;
 public class QCelula extends EntityPathBase<Celula> {
 
     private static final long serialVersionUID = 1182004676L;
-
-    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QCelula celula = new QCelula("celula");
 
@@ -35,29 +32,20 @@ public class QCelula extends EntityPathBase<Celula> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
+    public final NumberPath<Long> idUsuario = createNumber("idUsuario", Long.class);
+
     public final StringPath nome = createString("nome");
 
-    public final QUsuario usuario;
-
     public QCelula(String variable) {
-        this(Celula.class, forVariable(variable), INITS);
+        super(Celula.class, forVariable(variable));
     }
 
     public QCelula(Path<? extends Celula> path) {
-        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        super(path.getType(), path.getMetadata());
     }
 
     public QCelula(PathMetadata<?> metadata) {
-        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
-    }
-
-    public QCelula(PathMetadata<?> metadata, PathInits inits) {
-        this(Celula.class, metadata, inits);
-    }
-
-    public QCelula(Class<? extends Celula> type, PathMetadata<?> metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario"), inits.get("usuario")) : null;
+        super(Celula.class, metadata);
     }
 
 }

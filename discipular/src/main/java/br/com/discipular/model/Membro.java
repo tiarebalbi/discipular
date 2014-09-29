@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -49,6 +50,9 @@ public class Membro extends AbstractModel {
 	@NotNull
 	@ManyToOne
 	private Celula celula;
+	
+	@Transient
+	private String data;
 
 	public String getNome() {
 		return nome;
@@ -104,6 +108,14 @@ public class Membro extends AbstractModel {
 
 	public void setCelula(Celula celula) {
 		this.celula = celula;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
 	}
 	
 }

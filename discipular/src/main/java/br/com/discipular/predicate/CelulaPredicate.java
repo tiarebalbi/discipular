@@ -36,7 +36,7 @@ public class CelulaPredicate {
 
 	public static Predicate buscarPorUsuarioNulo() {
 		QCelula condicao = QCelula.celula;
-		return condicao.usuario.isNull();
+		return condicao.idUsuario.isNull();
 	}
 
 }

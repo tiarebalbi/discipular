@@ -1,7 +1,5 @@
 package br.com.discipular.controller.admin;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -80,19 +78,14 @@ public class UsuarioController {
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
-		view.addObject("tipos", TipoUsuario.values());
-		List<Celula> celulas = celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo());
-		view.addObject("celulas", celulas);
-		return view;
+		return carregarDadosForm(view);
 	}
 	
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Usuario usuario = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-		view.addObject("tipos", TipoUsuario.values());
-		view.addObject("celulas", celulaService.buscarTodos());
-		return view;
+		return carregarDadosForm(view);
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
@@ -100,22 +93,23 @@ public class UsuarioController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-			view.addObject("tipos", TipoUsuario.values());
-			view.addObject("celulas", celulaService.buscarTodos());
+			view = carregarDadosForm(view);
 			view.addObject("mensagem", "Reveja os campos");
-			view.addObject("status", "error");
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 		} else {
 			try {
-				usuario.getCelula().setUsuario(this.service.salvar(usuario));
+				usuario.getCelula().setIdUsuario(this.service.salvar(usuario).getId());
 				celulaService.salvar(usuario.getCelula());
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
+				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-				view.addObject("tipos", TipoUsuario.values());
-				view.addObject("celulas", celulaService.buscarTodos());
+				view = carregarDadosForm(view);
 				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "error");
+				view.addObject("status", "danger");
+				view.addObject("icon", "times");
 			}
 		}
 		return view;
@@ -128,9 +122,11 @@ public class UsuarioController {
 			this.service.excluir(id);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "success");
 		} catch(Exception e) {
 			redirect.addFlashAttribute("mensagem", e.getMessage());
 			redirect.addFlashAttribute("status", "error");
+			redirect.addFlashAttribute("icon", "danger");
 		}
 		
 		return view;
@@ -165,6 +161,12 @@ public class UsuarioController {
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
+		return view;
+	}
+	
+	private ModelAndView carregarDadosForm(ModelAndView view) {
+		view.addObject("tipos", TipoUsuario.values());
+		view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 		return view;
 	}
 	

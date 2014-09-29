@@ -65,7 +65,7 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public QRelatorio(Class<? extends Relatorio> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula"), inits.get("celula")) : null;
+        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
     }
 
 }

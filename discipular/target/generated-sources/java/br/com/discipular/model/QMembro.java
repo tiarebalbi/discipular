@@ -59,7 +59,7 @@ public class QMembro extends EntityPathBase<Membro> {
 
     public QMembro(Class<? extends Membro> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula"), inits.get("celula")) : null;
+        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
     }
 
 }

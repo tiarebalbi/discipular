@@ -53,7 +53,7 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     public QUsuario(Class<? extends Usuario> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula"), inits.get("celula")) : null;
+        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
     }
 
 }

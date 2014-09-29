@@ -46,7 +46,7 @@
 											<td>${registro.tipo}</td>
 											<td>${registro.celular}</td>
 											<td>${registro.email}</td>
-											<td>${registro.nascimento}</td>
+											<td>${registro.data}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">

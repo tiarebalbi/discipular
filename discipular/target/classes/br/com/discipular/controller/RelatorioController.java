@@ -93,17 +93,20 @@ public class RelatorioController extends AbstractController {
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 			view.addObject("mensagem", "Reveja os campos");
-			view.addObject("status", "error");
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 		} else {
 			try {
 				relatorio.setCelula(getCurrentUser().getCelula());
 				this.service.salvar(relatorio);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
+				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
+				view.addObject("icon", "times");
 			}
 		}
 		return view;
@@ -116,9 +119,11 @@ public class RelatorioController extends AbstractController {
 			this.service.excluir(id);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "check");
 		} catch(Exception e) {
 			redirect.addFlashAttribute("mensagem", e.getMessage());
 			redirect.addFlashAttribute("status", "error");
+			redirect.addFlashAttribute("icon", "times");
 		}
 		
 		return view;
