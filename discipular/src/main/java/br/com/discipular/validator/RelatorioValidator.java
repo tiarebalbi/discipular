@@ -34,7 +34,29 @@ public class RelatorioValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tema", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "data", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "celula", "campo.vazio", "Este campo é obrigatório");
-		//TODO faltando data
+
+		Relatorio relatorio = (Relatorio) target;
+		
+		if(relatorio.getAsk1() > 5 || relatorio.getAsk1() < 0) {
+			errors.rejectValue("ask1", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		}
+		
+		if(relatorio.getAsk2() > 5 || relatorio.getAsk2() < 0) {
+			errors.rejectValue("ask2", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		}
+		
+		if(relatorio.getAsk3() > 5 || relatorio.getAsk3() < 0) {
+			errors.rejectValue("ask3", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		}
+		
+		if(relatorio.getAsk4() > 5 || relatorio.getAsk4() < 0) {
+			errors.rejectValue("ask4", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		}
+		
+		if(relatorio.getAsk5() > 5 || relatorio.getAsk5() < 0) {
+			errors.rejectValue("ask5", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		}	
+	
 	}
 
 }

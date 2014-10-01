@@ -34,7 +34,7 @@ public class MembroServiceImpl implements MembroService {
 	
 	public Membro salvar(Membro entidade) throws Exception {
 		
-		if(isFull(entidade)) {
+		if(isFull(entidade) && entidade.getId() == null) {
 			throw new Exception("Está célula já está lotada, favor encaminhar o membro para outra célula.");
 		}
 		
