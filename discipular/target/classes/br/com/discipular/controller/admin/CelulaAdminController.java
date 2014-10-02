@@ -91,20 +91,24 @@ public class CelulaAdminController {
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "celula", celula);
 			view.addObject("mensagem", "Reveja os campos");
-			view.addObject("status", "error");
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
+			
 		} else {
 			try {
 				this.service.salvar(celula);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
+				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
 				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "error");
+				view.addObject("status", "danger");
+				view.addObject("icon", "times");
 			}
 		}
 		return view;
@@ -117,9 +121,11 @@ public class CelulaAdminController {
 			this.service.excluir(id);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "check");
 		} catch(Exception e) {
 			redirect.addFlashAttribute("mensagem", e.getMessage());
 			redirect.addFlashAttribute("status", "error");
+			redirect.addFlashAttribute("icon", "times");
 		}
 		
 		return view;

@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 <!DOCTYPE html>
 <html>
@@ -14,11 +15,14 @@
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/bootstrap.min.css"  />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/layout.css" />
 	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/elements.css" />
-	
+	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/bootstrap-wizard.css" />
+	<link rel="stylesheet" href="${path}resources/templates/centaurus/css/select2.css" />
+	<script src="${path}resources/templates/centaurus/js/jquery.js"></script>
 	<link type="image/x-icon" href="${path}resources/imagens/logo-discipular.png" rel="shortcut icon" />
 </head>
 <sec:authentication property="principal.username" var="username" />
-<body class="theme-red">
+<sec:authentication property="principal" var="principal" />
+<body class="theme-red" data-url="${path}">
 	<header class="navbar" id="header-navbar">
 		<div class="container">
 			<a href="${path}" id="logo" class="navbar-brand"> 
@@ -32,20 +36,50 @@
 				</button>
 				<div class="nav-no-collapse pull-right" id="header-nav">
 					<ul class="nav navbar-nav pull-right">
-						<li class="dropdown profile-dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+						<li class="dropdown profile-dropdown" style="margin-right:50px;">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
 <!-- 							<img src="img/samples/scarlet-159.png" alt="" />  -->
-							<span class="hidden-xs">${username}</span> <b class="caret"></b>
-						</a>
+								<span class="hidden-xs">${username}</span> <b class="caret"></b>
+							</a>	
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="fa fa-key"></i>Trocar Senha</a></li>
+								<li><a data-toggle="modal" data-target="#trocar-senha" ><i class="fa fa-key"></i>Alterar Senha</a></li>
 								<li><a href="${path}logout"><i class="fa fa-power-off"></i>Logout</a></li>
-							</ul></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</header>
+	<div class="modal fade in" id="trocar-senha" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #1a2d69; color:#FFF">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"><i class="fa fa-key"></i> Trocar Senha!</h4>
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fa fa-lock fa-5x"></i>
+					</div>
+					<div class="form-group">
+						<label>Nova Senha</label> 
+						<input class="form-control" id="nova-senha" />
+					</div>
+					<div class="form-group">
+						<label>Confirmar Nova Senha</label> 
+						<input class="form-control" id="confirm-senha" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-danger alterar-senha" data-dismiss="modal">Salvar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="page-wrapper" class="container">
 		<div class="row">
 			<div id="nav-col">
@@ -60,25 +94,33 @@
 						<div class="collapse navbar-collapse navbar-ex1-collapse"
 							id="sidebar-nav">
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="${path}admin/usuario"> <i class="fa fa-users"></i>
-										<span>Usuários</span>
-								</a></li>
-								<li><a href="${path}admin/celula"> <i class="fa fa-sitemap"></i>
-										<span>Células</span>
-								</a></li>
-								<li><a href="${path}membro"> <i class="fa fa-child"></i>
-										<span>Membro</span>
-								</a></li>
-								<li><a href="${path}relatorio"> <i class="fa fa-file-text-o"></i>
-										<span>Relatório</span>
-								</a></li>
+								<sec:authorize access="hasRole('ROLE_ADMINISTRADOR')">
+									<li>
+										<a href="${path}admin/usuario"> <i class="fa fa-users"></i><span>Usuários</span></a>
+									</li>
+									<li>
+										<a href="${path}admin/celula"> <i class="fa fa-sitemap"></i><span>Células</span></a>
+									</li>
+								</sec:authorize>
+								<li>
+									<a href="${path}membro"> <i class="fa fa-child"></i><span>Membro</span></a>
+								</li>
+								<li>
+									<a href="${path}relatorio"> <i class="fa fa-file-text-o"></i><span>Relatório</span></a>
+								</li>
 							</ul>
 						</div>
 					</div>
 				</section>
 			</div>
 			<div id="content-wrapper">
-			
+				<c:if test="${mensagem != null}">
+					<div class="alert alert-${status} fade in">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<i class="fa fa-${icon}-circle fa-fw fa-lg"></i>
+						${mensagem}
+					</div>
+				</c:if>
 				<tiles:insertAttribute name="conteudo" />
 				
 				<footer id="footer-bar" class="row">
@@ -90,8 +132,13 @@
 		</div>
 	</div>
 
+	<script src="${path}resources/templates/centaurus/js/scripts.js"></script>
 	<script src="${path}resources/templates/centaurus/js/header.js"></script>
-	<script src="${path}resources/templates/centaurus/js/jquery.js"></script>
+	
 	<script src="${path}resources/templates/centaurus/js/bootstrap.js"></script>
+	<script src="${path}resources/templates/centaurus/js/bootstrap-wizard.js"></script>
+	<script src="${path}resources/templates/centaurus/js/select2.min.js"></script>
+	<script src="${path}resources/alterar-senha.js"></script>
+	
 </body>
 </html>

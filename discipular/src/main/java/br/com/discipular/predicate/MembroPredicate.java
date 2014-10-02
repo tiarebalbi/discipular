@@ -1,6 +1,7 @@
 package br.com.discipular.predicate;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Membro;
@@ -20,7 +21,7 @@ import com.mysema.query.types.Predicate;
 public class MembroPredicate {
 
 	public static PageRequest buscarPaginacao(int pagina, int tamanho) {
-		return new PageRequest(pagina, tamanho);
+		return new PageRequest(pagina, tamanho, Direction.ASC, "nome");
 	}
 	
 	public static Predicate buscarPorNomeComFiltro(String nome) {

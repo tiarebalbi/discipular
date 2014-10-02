@@ -1,6 +1,7 @@
 package br.com.discipular.predicate;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.model.QUsuario;
 import br.com.discipular.model.Usuario;
@@ -19,7 +20,7 @@ import com.mysema.query.types.Predicate;
 public class UsuarioPredicate {
 
 	public static PageRequest buscarPaginacao(int pagina, int tamanho) {
-		return new PageRequest(pagina, tamanho);
+		return new PageRequest(pagina, tamanho, Direction.ASC, "login");
 	}
 
 	public static Predicate buscarPorNomeComFiltro(String login) {
@@ -30,6 +31,11 @@ public class UsuarioPredicate {
 	public static Predicate buscarPorLogin(String login) {
 		QUsuario condicao = QUsuario.usuario;
 		return condicao.login.eq(login);
+	}
+
+	public static Predicate buscarPorCelula(String celula) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.celula.nome.eq(celula);
 	}
 	
 }

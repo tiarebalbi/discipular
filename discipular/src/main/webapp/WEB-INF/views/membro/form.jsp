@@ -25,6 +25,7 @@
 	</header>
 	<div class="main-box-body clearfix">
 		<form:form role="form" action="${path}membro/salvar" method="post" modelAttribute="membro">
+			<form:hidden path="id" value="${membro.id}"/>
 			<div class="form-group">
 				<form:label path="nome">Nome</form:label>
 				<form:input path="nome" class="form-control" />
@@ -47,6 +48,11 @@
 				<form:select class="form-control" path="tipo" items="${tipos}">
 				</form:select>
 				<form:errors path="tipo" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="dataNascimento">Data de Nascimento</form:label> 
+				<form:input path="dataNascimento" class="form-control" />
+				<form:errors path="dataNascimento" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right"

@@ -21,7 +21,7 @@ import com.mysema.query.types.Predicate;
  */
 public interface MembroService {
 
-	public Membro salvar(Membro usuario);
+	public Membro salvar(Membro usuario) throws Exception;
 	
 	public void excluir(Membro usuario);
 	
@@ -40,6 +40,8 @@ public interface MembroService {
 	public Page<Membro> buscarTodos(Predicate condicao, Pageable paginacao);
 	
 	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
+
+	long count(Predicate condicao);
 
 	
 }

@@ -8,8 +8,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
+
 
 /**
  * Modelo que representa as células da paróquia
@@ -26,9 +29,7 @@ public class Celula extends AbstractModel {
 	@NotNull
 	@Column(length = 50)
 	private String nome;
-	
-	private LocalDate nascimento;
-	
+
 	@NotNull
 	@Column(length = 100)
 	private String endereco;
@@ -40,6 +41,11 @@ public class Celula extends AbstractModel {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Horario horario;
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataNascimento;
+	
+	private Long idUsuario;
 	
 	public String getNome() {
 		return nome;
@@ -47,14 +53,6 @@ public class Celula extends AbstractModel {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public LocalDate getNascimento() {
-		return nascimento;
-	}
-
-	public void setNascimento(LocalDate nascimento) {
-		this.nascimento = nascimento;
 	}
 
 	public String getEndereco() {
@@ -81,4 +79,20 @@ public class Celula extends AbstractModel {
 		this.horario = horario;
 	}
 
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
 }

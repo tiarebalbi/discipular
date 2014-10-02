@@ -30,6 +30,16 @@ public class UsuarioValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "senha", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tipo", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "celula", "campo.vazio", "Este campo é obrigatório");
+		
+		Usuario usuario = (Usuario) target;
+		
+		if(usuario.getLogin().length() < 5) {
+			errors.rejectValue("login", "campo.curto", "O login deve ter no mínimo 5 dígitos.");
+		}
+		
+		if(usuario.getSenha().length() < 6) {
+			errors.rejectValue("senha", "campo.pequeno", "A senha deve ter no mínimo 6 dígitos");			
+		}
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.model.Usuario;
+import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
 import br.com.discipular.service.UsuarioService;
 
@@ -32,10 +33,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	
 	@Override
-	public Usuario salvar(Usuario entidade) {
+	public Usuario salvar(Usuario entidade) throws Exception {
 		
 		if(entidade.getSenha() != null) {
 			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
+		}
+		
+		if(!isLoginValido(entidade)) {
+			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+		}
+		
+		if(!isCelulaOk(entidade.getCelula().getNome())) {
+			throw new Exception("Está célula já tem um líder cadastrado.");
 		}
 		
 		return this.repository.save(entidade);
@@ -84,6 +93,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public List<Usuario> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
 		return (List<Usuario>) this.repository.findAll(condicao, ordem);
+	}
+	
+	public long count(Predicate condicao) {
+		return this.repository.count(condicao);
+	}
+	
+	private boolean isLoginValido(Usuario usuario) {
+		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
+	
+		if(qtdeUsuarios == 0) {
+			return true;
+		} 
+		
+		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
+		
+		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
+	}
+	
+	private boolean isCelulaOk(String celula) {
+		return this.count(UsuarioPredicate.buscarPorCelula(celula)) == 0;
 	}
 
 }

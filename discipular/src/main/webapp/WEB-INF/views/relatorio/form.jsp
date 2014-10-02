@@ -32,28 +32,33 @@
 				<form:errors path="tema" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
+				<form:label path="data">Data</form:label> 
+				<form:input path="data" class="form-control" />
+				<form:errors path="data" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
 				<form:label path="ask1"><span>1) De um modo geral como foi a Célula "HOJE"?</span></form:label>
-				<form:input type="number" min="0" max="5" path="ask1" class="form-control" />
+				<form:input type="number" path="ask1" class="form-control" />
 				<form:errors path="ask1" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask2"><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega) </span></form:label>
-				<form:input type="number" min="0" max="5" path="ask2" class="form-control" />
+				<form:input type="number" path="ask2" class="form-control" />
 				<form:errors path="ask2" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask3"><span>3) Como foi a participação dos membros?</span></form:label>
-				<form:input type="number" min="0" max="5" path="ask3" class="form-control" />
+				<form:input type="number" path="ask3" class="form-control" />
 				<form:errors path="ask3" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask4"><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?</span></form:label>
-				<form:input type="number" min="0" max="5" path="ask4" class="form-control" />
+				<form:input type="number" path="ask4" class="form-control" />
 				<form:errors path="ask4" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask5"><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?</span></form:label>
-				<form:input type="number" min="0" max="5" path="ask5" class="form-control" />
+				<form:input type="number" path="ask5" class="form-control" />
 				<form:errors path="ask5" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
@@ -68,30 +73,24 @@
 					<label><span>Chamada</span></label>
 				</div>
 			</div>
-					
 			<c:forEach items="${membros}" var="membro" varStatus="i">
 				<div class="col-lg-12">
 					<div class="col-lg-4">
 						<div class="form-group">
-							<input disabled value="${membro.nome}" data-nome="${membro.nome}" class="form-control membro-nome${i.count}" />
+							<input disabled value="${membro.nome}" class="form-control" />
+							<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 						</div>
 					</div>
 					<div class="col-lg-4">
-						<select class="form-control membro-chamada${i.count}" onchange="chamadak()"> 
-							<option value="presente">Presente</option>
-							<option value="ausente">Ausênte</option>
-							<option value="justificado">Justificado</option>
-						</select>
+						<form:select path="chamada[${i.count - 1}].tipo" class="form-control"> 
+							<option value="PRESENTE">Presente</option>
+							<option value="AUSENTE">Ausênte</option>
+							<option value="JUSTIFICADO">Justificado</option>
+						</form:select>
 					</div>
 				</div>
 				<form:hidden path="chamada" id="chamada"/>
 			</c:forEach>
-			
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:label path="tipo">Tipo do Membro</form:label> --%>
-<%-- 				<form:select class="form-control" path="tipo" items="${tipos}"> --%>
-<%-- 				</form:select> --%>
-<!-- 			</div> -->
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}relatorio" class="btn btn-danger btn-lg pull-right">Cancelar</a>
@@ -100,4 +99,3 @@
 	</div>
 </div>
 <script src="${path}resources/templates/centaurus/js/jquery.js"></script>
-<script src="${path}resources/teste.js"></script>
