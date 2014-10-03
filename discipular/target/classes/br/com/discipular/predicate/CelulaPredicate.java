@@ -38,5 +38,10 @@ public class CelulaPredicate {
 		QCelula condicao = QCelula.celula;
 		return condicao.idUsuario.isNull();
 	}
+	
+	public static Predicate buscarPorIdUsuario(Long idUsuario) {
+		QCelula condicao = QCelula.celula;
+		return condicao.idUsuario.eq(idUsuario);
+	}
 
 }

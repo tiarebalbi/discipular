@@ -120,6 +120,9 @@ public class UsuarioController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			this.service.excluir(id);
+			Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorIdUsuario(id));
+			celula.setIdUsuario(null);
+			celulaService.salvar(celula);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");
 			redirect.addFlashAttribute("icon", "success");
