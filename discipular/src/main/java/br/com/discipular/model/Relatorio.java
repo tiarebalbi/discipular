@@ -56,6 +56,9 @@ public class Relatorio extends AbstractModel {
 	@OneToMany(mappedBy = "relatorio")
 	private List<Chamada> chamada;
 	
+	@ManyToOne
+	private Usuario usuario;
+	
 	public int getAsk1() {
 		return ask1;
 	}
@@ -134,6 +137,14 @@ public class Relatorio extends AbstractModel {
 
 	public void setChamada(List<Chamada> chamada) {
 		this.chamada = chamada;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

@@ -33,7 +33,6 @@ public class RelatorioValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask5", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tema", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "data", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "celula", "campo.vazio", "Este campo é obrigatório");
 
 		Relatorio relatorio = (Relatorio) target;
 		

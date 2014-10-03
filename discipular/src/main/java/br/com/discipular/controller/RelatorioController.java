@@ -84,6 +84,8 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Relatorio relatorio = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+		view.addObject("chamadas", TipoChamada.values());
 		return view;
 	}
 	
@@ -92,18 +94,23 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
+			view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+			view.addObject("chamadas", TipoChamada.values());
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {
 			try {
 				relatorio.setCelula(getCurrentUser().getCelula());
+				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
+				view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+				view.addObject("chamadas", TipoChamada.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 				view.addObject("icon", "times");

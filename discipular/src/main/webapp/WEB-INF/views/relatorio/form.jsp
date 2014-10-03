@@ -89,7 +89,6 @@
 						</form:select>
 					</div>
 				</div>
-				<form:hidden path="chamada" id="chamada"/>
 			</c:forEach>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

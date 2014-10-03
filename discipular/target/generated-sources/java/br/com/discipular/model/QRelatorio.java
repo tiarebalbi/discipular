@@ -47,6 +47,8 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public final StringPath tema = createString("tema");
 
+    public final QUsuario usuario;
+
     public QRelatorio(String variable) {
         this(Relatorio.class, forVariable(variable), INITS);
     }
@@ -66,6 +68,7 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
     public QRelatorio(Class<? extends Relatorio> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
+        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario"), inits.get("usuario")) : null;
     }
 
 }
