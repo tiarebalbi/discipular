@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoChamada;
 import br.com.discipular.model.Relatorio;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
+import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
 
 /**
@@ -31,8 +33,8 @@ import br.com.discipular.validator.RelatorioValidator;
  *
  * 	12/09/2014
  * 
- *  TODO buscar pelo Usuário logado
  */ 
+@Lider
 @Controller
 @RequestMapping(value = "/relatorio")
 public class RelatorioController extends AbstractController {
@@ -64,8 +66,9 @@ public class RelatorioController extends AbstractController {
 		
 		marker = 0;
 		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPor(getCurrentUser()) , RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
+		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
@@ -75,7 +78,7 @@ public class RelatorioController extends AbstractController {
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
 		view.addObject("chamadas", TipoChamada.values());
 		return view;
 	}
@@ -84,7 +87,7 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Relatorio relatorio = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
 		view.addObject("chamadas", TipoChamada.values());
 		return view;
 	}
@@ -94,9 +97,9 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-			view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+			view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
 			view.addObject("chamadas", TipoChamada.values());
-			view.addObject("mensagem", "Reveja os campos");
+			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {
@@ -109,7 +112,7 @@ public class RelatorioController extends AbstractController {
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-				view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula())));
+				view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
 				view.addObject("chamadas", TipoChamada.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");

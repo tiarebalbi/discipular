@@ -37,7 +37,7 @@ import br.com.discipular.validator.UsuarioValidator;
 @Controller
 @Administrador
 @RequestMapping(value = "/admin/usuario")
-public class UsuarioController {
+public class UsuarioAdminController {
 
 	private final static String VIEW_INDEX = "admin-usuario/index";
 	private final static String VIEW_FORM = "admin-usuario/form";
@@ -94,7 +94,7 @@ public class UsuarioController {
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 			view = carregarDadosForm(view);
-			view.addObject("mensagem", "Reveja os campos");
+			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {

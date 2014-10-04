@@ -29,12 +29,16 @@
 								<thead>
 									<tr>
 										<th><span>#Código</span></th>
+										<th><span>Responsável</span></th>
+										<th><span>Data</span></th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.id}</td>
+											<td>${registro.usuario.login}</td>
+											<td>${registro.dataFormat}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">

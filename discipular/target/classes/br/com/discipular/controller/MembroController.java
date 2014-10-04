@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoMembro;
 import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
@@ -33,6 +34,7 @@ import br.com.discipular.validator.MembroValidator;
  * 
  * TODO buscar por usuário logado
  */
+@Lider
 @Controller
 @RequestMapping(value = "/membro")
 public class MembroController extends AbstractController {
@@ -64,7 +66,7 @@ public class MembroController extends AbstractController {
 		
 		marker = 0;
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorCelula(getCurrentUser().getCelula()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
 		
 		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
@@ -96,7 +98,7 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "membro", membro);
-			view.addObject("mensagem", "Reveja os campos");
+			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 			view.addObject("tipos", TipoMembro.values());

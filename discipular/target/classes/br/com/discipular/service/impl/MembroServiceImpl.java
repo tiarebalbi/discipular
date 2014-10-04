@@ -92,7 +92,7 @@ public class MembroServiceImpl implements MembroService {
 	}
 	
 	private boolean isFull(Membro membro)  {
-		long qtdeMembros = this.count(MembroPredicate.buscarPorCelula(membro.getCelula()));
+		long qtdeMembros = this.count(MembroPredicate.buscarPor(membro.getCelula()));
 		return qtdeMembros >= 14; 
 	}
 	

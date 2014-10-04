@@ -19,7 +19,9 @@ import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.predicate.CelulaPredicate;
+import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
+import br.com.discipular.service.MembroService;
 import br.com.discipular.validator.CelulaValidator;
 
 /**
@@ -45,6 +47,9 @@ public class CelulaAdminController {
 	
 	@Autowired
 	private CelulaService service;
+	
+	@Autowired
+	private MembroService membroService;
 
 	@Autowired
 	private CelulaValidator validator;
@@ -62,6 +67,7 @@ public class CelulaAdminController {
 		
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
+		registros.getContent().forEach(celula -> celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula))));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
@@ -90,7 +96,7 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "celula", celula);
-			view.addObject("mensagem", "Reveja os campos");
+			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 			view.addObject("dias", DiaSemana.values());

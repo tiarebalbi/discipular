@@ -34,6 +34,9 @@ public class DashboardController extends AbstractController {
 				usuario.setSenha(senha);
 				usuarioService.salvar(usuario);
 			}
+			view.addObject("mensagem", "Senha alterada com sucesso!");
+			view.addObject("status", "success");
+			view.addObject("icon", "check");
 		} catch (Exception e) {
 			
 		}

@@ -1,10 +1,14 @@
 package br.com.discipular.predicate;
 
+import java.time.LocalDate;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
+import br.com.discipular.model.QRelatorio;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.model.Usuario;
 
 import com.mysema.query.types.Predicate;
 
@@ -23,9 +27,15 @@ public class RelatorioPredicate {
 		return new PageRequest(pagina, quantidade, Direction.DESC, "data");
 	}
 
+	//TODO corrigir condição
 	public static Predicate buscarPorNomeComFiltro(String nome) {
-		// TODO Auto-generated method stub
-		return null;
+		QRelatorio condicao = QRelatorio.relatorio;
+		return condicao.data.eq(LocalDate.now());
+	}
+
+	public static Predicate buscarPor(Usuario usuario) {
+		QRelatorio condicao = QRelatorio.relatorio;
+		return condicao.usuario.eq(usuario);
 	}
 
 }

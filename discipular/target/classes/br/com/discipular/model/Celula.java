@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,6 +47,9 @@ public class Celula extends AbstractModel {
 	private LocalDate dataNascimento;
 	
 	private Long idUsuario;
+	
+	@Transient
+	private long qtdeMembros;
 	
 	public String getNome() {
 		return nome;
@@ -93,6 +97,14 @@ public class Celula extends AbstractModel {
 
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	
+	public long getQtdeMembros() {
+		return qtdeMembros;
+	}
+
+	public void setQtdeMembros(long qtdeMembros) {
+		this.qtdeMembros = qtdeMembros;
 	}
 	
 }

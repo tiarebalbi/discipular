@@ -42,7 +42,7 @@
 											<td>${registro.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario}</td>
-											<td>Quantidade de membros</td>
+											<td>${registro.qtdeMembros}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">

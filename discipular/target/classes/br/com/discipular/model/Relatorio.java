@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,6 +47,14 @@ public class Relatorio extends AbstractModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data;
 	
+	public String getDataFormat() {
+		return dataFormat;
+	}
+
+	public void setDataFormat(String dataFormat) {
+		this.dataFormat = dataFormat;
+	}
+
 	@Column(length = 500)
 	private String observacao;
 	
@@ -58,6 +67,9 @@ public class Relatorio extends AbstractModel {
 	
 	@ManyToOne
 	private Usuario usuario;
+	
+	@Transient
+	private String dataFormat;
 	
 	public int getAsk1() {
 		return ask1;

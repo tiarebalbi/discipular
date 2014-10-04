@@ -34,7 +34,7 @@ public class MembroPredicate {
 		return condicao.nome.eq(text);
 	}
 
-	public static Predicate buscarPorCelula(Celula celula) {
+	public static Predicate buscarPor(Celula celula) {
 		QMembro condicao = QMembro.membro;
 		return condicao.celula.eq(celula);
 	}	

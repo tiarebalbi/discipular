@@ -63,33 +63,35 @@
 			</div>
 			<div class="form-group">
 				<form:label path="observacao"><span>Observação</span></form:label>
-				<form:textarea style="min-height:100px;" path="observacao" class="form-control" ></form:textarea>
+				<form:textarea style="min-height:100px;" path="observacao" placeholder="Favor informar as ocorrências da células e explicar a justificativas das faltas." class="form-control" ></form:textarea>
 			</div>
-			<div class="col-lg-12">
-				<div class="col-lg-4">
-					<label><span>Nome</span></label>
-				</div>
-				<div class="col-lg-4">
-					<label><span>Chamada</span></label>
-				</div>
-			</div>
-			<c:forEach items="${membros}" var="membro" varStatus="i">
+			<div class="main-box clearfix" style="background-color: #afc7c7;"> 
 				<div class="col-lg-12">
 					<div class="col-lg-4">
-						<div class="form-group">
-							<input disabled value="${membro.nome}" class="form-control" />
-							<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
-						</div>
+						<label><span>Nome</span></label>
 					</div>
 					<div class="col-lg-4">
-						<form:select path="chamada[${i.count - 1}].tipo" class="form-control"> 
-							<option value="PRESENTE">Presente</option>
-							<option value="AUSENTE">Ausênte</option>
-							<option value="JUSTIFICADO">Justificado</option>
-						</form:select>
+						<label><span>Chamada</span></label>
 					</div>
 				</div>
-			</c:forEach>
+				<c:forEach items="${membros}" var="membro" varStatus="i">
+					<div class="col-lg-12">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<input disabled value="${membro.nome}" class="form-control" />
+								<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<form:select path="chamada[${i.count - 1}].tipo" class="form-control"> 
+								<option value="PRESENTE">Presente</option>
+								<option value="AUSENTE">Ausênte</option>
+								<option value="JUSTIFICADO">Justificado</option>
+							</form:select>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}relatorio" class="btn btn-danger btn-lg pull-right">Cancelar</a>

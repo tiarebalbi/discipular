@@ -101,13 +101,21 @@
 									<li>
 										<a href="${path}admin/celula"> <i class="fa fa-sitemap"></i><span>Células</span></a>
 									</li>
+									<li>
+										<a href="${path}admin/membro"> <i class="fa fa-child"></i><span>Membros</span></a>
+									</li>
+									<li>
+										<a href="${path}admin/relatorio"> <i class="fa fa-file-text-o"></i><span>Relatórios</span></a>
+									</li>
 								</sec:authorize>
-								<li>
-									<a href="${path}membro"> <i class="fa fa-child"></i><span>Membro</span></a>
-								</li>
-								<li>
-									<a href="${path}relatorio"> <i class="fa fa-file-text-o"></i><span>Relatório</span></a>
-								</li>
+								<sec:authorize access="hasRole('ROLE_LIDER')">
+									<li>
+										<a href="${path}membro"> <i class="fa fa-child"></i><span>Membros</span></a>
+									</li>
+									<li>
+										<a href="${path}relatorio"> <i class="fa fa-file-text-o"></i><span>Relatórios</span></a>
+									</li>
+								</sec:authorize>
 							</ul>
 						</div>
 					</div>
