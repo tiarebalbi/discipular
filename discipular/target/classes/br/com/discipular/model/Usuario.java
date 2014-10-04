@@ -1,5 +1,7 @@
 package br.com.discipular.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,7 +21,12 @@ import br.com.discipular.enumerator.TipoUsuario;
  * 	08/09/2014 
  */
 @Entity
-public class Usuario extends AbstractModel {
+public class Usuario extends AbstractModel implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4531352122527191632L;
 
 	@NotNull
 	@Column(length = 22)

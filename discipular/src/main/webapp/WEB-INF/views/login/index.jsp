@@ -10,10 +10,10 @@
 	
 	<title>Discipular {{2 + 2}}</title>
 
-	<link rel="stylesheet" href="${path}resources/login/css/login-bootstrap.css" />
-	<link rel="stylesheet" href="${path}resources/login/css/login-layout.css" />
-	<link rel="stylesheet" href="${path}resources/login/css/login-elements.css" />
-	<link rel="stylesheet" href="${path}resources/font-awesome-4.1.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="${path}resources/both/login/css/login-bootstrap.css" />
+	<link rel="stylesheet" href="${path}resources/both/login/css/login-layout.css" />
+	<link rel="stylesheet" href="${path}resources/both/login/css/login-elements.css" />
+	<link rel="stylesheet" href="${path}resources/both/font-awesome-4.1.0/css/font-awesome.min.css" />
 	
 	<link type="image/x-icon" href="${path}resources/imagens/logo-discipular.png" rel="shortcut icon" />
 </head>
