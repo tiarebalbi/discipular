@@ -15,8 +15,6 @@
 	<link rel="stylesheet" href="${path}resources/both/templates/centaurus/css/bootstrap.min.css"  />
 	<link rel="stylesheet" href="${path}resources/both/templates/centaurus/css/layout.css" />
 	<link rel="stylesheet" href="${path}resources/both/templates/centaurus/css/elements.css" />
-	<link rel="stylesheet" href="${path}resources/both/templates/centaurus/css/bootstrap-wizard.css" />
-	<link rel="stylesheet" href="${path}resources/both/templates/centaurus/css/select2.css" />
 	<script src="${path}resources/both/templates/centaurus/js/jquery.js"></script>
 	<link type="image/x-icon" href="${path}resources/imagens/logo-discipular.png" rel="shortcut icon" />
 </head>
@@ -139,13 +137,8 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="${path}resources/both/templates/centaurus/js/scripts.js"></script>
 	<script src="${path}resources/both/templates/centaurus/js/header.js"></script>
-	
 	<script src="${path}resources/both/templates/centaurus/js/bootstrap.js"></script>
-	<script src="${path}resources/both/templates/centaurus/js/bootstrap-wizard.js"></script>
-	<script src="${path}resources/both/templates/centaurus/js/select2.min.js"></script>
 	<script src="${path}resources/both/js/alterar-senha.js"></script>
 	
 </body>

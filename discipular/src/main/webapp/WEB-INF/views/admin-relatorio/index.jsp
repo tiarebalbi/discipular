@@ -20,8 +20,8 @@
 						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
 						<div class="filter-block pull-right">
 							<div class="form-group pull-left">
-								<input type="text" class="form-control" placeholder="Search...">
-								<a href="#"><i class="fa fa-search search-icon"></i></a>
+								<input id="condicao" type="text" class="form-control" placeholder="Search...">
+								<a href="javascript:void(0);" id="#buscar" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
 						</div>
 					</header>
@@ -54,3 +54,4 @@
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/relatorio-index.js"></script>

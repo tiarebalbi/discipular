@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -63,6 +65,7 @@ public class Relatorio extends AbstractModel {
 	private Celula celula;
 	
 	@OneToMany(mappedBy = "relatorio")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Chamada> chamada;
 	
 	@ManyToOne

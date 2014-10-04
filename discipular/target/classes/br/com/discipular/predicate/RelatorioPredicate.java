@@ -1,7 +1,5 @@
 package br.com.discipular.predicate;
 
-import java.time.LocalDate;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -27,10 +25,9 @@ public class RelatorioPredicate {
 		return new PageRequest(pagina, quantidade, Direction.DESC, "data");
 	}
 
-	//TODO corrigir condição
-	public static Predicate buscarPorNomeComFiltro(String nome) {
+	public static Predicate buscarPor(String celula) {
 		QRelatorio condicao = QRelatorio.relatorio;
-		return condicao.data.eq(LocalDate.now());
+		return condicao.celula.nome.startsWithIgnoreCase(celula).or(condicao.celula.nome.endsWithIgnoreCase(celula));
 	}
 
 	public static Predicate buscarPor(Usuario usuario) {
