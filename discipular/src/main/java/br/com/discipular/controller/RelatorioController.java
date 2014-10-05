@@ -159,16 +159,4 @@ public class RelatorioController extends AbstractController {
 		return view;
 	}
 	
-	@RequestMapping(value = "find/{condicao}", method = RequestMethod.POST)
-	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
-		ModelAndView view = new ModelAndView();
-		
-		Page<Relatorio> users = service.buscarTodos(RelatorioPredicate.buscarPorNomeComFiltro(nome), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		
-		view.addObject("registros", users.getContent());
-		view.addObject("pagina", qtdePaginas);
-		
-		return view;
-	}
-	
 }

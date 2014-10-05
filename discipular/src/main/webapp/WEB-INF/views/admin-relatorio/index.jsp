@@ -20,7 +20,7 @@
 						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
 						<div class="filter-block pull-right">
 							<div class="form-group pull-left">
-								<input id="condicao" type="text" class="form-control" placeholder="Search...">
+								<input id="condicao" type="text" class="form-control" placeholder="Buscar Por Célula...">
 								<a href="javascript:void(0);" id="#buscar" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
 						</div>
@@ -30,10 +30,10 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>#Código</span></th>
-										<th><span>Célula</span></th>
-										<th><span>Responsável</span></th>
-										<th><span>Data</span></th>
+										<th>#Código</th>
+										<th>Célula</th>
+										<th>Responsável</th>
+										<th>Data</th>
 									</tr>
 								</thead>
 								<tbody>

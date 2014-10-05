@@ -28,6 +28,11 @@ public class MembroPredicate {
 		QMembro condicao = QMembro.membro;
 		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome));
 	}
+	
+	public static Predicate buscarPorCelulaComFiltro(String nome) {
+		QMembro condicao = QMembro.membro;
+		return condicao.celula.nome.startsWithIgnoreCase(nome).or(condicao.celula.nome.endsWithIgnoreCase(nome));
+	}
 
 	public static Predicate buscarPorNome(String text) {
 		QMembro condicao = QMembro.membro;

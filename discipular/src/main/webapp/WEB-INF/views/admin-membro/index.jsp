@@ -23,8 +23,8 @@
 						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
 						<div class="filter-block pull-right">
 							<div class="form-group pull-left">
-								<input type="text" class="form-control" placeholder="Search...">
-								<a href="#"><i class="fa fa-search search-icon"></i></a>
+								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Célula...">
+								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
 						</div>
 					</header>
@@ -33,12 +33,12 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>Nome</span></th>
-										<th><span>Célula</span></th>
-										<th><span>Tipo</span></th>
-										<th><span>Celular</span></th>
-										<th><span>Email</span></th>
-										<th><span>Data de Nascimento</span></th>
+										<th>Nome</th>
+										<th>Célula</th>
+										<th>Tipo</th>
+										<th>Celular</th>
+										<th>Email</th>
+										<th>Data de Nascimento</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -61,3 +61,4 @@
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/membro-index.js"></script>

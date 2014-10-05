@@ -1,10 +1,11 @@
 function buscar() {
 	var urlBase = $('body').data('url');
 	var condicao = $('#condicao').val();
+	console.log(condicao);
 	$.ajax({
         type: 'POST',
         dataType: 'json',
-        url: urlBase + "admin/relatorio/find/" + condicao, 
+        url: urlBase + "admin/membro/find/" + condicao, 
         complete : function(xhr, status) {
         	var response = JSON.parse(xhr.responseText)
         	$('tbody').html("");
@@ -13,16 +14,22 @@ function buscar() {
         		$(response.registros).each(function (index, value) {
         			$('tbody').append("<tr>" +
         					"<td>" +
-        					value.id +
+        					value.nome +
         					"</td>" +
         					"<td>" +
         					value.celula.nome +
         					"</td>" +
         					"<td>" +
-        					value.usuario.login +
+        					value.tipo +
         					"</td>" +
         					"<td>" +
-        					value.dataFormat +
+        					value.celular +
+        					"</td>" +
+        					"<td>" +
+        					value.email +
+        					"</td>" +
+        					"<td>" +
+        					value.dataNascimento +
         					"</td>" +
         					"</tr>");
         		});
