@@ -83,10 +83,7 @@
 							</div>
 						</div>
 						<div class="col-lg-4">
-							<form:select path="chamada[${i.count - 1}].tipo" class="form-control"> 
-								<option value="PRESENTE">Presente</option>
-								<option value="AUSENTE">Ausênte</option>
-								<option value="JUSTIFICADO">Justificado</option>
+							<form:select path="chamada[${i.count - 1}].tipo" class="form-control" items="${chamadas}"> 
 							</form:select>
 						</div>
 					</div>

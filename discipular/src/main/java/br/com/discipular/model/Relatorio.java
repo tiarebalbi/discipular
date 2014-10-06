@@ -49,6 +49,9 @@ public class Relatorio extends AbstractModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data;
 	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataCriacao;
+	
 	public String getDataFormat() {
 		return dataFormat;
 	}
@@ -124,6 +127,14 @@ public class Relatorio extends AbstractModel {
 
 	public LocalDate getData() {
 		return data;
+	}
+
+	public LocalDate getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDate dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public void setData(LocalDate data) {

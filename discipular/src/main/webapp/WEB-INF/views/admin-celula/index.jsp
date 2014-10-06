@@ -22,24 +22,34 @@
 			<div class="col-lg-12">
 				<div class="main-box clearfix">
 					<header class="main-box-header clearfix">
-						<h2><i class="fa fa-list"></i> Lista de registros</h2>
+						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
+						<div class="filter-block pull-right">
+							<div class="form-group pull-left">
+								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Nome...">
+								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
+							</div>
+						</div>
 					</header>
 					<div class="main-box-body clearfix">
 						<div class="table-responsive">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>Nome</span></th>
-										<th><span>Dia</span></th>
-										<th><span>Horário</span></th>
-										<th><span>Números de Membros</span></th>
-										<th><span>Menu</span></th>
+										<th>Nome</th>
+										<th>Líder</th>
+										<th>Supervisor</th>
+										<th>Dia</th>
+										<th>Horário</th>
+										<th>Números de Membros</th>
+										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
+											<td>${registro.lider}</td>
+											<td>${registro.supervisor.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario}</td>
 											<td>${registro.qtdeMembros}</td>
@@ -85,3 +95,4 @@
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/celula-index.js"></script>

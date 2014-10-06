@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
+import br.com.discipular.enumerator.TipoRede;
 
 
 /**
@@ -48,8 +50,17 @@ public class Celula extends AbstractModel {
 	
 	private Long idUsuario;
 	
+	@Enumerated(EnumType.STRING)
+	private TipoRede tipoRede;
+	
+	@ManyToOne
+	private Supervisor supervisor;
+	
 	@Transient
 	private long qtdeMembros;
+	
+	@Transient
+	private String lider;
 	
 	public String getNome() {
 		return nome;
@@ -105,6 +116,30 @@ public class Celula extends AbstractModel {
 
 	public void setQtdeMembros(long qtdeMembros) {
 		this.qtdeMembros = qtdeMembros;
+	}
+
+	public TipoRede getTipoRede() {
+		return tipoRede;
+	}
+
+	public void setTipoRede(TipoRede tipoRede) {
+		this.tipoRede = tipoRede;
+	}
+
+	public Supervisor getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(Supervisor supervisor) {
+		this.supervisor = supervisor;
+	}
+
+	public String getLider() {
+		return lider;
+	}
+
+	public void setLider(String lider) {
+		this.lider = lider;
 	}
 	
 }

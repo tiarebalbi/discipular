@@ -53,4 +53,12 @@ public class Chamada extends AbstractModel {
 		this.observacao = observacao;
 	}
 
+	public Relatorio getRelatorio() {
+		return relatorio;
+	}
+
+	public void setRelatorio(Relatorio relatorio) {
+		this.relatorio = relatorio;
+	}
+	
 }

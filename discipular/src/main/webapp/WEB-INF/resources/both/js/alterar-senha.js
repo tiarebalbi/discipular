@@ -13,5 +13,4 @@ $(".alterar-senha").on('click', function() {
         	$("#confirm-senha").val("");
         },
 	});
-	
 });

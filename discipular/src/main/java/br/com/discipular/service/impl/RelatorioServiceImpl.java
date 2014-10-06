@@ -1,5 +1,6 @@
 package br.com.discipular.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -34,6 +35,10 @@ public class RelatorioServiceImpl implements RelatorioService {
 	public Relatorio salvar(Relatorio relatorio) {
 		
 		Assert.notNull(relatorio, "Registro nulo, não foi possível salvar este registro.");
+		
+		if(relatorio.getId() == null) {
+			relatorio.setDataCriacao(LocalDate.now());
+		}
 		
 		return repository.save(relatorio);
 		

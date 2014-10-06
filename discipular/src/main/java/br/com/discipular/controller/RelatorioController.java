@@ -1,5 +1,7 @@
 package br.com.discipular.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,9 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoChamada;
+import br.com.discipular.model.Chamada;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
+import br.com.discipular.service.ChamadaService;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.utils.DataUtils;
@@ -52,6 +57,9 @@ public class RelatorioController extends AbstractController {
 	@Autowired
 	private MembroService membroService;
 
+	@Autowired
+	private ChamadaService chamadaService;
+	
 	@Autowired
 	private RelatorioValidator validator;
 	
@@ -87,7 +95,8 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Relatorio relatorio = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
+		List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+		view.addObject("membros", chamada);
 		view.addObject("chamadas", TipoChamada.values());
 		return view;
 	}
@@ -104,9 +113,12 @@ public class RelatorioController extends AbstractController {
 			view.addObject("icon", "times");
 		} else {
 			try {
+				chamadaService.salvar(relatorio.getChamada());
 				relatorio.setCelula(getCurrentUser().getCelula());
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
+				relatorio.getChamada().forEach(chamada -> chamada.setRelatorio(relatorio));
+				chamadaService.salvar(relatorio.getChamada());
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 				redirect.addFlashAttribute("icon", "check");

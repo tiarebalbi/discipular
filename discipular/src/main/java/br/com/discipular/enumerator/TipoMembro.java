@@ -11,6 +11,6 @@ package br.com.discipular.enumerator;
  */
 public enum TipoMembro {
 
-	MEMBRO, ANFITRIAO, AUXILIAR, LIDER;
+	MEMBRO, AUXILIAR, LIDER;
 	
 }

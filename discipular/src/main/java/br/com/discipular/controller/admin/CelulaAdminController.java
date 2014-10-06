@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import br.com.discipular.annotations.Administrador;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
@@ -22,7 +23,10 @@ import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
+import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.CelulaValidator;
+
+
 
 /**
  * Controller do modelo {@link Celula}
@@ -50,6 +54,9 @@ public class CelulaAdminController {
 	
 	@Autowired
 	private MembroService membroService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private CelulaValidator validator;
@@ -67,7 +74,12 @@ public class CelulaAdminController {
 		
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
-		registros.getContent().forEach(celula -> celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula))));
+		registros.getContent().forEach(celula -> {
+			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
+			if(celula.getIdUsuario() != null) {
+				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
+			}
+		});
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
@@ -162,6 +174,14 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltro(nome), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(celula -> {
+			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
+			if(celula.getIdUsuario() != null) {
+				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
+			} else {
+				celula.setLider("");
+			}
+		});
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
