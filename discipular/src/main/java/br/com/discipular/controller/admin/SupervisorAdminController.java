@@ -20,7 +20,6 @@ import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.SupervisorService;
 import br.com.discipular.validator.SupervisorValidator;
-r.com.discipular.validator.SupervisorValidator;
 
 @Controller
 @RequestMapping(value = "/admin/supervisor")
@@ -71,6 +70,7 @@ public class SupervisorAdminController {
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		Supervisor supervisor = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
+		view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 		return view;
 	}
 
@@ -79,6 +79,7 @@ public class SupervisorAdminController {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
 		if (errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
+			view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 			view.addObject("mensagem", "Reveja os campos");
 			view.addObject("status", "error");
 		} else {
@@ -88,6 +89,7 @@ public class SupervisorAdminController {
 				redirect.addFlashAttribute("status", "success");
 			} catch (Exception e) {
 				view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
+				view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 			}

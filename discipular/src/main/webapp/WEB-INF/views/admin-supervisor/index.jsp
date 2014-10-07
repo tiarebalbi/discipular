@@ -6,16 +6,16 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="row">	
+		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-					<li class="active"><i class="fa fa-sitemap"></i> Células</li>
+					<li class="active"><i class="fa fa-sitemap"></i> Supervisores</li>
 				</ol>
 			</div>
 		</div>
-		<a type="button" href="${path}admin/celula/novo" class="btn btn-primary btn-lg">
-			<span class="fa fa-plus-circle"></span> Nova Célula
+		<a type="button" href="${path}admin/supervisor/novo" class="btn btn-primary btn-lg">
+			<span class="fa fa-plus-circle"></span> Novo Supervisor
 		</a>
 		<p></p>
 		<div class="row">
@@ -36,11 +36,6 @@
 								<thead>
 									<tr>
 										<th>Nome</th>
-										<th>Líder</th>
-										<th>Supervisor</th>
-										<th>Dia</th>
-										<th>Horário</th>
-										<th>Números de Membros</th>
 										<th>Menu</th>
 									</tr>
 								</thead>
@@ -48,18 +43,13 @@
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
-											<td>${registro.lider}</td>
-											<td>${registro.supervisor.nome}</td>
-											<td>${registro.dia}</td>
-											<td>${registro.horario}</td>
-											<td>${registro.qtdeMembros}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
 														Opções <span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu" role="menu">
-														<li><a href="${path}admin/celula/editar/${registro.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
+														<li><a href="${path}admin/supervisor/editar/${registro.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
 														<li class="divider"></li>
 														<li><a data-toggle="modal" data-target="#excluir-${registro.id}"><i class="fa fa-trash-o"></i> Excluir</a></li>
 													</ul>
@@ -74,11 +64,11 @@
 																<h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4>
 															</div>
 															<div class="modal-body">
-																<p>Você realmente deseja excluir a célula ${registro.nome}?</p>
+																<p>Você realmente deseja excluir o(a) supervisor(a) ${registro.nome}?</p>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-																<a href="${path}admin/celula/excluir/${registro.id}" class="btn btn-danger">Excluir</a>
+																<a href="${path}admin/supervisor/excluir/${registro.id}" class="btn btn-danger">Excluir</a>
 															</div>
 														</div>
 													</div>
@@ -95,4 +85,3 @@
 		</div>
 	</div>
 </div>
-<script src="${path}resources/admin/js/celula-index.js"></script>
