@@ -7,7 +7,7 @@
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-			<li><a href="${path}admin/supervisor"><i class="fa fa-sitemap"></i> Supervisores</a></li>
+			<li><a href="${path}admin/supervisor"><i class="fa fa-trophy"></i> Supervisores</a></li>
 			<li class="active"><span><i class="fa fa-plus-circle"></i> Novo Supervisor</span></li>
 		</ol>
 		<h1>
@@ -28,7 +28,6 @@
 				<form:input path="nome" class="form-control" />
 				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-			
 			<div class="form-group">
 				<form:label path="usuario.login">Login</form:label> 
 				<form:input path="usuario.login" class="form-control" />
@@ -36,8 +35,8 @@
 			</div>
 			<div class="form-group">
 				<form:label path="usuario.senha">Senha</form:label> 
-				<form:input path="usuario.senha" class="form-control" />
-				<form:errors path="usuario.senha" type="password" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:input path="usuario.senha" type="password" class="form-control" />
+				<form:errors path="usuario.senha" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			
 			<div class="form-group">
@@ -45,12 +44,12 @@
 				<form:input path="area" class="form-control" />
 				<form:errors path="area" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:label path="dia">Dia</form:label>  --%>
-<%-- 				<form:select class="form-control" path="celulas" itemLabel="nome" itemValue="id" items="${celulas}"> --%>
-<%-- 				</form:select> --%>
-<%-- 				<form:errors path="dia" style="color:#FFF" cssClass="label label-danger" element="span" /> --%>
-<!-- 			</div> -->
+			<div class="form-group">
+				<form:label path="celulas">Células</form:label> 
+				<form:select multiple="multiple" class="form-control" itemValue="id" path="celulas" itemLabel="nome" items="${celulas}">
+				</form:select>
+				<form:errors path="celulas" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}admin/celula" class="btn btn-danger btn-lg pull-right">Cancelar</a> 

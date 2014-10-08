@@ -105,6 +105,9 @@
 									<li>
 										<a href="${path}admin/relatorio"> <i class="fa fa-file-text-o"></i><span>Relatórios</span></a>
 									</li>
+									<li>
+										<a href="${path}admin/supervisor"> <i class="fa fa-trophy"></i><span>Supervisores</span></a>
+									</li>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ROLE_LIDER')">
 									<li>

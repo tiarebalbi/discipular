@@ -42,5 +42,7 @@ public interface CelulaService {
 	public List<Celula> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
 
 	long count(Predicate condicao);
+
+	void salvar(List<Celula> celulas);
 	
 }

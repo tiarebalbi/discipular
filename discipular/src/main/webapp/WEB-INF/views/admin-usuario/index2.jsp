@@ -31,6 +31,7 @@
 										<th><span>#Código</span></th>
 										<th><span>Login</span></th>
 										<th><span>Tipo Usuário</span></th>
+										<th><span>Célula</span></th>
 										<th><span>Menu</span></th>
 									</tr>
 								</thead>
@@ -40,6 +41,7 @@
 											<td>${registro.id}</td>
 											<td>${registro.login}</td>
 											<td>${registro.tipo}</td>
+											<td>${registro.celula.nome}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button"

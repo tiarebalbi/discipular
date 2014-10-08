@@ -41,7 +41,6 @@
 										<th>Dia</th>
 										<th>Horário</th>
 										<th>Números de Membros</th>
-										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>

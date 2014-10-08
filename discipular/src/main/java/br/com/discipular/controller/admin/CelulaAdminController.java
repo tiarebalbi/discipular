@@ -178,10 +178,17 @@ public class CelulaAdminController {
 			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
 			if(celula.getIdUsuario() != null) {
 				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
-			} else {
-				celula.setLider("");
 			}
 		});
+		
+//		registros.getContent().forEach(celula -> {
+//			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
+//			if(celula.getIdUsuario() != null) {
+//				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
+//			} else {
+//				celula.setLider("");
+//			}
+//		});
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);

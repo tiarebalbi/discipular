@@ -10,7 +10,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-					<li class="active"><i class="fa fa-sitemap"></i> Supervisores</li>
+					<li class="active"><i class="fa fa-trophy"></i> Supervisores</li>
 				</ol>
 			</div>
 		</div>

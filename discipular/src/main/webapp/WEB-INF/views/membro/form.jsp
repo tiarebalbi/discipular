@@ -41,7 +41,7 @@
 			</div>
 			<div class="form-group">
 				<form:label path="celular">Celular</form:label>
-				<form:input path="celular" class="form-control" />
+				<form:input id="maskedPhone" placeholder="99999-9999" path="celular" class="form-control" />
 			</div>
 			<div class="form-group">
 				<form:label path="tipo">Tipo do Membro</form:label>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="form-group">
 				<form:label path="dataNascimento">Data de Nascimento</form:label> 
-				<form:input path="dataNascimento" class="form-control" />
+				<form:input path="dataNascimento" class="form-control" id="maskedDate" placeholder="__/__/____" />
 				<form:errors path="dataNascimento" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
@@ -62,3 +62,5 @@
 		</form:form>
 	</div>
 </div>
+<script src="${path}resources/both/js/jquery.mask.min.js"></script>
+<script src="${path}resources/both/js/mask.js"></script>

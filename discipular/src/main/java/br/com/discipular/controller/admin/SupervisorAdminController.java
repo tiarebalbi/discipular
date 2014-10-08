@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.editor.CustomCelulaEditor;
+import br.com.discipular.enumerator.TipoUsuario;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Supervisor;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.SupervisorPredicate;
@@ -26,7 +29,7 @@ import br.com.discipular.validator.SupervisorValidator;
 public class SupervisorAdminController {
 	
 	private final static String VIEW_INDEX = "admin-supervisor/index";
-	private final static String REDIRECT_VIEW_INDEX = "redirect:/admin-supervisor/index";
+	private final static String REDIRECT_VIEW_INDEX = "redirect:/admin/supervisor";
 	private final static String VIEW_FORM = "admin-supervisor/form";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
 	private int qtdePaginas;
@@ -43,6 +46,7 @@ public class SupervisorAdminController {
 	
 	@InitBinder("supervisor")
 	public void a(WebDataBinder binder) {
+		binder.registerCustomEditor(Celula.class, new CustomCelulaEditor(celulaService));
 		binder.setValidator(validator);
 	}
 
@@ -84,7 +88,10 @@ public class SupervisorAdminController {
 			view.addObject("status", "error");
 		} else {
 			try {
+				supervisor.getUsuario().setTipo(TipoUsuario.SUPERVISOR);
 				this.service.salvar(supervisor);
+				supervisor.getCelulas().forEach(celula -> celula.setSupervisor(supervisor));
+				celulaService.salvar(supervisor.getCelulas());
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch (Exception e) {

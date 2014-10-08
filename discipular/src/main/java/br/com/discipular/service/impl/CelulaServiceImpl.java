@@ -102,5 +102,10 @@ public class CelulaServiceImpl implements CelulaService {
 		
 		return celula.getId() != null && celula.getId().equals(retorno.getId());
 	}
+
+	@Override
+	public void salvar(List<Celula> celulas) {
+		this.repository.save(celulas);
+	}
 	
 }

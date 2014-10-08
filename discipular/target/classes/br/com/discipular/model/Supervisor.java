@@ -25,9 +25,6 @@ public class Supervisor extends AbstractModel {
 	
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "supervisor")
-	private List<Celula> celulas;
-
 	public String getNome() {
 		return nome;
 	}
@@ -50,14 +47,6 @@ public class Supervisor extends AbstractModel {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<Celula> getCelulas() {
-		return celulas;
-	}
-
-	public void setCelulas(List<Celula> celulas) {
-		this.celulas = celulas;
 	}
 	
 }
