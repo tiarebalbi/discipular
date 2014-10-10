@@ -28,17 +28,13 @@ public class DashboardController extends AbstractController {
 	public ModelAndView trocarSenha(@PathVariable ("senha") String senha, @PathVariable ("confirm") String confirm) {
 		ModelAndView view = new ModelAndView();
 		Usuario usuario = getCurrentUser();
-		
 		try {
 			if(senha.equals(confirm)) {
 				usuario.setSenha(senha);
 				usuarioService.salvar(usuario);
 			}
-			view.addObject("mensagem", "Senha alterada com sucesso!");
-			view.addObject("status", "success");
-			view.addObject("icon", "check");
 		} catch (Exception e) {
-			
+			view.addObject("mensagem", e.getMessage());
 		}
 		
 		return view;
