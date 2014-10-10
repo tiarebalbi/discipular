@@ -1,6 +1,7 @@
 urlBase = $("body").data("url")
 
 $(".alterar-senha").on('click', function() {
+	console.log("as");
 	var senha = $("#nova-senha").val();
 	var confirm = $("#confirm-senha").val();
 	

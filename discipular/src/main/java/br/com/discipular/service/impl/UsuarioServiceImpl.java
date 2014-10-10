@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
 		}
 		
-		if(!entidade.getTipo().equals(TipoUsuario.ADMINISTRADOR) && !isCelulaOk(entidade.getCelula().getNome())) {
+		if(!entidade.getTipo().equals(TipoUsuario.ADMINISTRADOR) && !isCelulaOk(entidade.getCelula().getNome(), entidade.getId())) {
 			throw new Exception("Está célula já tem um líder cadastrado.");
 		}
 		
@@ -112,8 +112,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}
 	
-	private boolean isCelulaOk(String celula) {
-		return this.count(UsuarioPredicate.buscarPorCelula(celula)) == 0;
+	private boolean isCelulaOk(String celula, Long idUsuario) {
+		return this.count(UsuarioPredicate.buscarPorCelulaIdUsuario(celula, idUsuario)) == 0;
 	}
 
 }
