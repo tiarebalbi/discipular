@@ -56,6 +56,8 @@ public class Celula extends AbstractModel {
 	@ManyToOne
 	private Supervisor supervisor;
 	
+	private boolean apagada;
+	
 	@Transient
 	private long qtdeMembros;
 	
@@ -140,6 +142,14 @@ public class Celula extends AbstractModel {
 
 	public void setLider(String lider) {
 		this.lider = lider;
+	}
+
+	public boolean isApagada() {
+		return apagada;
+	}
+
+	public void setApagada(boolean apagada) {
+		this.apagada = apagada;
 	}
 	
 }

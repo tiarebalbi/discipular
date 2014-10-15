@@ -23,9 +23,9 @@ public interface CelulaService {
 
 	public Celula salvar(Celula usuario) throws Exception;
 	
-	public void excluir(Celula usuario);
+	public void excluir(Celula usuario) throws Exception;
 	
-	public void excluir(Long id);
+	public void excluir(Long id) throws Exception;
 	
 	public Celula buscarRegistro(Long id);
 	

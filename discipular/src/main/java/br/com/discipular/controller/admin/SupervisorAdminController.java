@@ -1,5 +1,7 @@
 package br.com.discipular.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -105,10 +107,14 @@ public class SupervisorAdminController {
 	}
 
 	@RequestMapping(value = "excluir/{id}", method = RequestMethod.GET)
-	public ModelAndView excluir(@PathVariable("id") Long id,
-			RedirectAttributes redirect) {
+	public ModelAndView excluir(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
 		try {
+			Supervisor supervisor = service.buscarRegistro(id);
+			List<Celula> celulas = celulaService.buscarTodos(CelulaPredicate.buscarPor(supervisor));
+			celulas.forEach(c -> c.setSupervisor(null));
+			celulaService.salvar(celulas);
+			
 			this.service.excluir(id);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");

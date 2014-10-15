@@ -24,6 +24,8 @@ public class QCelula extends EntityPathBase<Celula> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
+    public final BooleanPath apagada = createBoolean("apagada");
+
     public final DatePath<java.time.LocalDate> dataNascimento = createDate("dataNascimento", java.time.LocalDate.class);
 
     public final EnumPath<br.com.discipular.enumerator.DiaSemana> dia = createEnum("dia", br.com.discipular.enumerator.DiaSemana.class);

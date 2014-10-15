@@ -72,7 +72,7 @@ public class CelulaAdminController {
 		
 		marker = 0;
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
 		registros.getContent().forEach(celula -> {
 			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
@@ -153,7 +153,7 @@ public class CelulaAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -163,7 +163,7 @@ public class CelulaAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;

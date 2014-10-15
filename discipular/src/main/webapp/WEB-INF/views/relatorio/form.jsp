@@ -75,9 +75,10 @@
 					</div>
 				</div>
 				<c:forEach items="${membros}" var="membro" varStatus="i">
+					<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
 					<div class="col-lg-12">
 						<div class="col-lg-4">
-							<div class="form-group">
+							<div class="form-group"> 
 								<input disabled value="${membro.nome}" class="form-control" />
 								<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 							</div>
