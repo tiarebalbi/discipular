@@ -40,6 +40,8 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public final DatePath<java.time.LocalDate> data = createDate("data", java.time.LocalDate.class);
 
+    public final DatePath<java.time.LocalDate> dataCriacao = createDate("dataCriacao", java.time.LocalDate.class);
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 
@@ -67,8 +69,8 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public QRelatorio(Class<? extends Relatorio> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula")) : null;
-        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario"), inits.get("usuario")) : null;
+        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula"), inits.get("celula")) : null;
+        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario")) : null;
     }
 
 }

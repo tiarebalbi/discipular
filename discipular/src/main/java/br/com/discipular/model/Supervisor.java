@@ -1,10 +1,7 @@
 package br.com.discipular.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 /**
  * Modelo que representa os supervisores
@@ -24,9 +21,6 @@ public class Supervisor extends AbstractModel {
 	private int area;
 	
 	private Usuario usuario;
-	
-	@OneToMany(mappedBy = "supervisor")
-	private List<Celula> celulas;
 
 	public String getNome() {
 		return nome;
@@ -52,12 +46,4 @@ public class Supervisor extends AbstractModel {
 		this.usuario = usuario;
 	}
 
-	public List<Celula> getCelulas() {
-		return celulas;
-	}
-
-	public void setCelulas(List<Celula> celulas) {
-		this.celulas = celulas;
-	}
-	
 }

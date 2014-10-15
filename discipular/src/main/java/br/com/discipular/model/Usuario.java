@@ -1,12 +1,13 @@
 package br.com.discipular.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.TipoUsuario;
@@ -26,7 +27,7 @@ public class Usuario extends AbstractModel implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4531352122527191632L;
+	private static final long serialVersionUID = -665605079063752910L;
 
 	@NotNull
 	@Column(length = 22)
@@ -39,9 +40,9 @@ public class Usuario extends AbstractModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
 	
-	@OneToOne
-	private Celula celula;
-
+	@OneToMany(mappedBy = "usuario")
+	private List<Celula> celulas;
+	
 	public String getLogin() {
 		return login;
 	}
@@ -66,12 +67,12 @@ public class Usuario extends AbstractModel implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public Celula getCelula() {
-		return celula;
+	public List<Celula> getCelulas() {
+		return celulas;
 	}
 
-	public void setCelula(Celula celula) {
-		this.celula = celula;
+	public void setCelulas(List<Celula> celulas) {
+		this.celulas = celulas;
 	}
 
 }

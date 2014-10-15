@@ -1,5 +1,7 @@
 package br.com.discipular.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Administrador;
-import br.com.discipular.editor.CustomCelulaEditor;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
@@ -51,13 +52,12 @@ public class UsuarioAdminController {
 	
 	@Autowired
 	private CelulaService celulaService;
-
+	
 	@Autowired
 	private UsuarioValidator validator;
 	
 	@InitBinder("usuario")
 	public void a(WebDataBinder binder) {
-		binder.registerCustomEditor(Celula.class, new CustomCelulaEditor(celulaService));
 		binder.setValidator(validator);
 	}
 	
@@ -78,14 +78,8 @@ public class UsuarioAdminController {
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
-		return carregarDadosForm(view);
-	}
-	
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
-	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Usuario usuario = service.buscarRegistro(id);
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-		return carregarDadosForm(view);
+		view.addObject("tipos", TipoUsuario.values());
+		return view;
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
@@ -93,20 +87,19 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-			view = carregarDadosForm(view);
+			view.addObject("tipos", TipoUsuario.values());
 			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {
 			try {
-				usuario.getCelula().setIdUsuario(this.service.salvar(usuario).getId());
-				celulaService.salvar(usuario.getCelula());
+				this.service.salvar(usuario);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-				view = carregarDadosForm(view);
+				view.addObject("tipos", TipoUsuario.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
@@ -119,10 +112,12 @@ public class UsuarioAdminController {
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
+			Usuario usuario = this.service.buscarRegistro(id);
+			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPor(usuario));
+			celulas.forEach(c -> c.setUsuario(null));
+			this.celulaService.salvar(celulas);
+			
 			this.service.excluir(id);
-			Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorIdUsuario(id));
-			celula.setIdUsuario(null);
-			celulaService.salvar(celula);
 			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
 			redirect.addFlashAttribute("status", "success");
 			redirect.addFlashAttribute("icon", "success");
@@ -164,12 +159,6 @@ public class UsuarioAdminController {
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
-		return view;
-	}
-	
-	private ModelAndView carregarDadosForm(ModelAndView view) {
-		view.addObject("tipos", TipoUsuario.values());
-		view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 		return view;
 	}
 	

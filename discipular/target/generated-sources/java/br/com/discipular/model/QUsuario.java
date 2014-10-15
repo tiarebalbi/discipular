@@ -18,13 +18,11 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     private static final long serialVersionUID = 1486133770L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QUsuario usuario = new QUsuario("usuario");
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
-    public final QCelula celula;
+    public final ListPath<Celula, QCelula> celulas = this.<Celula, QCelula>createList("celulas", Celula.class, QCelula.class, PathInits.DIRECT2);
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -36,24 +34,15 @@ public class QUsuario extends EntityPathBase<Usuario> {
     public final EnumPath<br.com.discipular.enumerator.TipoUsuario> tipo = createEnum("tipo", br.com.discipular.enumerator.TipoUsuario.class);
 
     public QUsuario(String variable) {
-        this(Usuario.class, forVariable(variable), INITS);
+        super(Usuario.class, forVariable(variable));
     }
 
     public QUsuario(Path<? extends Usuario> path) {
-        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        super(path.getType(), path.getMetadata());
     }
 
     public QUsuario(PathMetadata<?> metadata) {
-        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
-    }
-
-    public QUsuario(PathMetadata<?> metadata, PathInits inits) {
-        this(Usuario.class, metadata, inits);
-    }
-
-    public QUsuario(Class<? extends Usuario> type, PathMetadata<?> metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.celula = inits.isInitialized("celula") ? new QCelula(forProperty("celula"), inits.get("celula")) : null;
+        super(Usuario.class, metadata);
     }
 
 }

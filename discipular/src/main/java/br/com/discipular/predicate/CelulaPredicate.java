@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort.Direction;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.QCelula;
 import br.com.discipular.model.Supervisor;
+import br.com.discipular.model.Usuario;
 
 import com.mysema.query.types.Predicate;
 
@@ -35,16 +36,6 @@ public class CelulaPredicate {
 		return condicao.nome.eq(nome);
 	}
 
-	public static Predicate buscarPorUsuarioNulo() {
-		QCelula condicao = QCelula.celula;
-		return condicao.idUsuario.isNull();
-	}
-	
-	public static Predicate buscarPorIdUsuario(Long idUsuario) {
-		QCelula condicao = QCelula.celula;
-		return condicao.idUsuario.eq(idUsuario);
-	}
-
 	public static Predicate buscarPor(Supervisor supervisor) {
 		QCelula condicao = QCelula.celula;
 		return condicao.supervisor.id.eq(supervisor.getId());
@@ -53,6 +44,16 @@ public class CelulaPredicate {
 	public static Predicate buscarPorCelulaAtiva() {
 		QCelula condicao = QCelula.celula;
 		return condicao.apagada.eq(false);
+	}
+
+	public static Predicate buscarPorUsuarioNulo() {
+		QCelula condicao = QCelula.celula;
+		return condicao.usuario.isNull();
+	}
+
+	public static Predicate buscarPor(Usuario usuario) {
+		QCelula condicao = QCelula.celula;
+		return condicao.usuario.id.eq(usuario.getId());
 	}
 
 }

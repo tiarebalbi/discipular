@@ -46,9 +46,20 @@
 				<form:errors path="horario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
+				<form:label path="area">Área</form:label> 
+				<form:input class="form-control" path="area" />
+				<form:errors path="area" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
 				<form:label path="dataNascimento">Data de Nascimento</form:label> 
 				<form:input path="dataNascimento" class="form-control" id="maskedDate" placeholder="__/__/____" />
 				<form:errors path="dataNascimento" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="usuario">Líder</form:label> 
+				<form:select path="usuario" class="form-control" items="${usuarios}" itemLabel="login" itemValue="id">
+				</form:select>
+				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoMembro;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Membro;
+import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
@@ -66,13 +68,15 @@ public class MembroController extends AbstractController {
 		
 		marker = 0;
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
+		
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
 		
 		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		
 		view.addObject("registros", registros.getContent());
-		view.addObject("celula", getCurrentUser().getCelula().getNome());
+		view.addObject("celula", celula.getNome());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
@@ -104,7 +108,8 @@ public class MembroController extends AbstractController {
 			view.addObject("tipos", TipoMembro.values());
 		} else {
 			try {
-				membro.setCelula(getCurrentUser().getCelula());
+				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
+				membro.setCelula(celula);
 				this.service.salvar(membro);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");

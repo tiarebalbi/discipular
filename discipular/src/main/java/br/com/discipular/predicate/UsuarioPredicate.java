@@ -33,14 +33,4 @@ public class UsuarioPredicate {
 		return condicao.login.eq(login);
 	}
 
-	public static Predicate buscarPorCelula(String celula) {
-		QUsuario condicao = QUsuario.usuario;
-		return condicao.celula.nome.eq(celula);
-	}
-
-	public static Predicate buscarPorCelulaIdUsuario(String celula, Long idUsuario) {
-		QUsuario condicao = QUsuario.usuario;
-		return condicao.celula.nome.eq(celula).and(condicao.id.ne(idUsuario));
-	}
-	
 }

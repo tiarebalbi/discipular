@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import br.com.discipular.annotations.Administrador;
+import br.com.discipular.editor.CustomUsuarioEditor;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.model.Celula;
+import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
@@ -63,6 +64,7 @@ public class CelulaAdminController {
 	
 	@InitBinder("celula")
 	public void a(WebDataBinder binder) {
+		binder.registerCustomEditor(Usuario.class, new CustomUsuarioEditor(usuarioService));
 		binder.setValidator(validator);
 	}
 	
@@ -76,9 +78,6 @@ public class CelulaAdminController {
 		qtdePaginas = registros.getTotalPages();
 		registros.getContent().forEach(celula -> {
 			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
-			if(celula.getIdUsuario() != null) {
-				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
-			}
 		});
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
@@ -91,6 +90,7 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
+		view.addObject("usuarios", usuarioService.buscarTodos());
 		return view;
 	}
 	
@@ -100,6 +100,7 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
+		view.addObject("usuarios", usuarioService.buscarTodos());
 		return view;
 	}
 	
@@ -113,6 +114,7 @@ public class CelulaAdminController {
 			view.addObject("icon", "times");
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
+			view.addObject("usuarios", usuarioService.buscarTodos());
 			
 		} else {
 			try {
@@ -124,6 +126,7 @@ public class CelulaAdminController {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
+				view.addObject("usuarios", usuarioService.buscarTodos());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
@@ -176,9 +179,6 @@ public class CelulaAdminController {
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltro(nome), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().forEach(celula -> {
 			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
-			if(celula.getIdUsuario() != null) {
-				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
-			}
 		});
 		
 //		registros.getContent().forEach(celula -> {

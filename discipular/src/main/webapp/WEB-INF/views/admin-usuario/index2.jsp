@@ -31,7 +31,6 @@
 										<th><span>#Código</span></th>
 										<th><span>Login</span></th>
 										<th><span>Tipo Usuário</span></th>
-										<th><span>Célula</span></th>
 										<th><span>Menu</span></th>
 									</tr>
 								</thead>
@@ -41,7 +40,6 @@
 											<td>${registro.id}</td>
 											<td>${registro.login}</td>
 											<td>${registro.tipo}</td>
-											<td>${registro.celula.nome}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button"
@@ -50,8 +48,6 @@
 														Opções <span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu" role="menu">
-														<li><a href="${path}admin/usuario/editar/${registro.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
-														<li class="divider"></li>
 														<li><a data-toggle="modal" data-target="#excluir-${registro.id}"><i class="fa fa-trash-o"></i> Excluir</a></li>
 													</ul>
 												</div>

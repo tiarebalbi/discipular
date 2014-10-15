@@ -47,7 +47,7 @@
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
-											<td>${registro.lider}</td>
+											<td>${registro.usuario.login}</td>
 											<td>${registro.supervisor.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario}</td>

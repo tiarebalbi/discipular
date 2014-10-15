@@ -39,12 +39,6 @@
 				</form:select>
 				<form:errors path="tipo" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-			<div class="form-group">
-				<form:label path="celula">Célula</form:label>
-				<form:select class="form-control" path="celula" items="${celulas}" itemLabel="nome" itemValue="nome">
-				</form:select>
-				<form:errors path="celula" style="color:#FFF" cssClass="label label-danger" element="span" />
-			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}admin/usuario" class="btn btn-danger btn-lg pull-right">Cancelar</a> 

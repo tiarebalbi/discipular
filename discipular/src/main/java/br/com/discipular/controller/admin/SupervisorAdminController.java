@@ -92,8 +92,8 @@ public class SupervisorAdminController {
 			try {
 				supervisor.getUsuario().setTipo(TipoUsuario.SUPERVISOR);
 				this.service.salvar(supervisor);
-				supervisor.getCelulas().forEach(celula -> celula.setSupervisor(supervisor));
-				celulaService.salvar(supervisor.getCelulas());
+				supervisor.getUsuario().getCelulas().forEach(celula -> celula.setSupervisor(supervisor));
+				celulaService.salvar(supervisor.getUsuario().getCelulas());
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch (Exception e) {

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
-import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
@@ -44,9 +43,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
 		}
 		
-		if(!entidade.getTipo().equals(TipoUsuario.ADMINISTRADOR) && !isCelulaOk(entidade.getCelula().getNome(), entidade.getId())) {
-			throw new Exception("Está célula já tem um líder cadastrado.");
-		}
 		
 		return this.repository.save(entidade);
 	}
@@ -112,8 +108,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}
 	
-	private boolean isCelulaOk(String celula, Long idUsuario) {
-		return this.count(UsuarioPredicate.buscarPorCelulaIdUsuario(celula, idUsuario)) == 0;
-	}
-
 }

@@ -18,11 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoChamada;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Chamada;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
+import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.ChamadaService;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
@@ -61,6 +64,9 @@ public class RelatorioController extends AbstractController {
 	private ChamadaService chamadaService;
 	
 	@Autowired
+	private CelulaService celulaService;
+	
+	@Autowired
 	private RelatorioValidator validator;
 	
 	@InitBinder("relatorio")
@@ -86,8 +92,7 @@ public class RelatorioController extends AbstractController {
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
-		view.addObject("chamadas", TipoChamada.values());
+		carregarContexto(view);
 		return view;
 	}
 	
@@ -106,15 +111,17 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-			view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
-			view.addObject("chamadas", TipoChamada.values());
+			carregarContexto(view);
 			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {
 			try {
 				chamadaService.salvar(relatorio.getChamada());
-				relatorio.setCelula(getCurrentUser().getCelula());
+				
+				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
+				
+				relatorio.setCelula(celula);
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
 				relatorio.getChamada().forEach(chamada -> chamada.setRelatorio(relatorio));
@@ -124,8 +131,7 @@ public class RelatorioController extends AbstractController {
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-				view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
-				view.addObject("chamadas", TipoChamada.values());
+				carregarContexto(view);
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 				view.addObject("icon", "times");
@@ -171,4 +177,12 @@ public class RelatorioController extends AbstractController {
 		return view;
 	}
 	
+	private ModelAndView carregarContexto(ModelAndView view) {
+		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
+		
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(celula)));
+		view.addObject("chamadas", TipoChamada.values());
+		
+		return view;
+	}
 }

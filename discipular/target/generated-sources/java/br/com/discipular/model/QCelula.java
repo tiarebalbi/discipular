@@ -26,6 +26,8 @@ public class QCelula extends EntityPathBase<Celula> {
 
     public final BooleanPath apagada = createBoolean("apagada");
 
+    public final NumberPath<Integer> area = createNumber("area", Integer.class);
+
     public final DatePath<java.time.LocalDate> dataNascimento = createDate("dataNascimento", java.time.LocalDate.class);
 
     public final EnumPath<br.com.discipular.enumerator.DiaSemana> dia = createEnum("dia", br.com.discipular.enumerator.DiaSemana.class);
@@ -37,13 +39,13 @@ public class QCelula extends EntityPathBase<Celula> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final NumberPath<Long> idUsuario = createNumber("idUsuario", Long.class);
-
     public final StringPath nome = createString("nome");
 
     public final QSupervisor supervisor;
 
     public final EnumPath<br.com.discipular.enumerator.TipoRede> tipoRede = createEnum("tipoRede", br.com.discipular.enumerator.TipoRede.class);
+
+    public final QUsuario usuario;
 
     public QCelula(String variable) {
         this(Celula.class, forVariable(variable), INITS);
@@ -64,6 +66,7 @@ public class QCelula extends EntityPathBase<Celula> {
     public QCelula(Class<? extends Celula> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.supervisor = inits.isInitialized("supervisor") ? new QSupervisor(forProperty("supervisor"), inits.get("supervisor")) : null;
+        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario")) : null;
     }
 
 }
