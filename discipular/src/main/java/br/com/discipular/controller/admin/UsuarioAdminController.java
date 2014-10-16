@@ -1,5 +1,6 @@
 package br.com.discipular.controller.admin;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,6 +160,24 @@ public class UsuarioAdminController {
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
+		return view;
+	}
+	
+	@RequestMapping(value = "/alterar-senha/{id}", method = RequestMethod.GET)
+	public ModelAndView resetarSenha(@PathVariable ("id") Long id, RedirectAttributes redirect) {
+		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
+		try {
+			Usuario usuario = service.buscarRegistro(id);
+			usuario.setSenha(usuario.getLogin() + "123");
+			service.salvar(usuario);
+			redirect.addFlashAttribute("mensagem", "Senha do líder " + usuario.getLogin() + " alterada com sucesso.");
+			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "check");
+		} catch (Exception e) {
+			redirect.addFlashAttribute("mensagem", e.getMessage());
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+		}
 		return view;
 	}
 	
