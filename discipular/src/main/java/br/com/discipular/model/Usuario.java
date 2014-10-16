@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.discipular.enumerator.TipoUsuario;
 
 /**
@@ -43,8 +45,9 @@ public class Usuario extends AbstractModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Celula> celulas;
 	
 	public String getLogin() {

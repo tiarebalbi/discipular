@@ -62,7 +62,6 @@ $('.anterior').on('click', function(e) {
 
 function addMenu(xhr) {
 	var response = JSON.parse(xhr.responseText)
-	console.log(response);
 	$('tbody').html("");
 	$('table').find('span').html("");
 	if(response.registros.length > 0) {

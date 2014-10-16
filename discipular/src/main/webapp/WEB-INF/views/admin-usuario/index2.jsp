@@ -34,7 +34,7 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>#Código ${registros.size()}</th>
+										<th>#Código</th>
 										<th>Login</th>
 										<th>Tipo Usuário</th>
 										<th>Menu</th>
