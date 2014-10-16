@@ -10,6 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import br.com.discipular.enumerator.TipoUsuario;
 
 /**
@@ -41,6 +44,7 @@ public class Usuario extends AbstractModel implements Serializable {
 	private TipoUsuario tipo;
 	
 	@OneToMany(mappedBy = "usuario")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Celula> celulas;
 	
 	public String getLogin() {

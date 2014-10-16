@@ -21,17 +21,23 @@
 			<div class="col-lg-12">
 				<div class="main-box clearfix">
 					<header class="main-box-header clearfix">
-						<h2><i class="fa fa-list"></i> Lista de registros</h2>
+						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
+						<div class="filter-block pull-right">
+							<div class="form-group pull-left">
+								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Nome...">
+								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
+							</div>
+						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive">
+						<div class="table-responsive" data-pagina="${pagina}">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>#Código</span></th>
-										<th><span>Login</span></th>
-										<th><span>Tipo Usuário</span></th>
-										<th><span>Menu</span></th>
+										<th>#Código ${registros.size()}</th>
+										<th>Login</th>
+										<th>Tipo Usuário</th>
+										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -80,8 +86,22 @@
 							</table>
 						</div>
 					</div>
+					<div class="text-center" data-marker="${marker}">
+						<ul class="pagination pagination-sm">
+							<li class="disabled"><a class="anterior"><i class="fa fa-chevron-left"></i></a></li>
+							<c:choose>
+								<c:when test="${pagina > 1}">
+									<li><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="disabled"><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/usuario-index.js"></script>

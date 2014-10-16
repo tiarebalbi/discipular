@@ -25,7 +25,7 @@ public class UsuarioPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String login) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.login.startsWith(login).or(condicao.login.endsWith(login));
+		return condicao.login.startsWithIgnoreCase(login).or(condicao.login.endsWithIgnoreCase(login));
 	}
 
 	public static Predicate buscarPorLogin(String login) {
