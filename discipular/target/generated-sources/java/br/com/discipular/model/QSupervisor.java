@@ -29,8 +29,6 @@ public class QSupervisor extends EntityPathBase<Supervisor> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final StringPath nome = createString("nome");
-
     public final QUsuario usuario;
 
     public QSupervisor(String variable) {

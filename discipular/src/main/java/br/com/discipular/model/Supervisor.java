@@ -1,7 +1,8 @@
 package br.com.discipular.model;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 /**
  * Modelo que representa os supervisores
@@ -15,20 +16,10 @@ import javax.persistence.Entity;
 @Entity
 public class Supervisor extends AbstractModel {
 
-	@Column(length = 50)
-	private String nome;
-	
 	private int area;
 	
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Usuario usuario;
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 
 	public int getArea() {
 		return area;

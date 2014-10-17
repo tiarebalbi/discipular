@@ -30,11 +30,12 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="usuario">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
 										<th>#Código</th>
+										<th>Nome</th>
 										<th>Login</th>
 										<th>Tipo Usuário</th>
 										<th>Menu</th>
@@ -44,6 +45,7 @@
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.id}</td>
+											<td>${registro.nome}</td>
 											<td>${registro.login}</td>
 											<td>${registro.tipo}</td>
 											<td>
@@ -71,7 +73,7 @@
 																	<i class="fa fa-lock fa-5x"></i>
 																</div>
 																<div class="text-center">
-																	<p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) líder <strong>${registro.login}</strong>?</p>
+																	<p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) líder <strong>${registro.nome}</strong>?</p>
 																</div>
 															</div>
 															<div class="modal-footer">
@@ -91,7 +93,7 @@
 																<h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4>
 															</div>
 															<div class="modal-body">
-																<p>Você realmente deseja excluir o usuário ${registro.login}?</p>
+																<p>Você realmente deseja excluir o usuário ${registro.nome}?</p>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -125,4 +127,5 @@
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/busca-paginacao.js"></script>
 <script src="${path}resources/admin/js/usuario-index.js"></script>

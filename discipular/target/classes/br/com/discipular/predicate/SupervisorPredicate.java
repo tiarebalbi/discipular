@@ -11,12 +11,12 @@ import com.mysema.query.types.Predicate;
 public class SupervisorPredicate {
 
 	public static Pageable buscarPaginacao(int pagina,int quantidade) {
-		return new PageRequest(pagina, quantidade, Direction.ASC, "nome");
+		return new PageRequest(pagina, quantidade, Direction.ASC, "usuario.nome");
 	}
 
 	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QSupervisor condicao = QSupervisor.supervisor;
-		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome));
+		return condicao.usuario.nome.startsWithIgnoreCase(nome).or(condicao.usuario.nome.endsWithIgnoreCase(nome));
 	}
 
 }

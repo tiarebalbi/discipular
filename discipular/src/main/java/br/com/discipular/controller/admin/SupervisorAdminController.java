@@ -20,10 +20,12 @@ import br.com.discipular.editor.CustomCelulaEditor;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Supervisor;
+import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.SupervisorService;
+import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.SupervisorValidator;
 
 @Controller
@@ -33,7 +35,7 @@ public class SupervisorAdminController {
 	private final static String VIEW_INDEX = "admin-supervisor/index";
 	private final static String REDIRECT_VIEW_INDEX = "redirect:/admin/supervisor";
 	private final static String VIEW_FORM = "admin-supervisor/form";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -42,6 +44,9 @@ public class SupervisorAdminController {
 	
 	@Autowired
 	private CelulaService celulaService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	@Autowired
 	private SupervisorValidator validator;
@@ -76,6 +81,7 @@ public class SupervisorAdminController {
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		Supervisor supervisor = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
+		supervisor.getUsuario().setCelulas(celulaService.buscarTodos(CelulaPredicate.buscarPor(supervisor.getUsuario())));
 		view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 		return view;
 	}
@@ -91,9 +97,16 @@ public class SupervisorAdminController {
 		} else {
 			try {
 				supervisor.getUsuario().setTipo(TipoUsuario.SUPERVISOR);
+				usuarioService.salvar(supervisor.getUsuario());
 				this.service.salvar(supervisor);
-				supervisor.getUsuario().getCelulas().forEach(celula -> celula.setSupervisor(supervisor));
-				celulaService.salvar(supervisor.getUsuario().getCelulas());
+				
+				if(supervisor.getUsuario().getCelulas() != null && supervisor.getUsuario().getCelulas().size() > 0) {
+					supervisor.getUsuario().getCelulas().forEach(c -> c.setSupervisor(supervisor));
+					celulaService.salvar(supervisor.getUsuario().getCelulas());
+				}
+				
+				service.salvar(supervisor);
+				
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch (Exception e) {
@@ -157,6 +170,24 @@ public class SupervisorAdminController {
 		view.addObject("registros", users.getContent());
 		view.addObject("pagina", qtdePaginas);
 
+		return view;
+	}
+	
+	@RequestMapping(value = "/alterar-senha/{id}", method = RequestMethod.GET)
+	public ModelAndView resetarSenha(@PathVariable ("id") Long id, RedirectAttributes redirect) {
+		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
+		try {
+			Usuario usuario = usuarioService.buscarRegistro(id);
+			usuario.setSenha(usuario.getLogin() + "123");
+			usuarioService.salvar(usuario);
+			redirect.addFlashAttribute("mensagem", "Senha do supervisor " + usuario.getNome() + " foi alterada com sucesso.");
+			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "check");
+		} catch (Exception e) {
+			redirect.addFlashAttribute("mensagem", e.getMessage());
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+		}
 		return view;
 	}
 

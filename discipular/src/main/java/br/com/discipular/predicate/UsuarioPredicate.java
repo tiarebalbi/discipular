@@ -33,4 +33,9 @@ public class UsuarioPredicate {
 		return condicao.login.eq(login);
 	}
 
+	public static Predicate buscarPorNome(String nome) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.nome.eq(nome);
+	}
+
 }

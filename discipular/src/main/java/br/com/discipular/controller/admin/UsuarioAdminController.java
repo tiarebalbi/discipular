@@ -169,7 +169,7 @@ public class UsuarioAdminController {
 			Usuario usuario = service.buscarRegistro(id);
 			usuario.setSenha(usuario.getLogin() + "123");
 			service.salvar(usuario);
-			redirect.addFlashAttribute("mensagem", "Senha do líder " + usuario.getLogin() + " alterada com sucesso.");
+			redirect.addFlashAttribute("mensagem", "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
 			redirect.addFlashAttribute("status", "success");
 			redirect.addFlashAttribute("icon", "check");
 		} catch (Exception e) {

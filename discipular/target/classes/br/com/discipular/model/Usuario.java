@@ -13,9 +13,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import br.com.discipular.enumerator.TipoUsuario;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Modelo que representa os usuários do sistema
@@ -34,6 +34,9 @@ public class Usuario extends AbstractModel implements Serializable {
 	 */
 	private static final long serialVersionUID = -665605079063752910L;
 
+	@Column(length = 50)
+	private String nome;
+	
 	@NotNull
 	@Column(length = 22)
 	private String login;
@@ -50,6 +53,14 @@ public class Usuario extends AbstractModel implements Serializable {
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Celula> celulas;
 	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public String getLogin() {
 		return login;
 	}

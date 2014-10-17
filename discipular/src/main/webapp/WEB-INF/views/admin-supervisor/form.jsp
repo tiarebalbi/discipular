@@ -24,9 +24,9 @@
 		<form:form role="form" action="${path}admin/supervisor/salvar" method="post" modelAttribute="supervisor">
 			<form:hidden path="id" value="${supervisor.id}"/>
 			<div class="form-group">
-				<form:label path="nome">Nome</form:label> 
-				<form:input path="nome" class="form-control" />
-				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="usuario.nome">Nome</form:label> 
+				<form:input path="usuario.nome" class="form-control" />
+				<form:errors path="usuario.nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="usuario.login">Login</form:label> 
@@ -52,7 +52,7 @@
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
-				<a type="button" href="${path}admin/celula" class="btn btn-danger btn-lg pull-right">Cancelar</a> 
+				<a type="button" href="${path}admin/supervisor" class="btn btn-danger btn-lg pull-right">Cancelar</a> 
 			</div>
 		</form:form>
 	</div>

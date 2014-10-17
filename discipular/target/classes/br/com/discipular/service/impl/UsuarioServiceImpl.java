@@ -43,6 +43,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
 		}
 		
+		if(!isNomeValido(entidade)) {
+			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+		}
 		
 		return this.repository.save(entidade);
 	}
@@ -104,6 +107,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 		} 
 		
 		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
+		
+		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
+	}
+	
+	private boolean isNomeValido(Usuario usuario) {
+		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorNome(usuario.getNome()));
+	
+		if(qtdeUsuarios == 0) {
+			return true;
+		} 
+		
+		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorNome(usuario.getNome()));
 		
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}

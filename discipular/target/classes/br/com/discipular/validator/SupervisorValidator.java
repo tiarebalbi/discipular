@@ -26,9 +26,10 @@ public class SupervisorValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nome", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "area", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.nome", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.senha", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.login", "campo.vazio", "Este campo é obrigatório");
 	}
 	
 }
