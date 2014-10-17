@@ -35,16 +35,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario salvar(Usuario entidade) throws Exception {
 		
-		if(entidade.getSenha() != null) {
+		if(entidade.getSenha() != null && entidade.getId() == null) {
 			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
 		}
 		
 		if(!isLoginValido(entidade)) {
-			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+			throw new Exception("Já existe um usuário cadastrado com este login, favor utilizar outro login.");
 		}
 		
 		if(!isNomeValido(entidade)) {
-			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+			throw new Exception("Já existe um usuário cadastrado com este nome, favor utilizar outro login.");
 		}
 		
 		return this.repository.save(entidade);

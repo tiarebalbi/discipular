@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Administrador;
+import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
@@ -67,7 +68,7 @@ public class UsuarioAdminController {
 		
 		marker = 0;
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarLideres(), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
@@ -134,7 +135,7 @@ public class UsuarioAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarLideres(), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -144,7 +145,7 @@ public class UsuarioAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarLideres(), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -167,7 +168,7 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			Usuario usuario = service.buscarRegistro(id);
-			usuario.setSenha(usuario.getLogin() + "123");
+			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
 			redirect.addFlashAttribute("mensagem", "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
 			redirect.addFlashAttribute("status", "success");

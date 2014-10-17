@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.editor.CustomCelulaEditor;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
@@ -178,7 +179,7 @@ public class SupervisorAdminController {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
 		try {
 			Usuario usuario = usuarioService.buscarRegistro(id);
-			usuario.setSenha(usuario.getLogin() + "123");
+			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			usuarioService.salvar(usuario);
 			redirect.addFlashAttribute("mensagem", "Senha do supervisor " + usuario.getNome() + " foi alterada com sucesso.");
 			redirect.addFlashAttribute("status", "success");

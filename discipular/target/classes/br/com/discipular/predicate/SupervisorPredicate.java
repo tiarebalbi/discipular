@@ -16,7 +16,7 @@ public class SupervisorPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QSupervisor condicao = QSupervisor.supervisor;
-		return condicao.usuario.nome.startsWithIgnoreCase(nome).or(condicao.usuario.nome.endsWithIgnoreCase(nome));
+		return condicao.usuario.nome.startsWithIgnoreCase(nome);
 	}
 
 }

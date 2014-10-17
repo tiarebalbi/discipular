@@ -3,6 +3,7 @@ package br.com.discipular.predicate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 
+import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.QUsuario;
 import br.com.discipular.model.Usuario;
 
@@ -25,7 +26,7 @@ public class UsuarioPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String login) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.login.startsWithIgnoreCase(login).or(condicao.login.endsWithIgnoreCase(login));
+		return condicao.login.startsWithIgnoreCase(login).and(condicao.tipo.eq(TipoUsuario.LIDER));
 	}
 
 	public static Predicate buscarPorLogin(String login) {
@@ -36,6 +37,11 @@ public class UsuarioPredicate {
 	public static Predicate buscarPorNome(String nome) {
 		QUsuario condicao = QUsuario.usuario;
 		return condicao.nome.eq(nome);
+	}
+
+	public static Predicate buscarLideres() {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(TipoUsuario.LIDER);
 	}
 
 }

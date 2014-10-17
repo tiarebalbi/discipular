@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 
 <div class="row">
@@ -23,8 +24,9 @@
 	<div class="main-box-body clearfix">
 		<form:form role="form" action="${path}admin/supervisor/salvar" method="post" modelAttribute="supervisor">
 			<form:hidden path="id" value="${supervisor.id}"/>
+			<form:hidden path="usuario.id" value="${supervisor.usuario.id}" />
 			<div class="form-group">
-				<form:label path="usuario.nome">Nome</form:label> 
+				<form:label path="usuario.nome">Nome</form:label>
 				<form:input path="usuario.nome" class="form-control" />
 				<form:errors path="usuario.nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
@@ -33,12 +35,18 @@
 				<form:input path="usuario.login" class="form-control" />
 				<form:errors path="usuario.login" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-			<div class="form-group">
-				<form:label path="usuario.senha">Senha</form:label> 
-				<form:input path="usuario.senha" type="password" class="form-control" />
-				<form:errors path="usuario.senha" style="color:#FFF" cssClass="label label-danger" element="span" />
-			</div>
-			
+			<c:choose>
+				<c:when test="${supervisor.id == nul}">
+					<div class="form-group">
+						<form:label path="usuario.senha">Senha</form:label> 
+						<form:input path="usuario.senha" type="password" class="form-control" />
+						<form:errors path="usuario.senha" style="color:#FFF" cssClass="label label-danger" element="span" />
+					</div>	
+				</c:when>
+				<c:otherwise>
+					<form:hidden path="usuario.senha" value="${usuario.senha}"/>
+				</c:otherwise>
+			</c:choose>
 			<div class="form-group">
 				<form:label path="area">Área</form:label> 
 				<form:input path="area" class="form-control" />
