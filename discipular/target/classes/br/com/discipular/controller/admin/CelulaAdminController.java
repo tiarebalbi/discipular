@@ -18,12 +18,15 @@ import br.com.discipular.annotations.Administrador;
 import br.com.discipular.editor.CustomUsuarioEditor;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
+import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
+import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
+import br.com.discipular.service.SupervisorService;
 import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.CelulaValidator;
 
@@ -46,7 +49,7 @@ public class CelulaAdminController {
 	private final static String VIEW_INDEX = "admin-celula/index";
 	private final static String VIEW_FORM = "admin-celula/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/celula";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -58,6 +61,9 @@ public class CelulaAdminController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private SupervisorService supervisorService;
 
 	@Autowired
 	private CelulaValidator validator;
@@ -90,7 +96,8 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos());
+		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
+		view.addObject("supervisores", supervisorService.buscarTodos());
 		return view;
 	}
 	
@@ -100,7 +107,8 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos());
+		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
+		view.addObject("supervisores", supervisorService.buscarTodos());
 		return view;
 	}
 	
@@ -114,7 +122,8 @@ public class CelulaAdminController {
 			view.addObject("icon", "times");
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
-			view.addObject("usuarios", usuarioService.buscarTodos());
+			view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
+			view.addObject("supervisores", supervisorService.buscarTodos());
 			
 		} else {
 			try {
@@ -126,7 +135,8 @@ public class CelulaAdminController {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
-				view.addObject("usuarios", usuarioService.buscarTodos());
+				view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
+				view.addObject("supervisores", supervisorService.buscarTodos());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
@@ -180,15 +190,6 @@ public class CelulaAdminController {
 		registros.getContent().forEach(celula -> {
 			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
 		});
-		
-//		registros.getContent().forEach(celula -> {
-//			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
-//			if(celula.getIdUsuario() != null) {
-//				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
-//			} else {
-//				celula.setLider("");
-//			}
-//		});
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);

@@ -52,12 +52,12 @@
 				<form:input path="area" class="form-control" />
 				<form:errors path="area" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-			<div class="form-group">
-				<form:label path="usuario.celulas">Células</form:label> 
-				<form:select multiple="multiple" class="form-control" itemValue="id" path="usuario.celulas" itemLabel="nome" items="${celulas}">
-				</form:select>
-				<form:errors path="usuario.celulas" style="color:#FFF" cssClass="label label-danger" element="span" />
-			</div>
+<!-- 			<div class="form-group"> -->
+<%-- 				<form:label path="usuario.celulas">Células</form:label>  --%>
+<%-- 				<form:select multiple="multiple" class="form-control" itemValue="id" path="usuario.celulas" itemLabel="nome" items="${celulas}"> --%>
+<%-- 				</form:select> --%>
+<%-- 				<form:errors path="usuario.celulas" style="color:#FFF" cssClass="label label-danger" element="span" /> --%>
+<!-- 			</div> -->
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}admin/supervisor" class="btn btn-danger btn-lg pull-right">Cancelar</a> 

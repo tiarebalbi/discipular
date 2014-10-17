@@ -39,9 +39,9 @@ public class UsuarioPredicate {
 		return condicao.nome.eq(nome);
 	}
 
-	public static Predicate buscarLideres() {
+	public static Predicate buscarTipo(TipoUsuario tipo) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.tipo.eq(TipoUsuario.LIDER);
+		return condicao.tipo.eq(tipo);
 	}
 
 }

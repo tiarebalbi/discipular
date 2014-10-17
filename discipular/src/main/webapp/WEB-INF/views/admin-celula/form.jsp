@@ -61,6 +61,12 @@
 				</form:select>
 				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
+			<div class="form-group">
+				<form:label path="supervisor">Supervisor</form:label> 
+				<form:select path="supervisor" class="form-control" items="${supervisores}" itemLabel="usuario.nome" itemValue="id">
+				</form:select>
+				<form:errors path="supervisor" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}admin/celula" class="btn btn-danger btn-lg pull-right">Cancelar</a> 
