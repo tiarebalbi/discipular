@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.model.QSupervisor;
+import br.com.discipular.model.Supervisor;
 
 import com.mysema.query.types.Predicate;
 
@@ -17,6 +18,16 @@ public class SupervisorPredicate {
 	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QSupervisor condicao = QSupervisor.supervisor;
 		return condicao.usuario.nome.startsWithIgnoreCase(nome);
+	}
+
+	public static Predicate buscarPorNome(String nome) {
+		QSupervisor condicao = QSupervisor.supervisor;
+		return condicao.usuario.nome.eq(nome);
+	}
+
+	public static Predicate buscarPorSupervisoresDiferente(Supervisor supervisor) {
+		QSupervisor condicao = QSupervisor.supervisor;
+		return condicao.id.ne(supervisor.getId());
 	}
 
 }

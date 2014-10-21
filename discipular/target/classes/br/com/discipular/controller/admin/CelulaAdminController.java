@@ -1,5 +1,8 @@
 package br.com.discipular.controller.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,14 +18,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Administrador;
+import br.com.discipular.editor.CustomSupervisorEditor;
 import br.com.discipular.editor.CustomUsuarioEditor;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
+import br.com.discipular.model.Supervisor;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
+import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
@@ -70,6 +76,7 @@ public class CelulaAdminController {
 	
 	@InitBinder("celula")
 	public void a(WebDataBinder binder) {
+		binder.registerCustomEditor(Supervisor.class, new CustomSupervisorEditor(supervisorService));
 		binder.registerCustomEditor(Usuario.class, new CustomUsuarioEditor(usuarioService));
 		binder.setValidator(validator);
 	}
@@ -105,10 +112,28 @@ public class CelulaAdminController {
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Celula celula = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
+		
+		List<Supervisor> supervisores = new ArrayList<>();
+		List<Usuario> lideres = new ArrayList<>();
+		
+		if(celula.getUsuario() != null) {
+			lideres.add(celula.getUsuario());
+			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarTipoEDiferentes(celula.getUsuario())));
+		} else {
+			lideres.addAll(usuarioService.buscarTodos());
+		}
+		
+		if(celula.getSupervisor() != null) {
+			supervisores.add(celula.getSupervisor());
+			supervisores.addAll(supervisorService.buscarTodos(SupervisorPredicate.buscarPorSupervisoresDiferente(celula.getSupervisor())));
+		} else {
+			supervisores.addAll(supervisorService.buscarTodos());
+		}
+
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
-		view.addObject("supervisores", supervisorService.buscarTodos());
+		view.addObject("usuarios", lideres);
+		view.addObject("supervisores", supervisores);
 		return view;
 	}
 	

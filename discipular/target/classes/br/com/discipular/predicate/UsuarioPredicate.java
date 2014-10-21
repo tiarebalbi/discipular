@@ -1,6 +1,7 @@
 package br.com.discipular.predicate;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.enumerator.TipoUsuario;
@@ -42,6 +43,11 @@ public class UsuarioPredicate {
 	public static Predicate buscarTipo(TipoUsuario tipo) {
 		QUsuario condicao = QUsuario.usuario;
 		return condicao.tipo.eq(tipo);
+	}
+
+	public static Predicate buscarTipoEDiferentes(Usuario lider) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(lider.getTipo()).and(condicao.id.ne(lider.getId()));
 	}
 
 }

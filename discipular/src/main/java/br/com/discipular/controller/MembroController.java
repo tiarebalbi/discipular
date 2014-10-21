@@ -1,5 +1,7 @@
 package br.com.discipular.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,7 @@ public class MembroController extends AbstractController {
 	private final static String VIEW_INDEX = "membro/index";
 	private final static String VIEW_FORM = "membro/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
+	private final static String REDIRECT_INDEX = "redirect:/";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 14;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -63,21 +66,28 @@ public class MembroController extends AbstractController {
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		marker = 0;
 		
-		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
-		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = registros.getTotalPages();
-		
-		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
-		
-		view.addObject("registros", registros.getContent());
-		view.addObject("celula", celula.getNome());
-		view.addObject("pagina", qtdePaginas);
+		try {
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+			
+			Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+			qtdePaginas = registros.getTotalPages();
+			
+			registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+			
+			view.addObject("registros", registros.getContent());
+			view.addObject("celula", celula.get(0).getNome());
+			view.addObject("pagina", qtdePaginas);
+		} catch (Exception e) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+		}
 		
 		return view;
 	}

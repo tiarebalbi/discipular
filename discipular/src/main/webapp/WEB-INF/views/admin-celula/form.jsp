@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 
 <div class="row">
@@ -57,13 +58,21 @@
 			</div>
 			<div class="form-group">
 				<form:label path="usuario">Líder</form:label> 
-				<form:select path="usuario" class="form-control" items="${usuarios}" itemLabel="login" itemValue="id">
+				<form:select  path="usuario" class="form-control" items="${usuarios}" itemLabel="nome" itemValue="id" value="Banaana">
+					<c:if test="${celula.usuario eq null}">
+						<form:option value=""></form:option>
+					</c:if>
+					<form:options items="${usuarios}" itemLabel="usuario.nome" itemValue="id"></form:options>
 				</form:select>
 				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="supervisor">Supervisor</form:label> 
-				<form:select path="supervisor" class="form-control" items="${supervisores}" itemLabel="usuario.nome" itemValue="id">
+				<form:select path="supervisor" class="form-control" >
+					<c:if test="${celula.supervisor eq null}">
+						<form:option value=""></form:option>
+					</c:if>
+					<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
 				</form:select>
 				<form:errors path="supervisor" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>

@@ -48,8 +48,8 @@
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
-											<td>${registro.usuario.login}</td>
-											<td>${registro.supervisor.nome}</td>
+											<td>${registro.usuario.nome}</td>
+											<td>${registro.supervisor.usuario.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario}</td>
 											<td>${registro.qtdeMembros}</td>
