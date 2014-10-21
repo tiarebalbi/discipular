@@ -26,7 +26,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="relatorio">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
@@ -54,4 +54,5 @@
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/busca-paginacao.js"></script>
 <script src="${path}resources/admin/js/relatorio-index.js"></script>

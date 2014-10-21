@@ -178,9 +178,9 @@ public class RelatorioController extends AbstractController {
 	}
 	
 	private ModelAndView carregarContexto(ModelAndView view) {
-		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
+		List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
 		
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(celula)));
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0))));
 		view.addObject("chamadas", TipoChamada.values());
 		
 		return view;

@@ -15,6 +15,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Modelo que representa os relatórios das células
  * 
@@ -70,6 +72,7 @@ public class Relatorio extends AbstractModel {
 	
 	@OneToMany(mappedBy = "relatorio", cascade = CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonIgnore
 	private List<Chamada> chamada;
 	
 	@ManyToOne

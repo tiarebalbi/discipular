@@ -44,6 +44,7 @@ public class CelulaServiceImpl implements CelulaService {
 	@Override
 	public void excluir(Celula celula) throws Exception {
 		celula.setSupervisor(null);
+		celula.setUsuario(null);
 		celula.setApagada(true);
 		this.salvar(celula);
 	}
@@ -52,6 +53,7 @@ public class CelulaServiceImpl implements CelulaService {
 	public void excluir(Long id) throws Exception {
 		Celula celula = this.buscarRegistro(id);
 		celula.setSupervisor(null);
+		celula.setUsuario(null);
 		celula.setApagada(true);
 		this.salvar(celula);
 	}

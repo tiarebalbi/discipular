@@ -118,8 +118,8 @@ public class MembroController extends AbstractController {
 			view.addObject("tipos", TipoMembro.values());
 		} else {
 			try {
-				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
-				membro.setCelula(celula);
+				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+				membro.setCelula(celula.get(0));
 				this.service.salvar(membro);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
