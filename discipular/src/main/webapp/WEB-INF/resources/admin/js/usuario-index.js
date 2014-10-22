@@ -12,10 +12,13 @@ function addMenu(xhr) {
 					value.nome +
 					"</td>" +
 					"<td>" +
-					value.login +
+					value.tipo +
 					"</td>" +
 					"<td>" +
-					value.tipo +
+					value.celula +
+					"</td>" +
+					"<td>" +
+					value.login +
 					"</td>" +
 					"<td>" +
 					'<div class="btn-group"> <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"> Opções <span class="caret"></span> </button>' +

@@ -1,7 +1,6 @@
 package br.com.discipular.predicate;
 
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.enumerator.TipoUsuario;
@@ -27,7 +26,7 @@ public class UsuarioPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String login) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.login.startsWithIgnoreCase(login).and(condicao.tipo.eq(TipoUsuario.LIDER));
+		return condicao.nome.startsWithIgnoreCase(login).and(condicao.tipo.eq(TipoUsuario.LIDER));
 	}
 
 	public static Predicate buscarPorLogin(String login) {

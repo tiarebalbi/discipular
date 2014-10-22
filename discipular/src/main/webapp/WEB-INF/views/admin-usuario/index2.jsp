@@ -24,7 +24,7 @@
 						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
 						<div class="filter-block pull-right">
 							<div class="form-group pull-left">
-								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Login...">
+								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Nome...">
 								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
 						</div>
@@ -36,8 +36,9 @@
 									<tr>
 										<th>#Código</th>
 										<th>Nome</th>
-										<th>Login</th>
 										<th>Tipo Usuário</th>
+										<th>Célula</th>
+										<th>Login</th>
 										<th>Menu</th>
 									</tr>
 								</thead>
@@ -46,8 +47,10 @@
 										<tr>
 											<td>${registro.id}</td>
 											<td>${registro.nome}</td>
-											<td>${registro.login}</td>
 											<td>${registro.tipo}</td>
+											<td>${registro.celula}</td>
+											<td>${registro.login}</td>
+											
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">

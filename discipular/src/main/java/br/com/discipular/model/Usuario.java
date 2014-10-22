@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.LazyCollection;
@@ -53,6 +54,9 @@ public class Usuario extends AbstractModel implements Serializable {
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Celula> celulas;
 	
+	@Transient
+	private String celula;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -91,6 +95,20 @@ public class Usuario extends AbstractModel implements Serializable {
 
 	public void setCelulas(List<Celula> celulas) {
 		this.celulas = celulas;
+	}
+
+	/**
+	 * @return the celula
+	 */
+	public String getCelula() {
+		return celula;
+	}
+
+	/**
+	 * @param celula the celula to set
+	 */
+	public void setCelula(String celula) {
+		this.celula = celula;
 	}
 
 }

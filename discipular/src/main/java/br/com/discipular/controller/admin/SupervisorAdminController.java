@@ -65,7 +65,9 @@ public class SupervisorAdminController {
 		marker = 0;
 
 		Page<Supervisor> registros = service.buscarTodos(SupervisorPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		
 		view.addObject("registros", registros.getContent());
+		
 		view.addObject("pagina", registros.getTotalPages());
 
 		return view;

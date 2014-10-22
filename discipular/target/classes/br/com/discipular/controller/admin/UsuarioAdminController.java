@@ -69,6 +69,9 @@ public class UsuarioAdminController {
 		marker = 0;
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		
 		qtdePaginas = registros.getTotalPages();
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
@@ -138,6 +141,7 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -148,6 +152,7 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -158,7 +163,7 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
