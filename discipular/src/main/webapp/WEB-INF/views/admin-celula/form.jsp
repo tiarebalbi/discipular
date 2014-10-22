@@ -59,20 +59,33 @@
 			<div class="form-group">
 				<form:label path="usuario">Líder</form:label> 
 				<form:select  path="usuario" class="form-control">
-					<c:if test="${celula.usuario eq null}">
-						<form:option value=""></form:option>
-					</c:if>
-					<form:options items="${usuarios}" itemLabel="nome" itemValue="id"></form:options>
+					<c:choose>
+						<c:when test="${celula.usuario eq null}">
+							<form:option value=""></form:option>
+							<form:options items="${usuarios}" itemLabel="nome" itemValue="id"></form:options>
+						</c:when>
+						<c:otherwise>
+							<form:options items="${usuarios}" itemLabel="nome" itemValue="id"></form:options>
+							<form:option value="">---------- Sem Líder ----------</form:option>
+						</c:otherwise>
+					</c:choose>
 				</form:select>
 				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="supervisor">Supervisor</form:label> 
 				<form:select path="supervisor" class="form-control" >
-					<c:if test="${celula.supervisor eq null}">
-						<form:option value=""></form:option>
-					</c:if>
-					<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+					<c:choose>
+						<c:when test="${celula.supervisor eq null}">
+							<form:option value=""></form:option>
+							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+						</c:when>
+						<c:otherwise>
+							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+							<form:option value="">---------- Sem Supervisor ----------</form:option>
+						</c:otherwise>
+					</c:choose>
+					
 				</form:select>
 				<form:errors path="supervisor" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
