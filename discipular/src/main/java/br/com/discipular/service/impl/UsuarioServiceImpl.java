@@ -40,11 +40,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		if(!isLoginValido(entidade)) {
-			throw new Exception("Já existe um usuário cadastrado com este login, favor utilizar outro login.");
+			throw new Exception("Já existe um líder/supervisor cadastrado com este login, favor utilizar outro login.");
 		}
 		
 		if(!isNomeValido(entidade)) {
-			throw new Exception("Já existe um usuário cadastrado com este nome, favor utilizar outro login.");
+			throw new Exception("Já existe um líder/supervisor cadastrado com este nome, favor utilizar outro nome.");
 		}
 		
 		return this.repository.save(entidade);

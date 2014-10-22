@@ -30,4 +30,9 @@ public class SupervisorPredicate {
 		return condicao.id.ne(supervisor.getId());
 	}
 
+	public static Predicate buscarPorArea(int area) {
+		QSupervisor condicao = QSupervisor.supervisor;
+		return condicao.area.eq(area);
+	}
+
 }

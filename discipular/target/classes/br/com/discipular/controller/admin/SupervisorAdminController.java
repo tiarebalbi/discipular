@@ -96,8 +96,9 @@ public class SupervisorAdminController {
 			supervisor.getUsuario().setSenha("");
 			view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
 			view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
-			view.addObject("mensagem", "Reveja os campos");
-			view.addObject("status", "error");
+			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 		} else {
 			try {
 				supervisor.getUsuario().setTipo(TipoUsuario.SUPERVISOR);
@@ -118,7 +119,8 @@ public class SupervisorAdminController {
 				view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
 				view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "error");
+				view.addObject("status", "danger");
+				view.addObject("icon", "times");
 			}
 		}
 		return view;
