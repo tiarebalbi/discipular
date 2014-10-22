@@ -91,6 +91,7 @@ public class SupervisorAdminController {
 	public ModelAndView salvar(@ModelAttribute("supervisor") @Validated Supervisor supervisor, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
 		if (errors.hasErrors()) {
+			supervisor.getUsuario().setSenha("");
 			view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
 			view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 			view.addObject("mensagem", "Reveja os campos");
@@ -111,6 +112,7 @@ public class SupervisorAdminController {
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
 			} catch (Exception e) {
+				supervisor.getUsuario().setSenha("");
 				view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
 				view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 				view.addObject("mensagem", e.getMessage());

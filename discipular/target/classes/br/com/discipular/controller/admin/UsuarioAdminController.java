@@ -87,6 +87,7 @@ public class UsuarioAdminController {
 	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Usuario usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
+			usuario.setSenha("");
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 			view.addObject("tipos", TipoUsuario.values());
 			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
@@ -99,6 +100,7 @@ public class UsuarioAdminController {
 				redirect.addFlashAttribute("status", "success");
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
+				usuario.setSenha("");
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 				view.addObject("tipos", TipoUsuario.values());
 				view.addObject("mensagem", e.getMessage());

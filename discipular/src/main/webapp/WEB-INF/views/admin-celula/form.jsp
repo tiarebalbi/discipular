@@ -58,11 +58,11 @@
 			</div>
 			<div class="form-group">
 				<form:label path="usuario">Líder</form:label> 
-				<form:select  path="usuario" class="form-control" items="${usuarios}" itemLabel="nome" itemValue="id" value="Banaana">
+				<form:select  path="usuario" class="form-control">
 					<c:if test="${celula.usuario eq null}">
 						<form:option value=""></form:option>
 					</c:if>
-					<form:options items="${usuarios}" itemLabel="usuario.nome" itemValue="id"></form:options>
+					<form:options items="${usuarios}" itemLabel="nome" itemValue="id"></form:options>
 				</form:select>
 				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
