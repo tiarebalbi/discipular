@@ -29,7 +29,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="membro">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
@@ -61,4 +61,5 @@
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/busca-paginacao.js"></script>
 <script src="${path}resources/admin/js/membro-index.js"></script>

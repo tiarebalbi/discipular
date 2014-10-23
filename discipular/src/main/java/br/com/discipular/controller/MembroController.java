@@ -1,5 +1,7 @@
 package br.com.discipular.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoMembro;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Membro;
+import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
@@ -42,6 +46,7 @@ public class MembroController extends AbstractController {
 	private final static String VIEW_INDEX = "membro/index";
 	private final static String VIEW_FORM = "membro/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
+	private final static String REDIRECT_INDEX = "redirect:/";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 14;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -61,27 +66,46 @@ public class MembroController extends AbstractController {
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		marker = 0;
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = registros.getTotalPages();
-		
-		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
-		
-		view.addObject("registros", registros.getContent());
-		view.addObject("celula", getCurrentUser().getCelula().getNome());
-		view.addObject("pagina", qtdePaginas);
+		try {
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+			
+			Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+			qtdePaginas = registros.getTotalPages();
+			
+			registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+			
+			view.addObject("registros", registros.getContent());
+			view.addObject("celula", celula.get(0).getNome());
+			view.addObject("pagina", qtdePaginas);
+		} catch (Exception e) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+		}
 		
 		return view;
 	}
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
-	public ModelAndView novo() {
+	public ModelAndView novo(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", new Membro());
-		view.addObject("tipos", TipoMembro.values());
+
+		if(!haveCelula()) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+			return view;
+		}
+		
+		view.addObject("tipos", TipoMembro.values());	
+
 		return view;
 	}
 	
@@ -104,7 +128,8 @@ public class MembroController extends AbstractController {
 			view.addObject("tipos", TipoMembro.values());
 		} else {
 			try {
-				membro.setCelula(getCurrentUser().getCelula());
+				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+				membro.setCelula(celula.get(0));
 				this.service.salvar(membro);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");

@@ -31,6 +31,7 @@ public class LoginController {
 		
 		Usuario usuario = new Usuario();
 		
+		usuario.setNome("Lucas Campos");
 		usuario.setLogin("admin");
 		usuario.setSenha("123");
 		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
@@ -38,6 +39,7 @@ public class LoginController {
 		try {
 			usuarioService.salvar(usuario);
 		} catch (Exception e) {
+			System.out.println("Deu erro.");
 		}
 		
 		return view;

@@ -100,6 +100,9 @@
 										<a href="${path}admin/celula"> <i class="fa fa-sitemap"></i><span>Células</span></a>
 									</li>
 									<li>
+										<a href="${path}admin/supervisor"> <i class="fa fa-trophy"></i><span>Supervisores</span></a>
+									</li>
+									<li>
 										<a href="${path}admin/membro"> <i class="fa fa-child"></i><span>Membros</span></a>
 									</li>
 									<li>
@@ -120,6 +123,7 @@
 				</section>
 			</div>
 			<div id="content-wrapper">
+				<div class="change-password"></div>
 				<c:if test="${mensagem != null}">
 					<div class="alert alert-${status} fade in">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

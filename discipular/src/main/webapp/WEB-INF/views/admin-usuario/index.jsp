@@ -56,8 +56,6 @@
 								Opções <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="${path}admin/usuario/editar/${usuario.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
-								<li class="divider"></li>
 								<li><a data-toggle="modal" data-target="#excluir-${usuario.id}"><i class="fa fa-trash-o"></i> Excluir</a></li>
 							</ul>
 						</div>

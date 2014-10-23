@@ -24,6 +24,11 @@
 		<form:form role="form" action="${path}admin/usuario/salvar" method="post" modelAttribute="usuario">
 			<form:hidden path="id" value="${usuario.id}"/>
 			<div class="form-group">
+				<form:label path="nome">Nome</form:label> 
+				<form:input path="nome" class="form-control" />
+				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
 				<form:label path="login">Login</form:label> 
 				<form:input path="login" class="form-control" />
 				<form:errors path="login" style="color:#FFF" cssClass="label label-danger" element="span" />
@@ -38,12 +43,6 @@
 				<form:select class="form-control" path="tipo" items="${tipos}">
 				</form:select>
 				<form:errors path="tipo" style="color:#FFF" cssClass="label label-danger" element="span" />
-			</div>
-			<div class="form-group">
-				<form:label path="celula">Célula</form:label>
-				<form:select class="form-control" path="celula" items="${celulas}" itemLabel="nome" itemValue="nome">
-				</form:select>
-				<form:errors path="celula" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

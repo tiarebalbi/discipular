@@ -2,7 +2,9 @@ package br.com.discipular.enumerator;
 
 public enum TipoUsuario {
 	
-	LIDER("ROLE_LIDER", "Líder"), ADMINISTRADOR("ROLE_ADMINISTRADOR", "Administrador");
+	LIDER("ROLE_LIDER", "Líder"), 
+	SUPERVISOR("ROLE_SUPERVISOR", "Supervisor"),
+	ADMINISTRADOR("ROLE_ADMINISTRADOR", "Administrador");
 
 	private String regra;
 	

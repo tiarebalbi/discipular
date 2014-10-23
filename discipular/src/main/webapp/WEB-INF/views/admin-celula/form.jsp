@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 
 <div class="row">
@@ -46,9 +47,47 @@
 				<form:errors path="horario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
+				<form:label path="area">Área</form:label> 
+				<form:input class="form-control" path="area" />
+				<form:errors path="area" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
 				<form:label path="dataNascimento">Data de Nascimento</form:label> 
-				<form:input path="dataNascimento" class="form-control" />
+				<form:input path="dataNascimento" class="form-control" id="maskedDate" placeholder="__/__/____" />
 				<form:errors path="dataNascimento" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="usuario">Líder</form:label> 
+				<form:select  path="usuario" class="form-control">
+					<c:choose>
+						<c:when test="${celula.usuario eq null}">
+							<form:option value=""></form:option>
+							<form:options items="${usuarios}" itemLabel="nome" itemValue="id"></form:options>
+						</c:when>
+						<c:otherwise>
+							<form:options items="${usuarios}" itemLabel="nome" itemValue="id"></form:options>
+							<form:option value="">---------- Sem Líder ----------</form:option>
+						</c:otherwise>
+					</c:choose>
+				</form:select>
+				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="supervisor">Supervisor</form:label> 
+				<form:select path="supervisor" class="form-control" >
+					<c:choose>
+						<c:when test="${celula.supervisor eq null}">
+							<form:option value=""></form:option>
+							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+						</c:when>
+						<c:otherwise>
+							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+							<form:option value="">---------- Sem Supervisor ----------</form:option>
+						</c:otherwise>
+					</c:choose>
+					
+				</form:select>
+				<form:errors path="supervisor" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
@@ -57,3 +96,5 @@
 		</form:form>
 	</div>
 </div>
+<script src="${path}resources/both/js/jquery.mask.min.js"></script>
+<script src="${path}resources/both/js/mask.js"></script>

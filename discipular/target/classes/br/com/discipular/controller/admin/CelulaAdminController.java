@@ -1,5 +1,8 @@
 package br.com.discipular.controller.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,15 +17,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import br.com.discipular.annotations.Administrador;
+import br.com.discipular.editor.CustomSupervisorEditor;
+import br.com.discipular.editor.CustomUsuarioEditor;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.model.Celula;
+import br.com.discipular.model.Supervisor;
+import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
+import br.com.discipular.predicate.SupervisorPredicate;
+import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
+import br.com.discipular.service.SupervisorService;
 import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.CelulaValidator;
 
@@ -45,7 +54,7 @@ public class CelulaAdminController {
 	private final static String VIEW_INDEX = "admin-celula/index";
 	private final static String VIEW_FORM = "admin-celula/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/celula";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -57,12 +66,17 @@ public class CelulaAdminController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private SupervisorService supervisorService;
 
 	@Autowired
 	private CelulaValidator validator;
 	
 	@InitBinder("celula")
 	public void a(WebDataBinder binder) {
+		binder.registerCustomEditor(Supervisor.class, new CustomSupervisorEditor(supervisorService));
+		binder.registerCustomEditor(Usuario.class, new CustomUsuarioEditor(usuarioService));
 		binder.setValidator(validator);
 	}
 	
@@ -72,36 +86,38 @@ public class CelulaAdminController {
 		
 		marker = 0;
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = registros.getTotalPages();
-		registros.getContent().forEach(celula -> {
-			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
-			if(celula.getIdUsuario() != null) {
-				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
-			}
-		});
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
-		view.addObject("pagina", qtdePaginas);
+		view.addObject("pagina", registros.getTotalPages());
 		
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
+		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelula()));
+		view.addObject("supervisores", supervisorService.buscarTodos());
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
 		Celula celula = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
+		
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
+		view.addObject("usuarios", getLideres(celula));
+		view.addObject("supervisores", getSupervisor(celula));
+
 		return view;
 	}
+
+	
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("celula") @Validated Celula celula, BindingResult errors, RedirectAttributes redirect) {
@@ -113,6 +129,8 @@ public class CelulaAdminController {
 			view.addObject("icon", "times");
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
+			view.addObject("usuarios", getLideres(celula));
+			view.addObject("supervisores", getSupervisor(celula));
 			
 		} else {
 			try {
@@ -124,6 +142,8 @@ public class CelulaAdminController {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
+				view.addObject("usuarios", getLideres(celula));
+				view.addObject("supervisores", getSupervisor(celula));
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
@@ -153,7 +173,7 @@ public class CelulaAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -163,7 +183,7 @@ public class CelulaAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -174,19 +194,35 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltro(nome), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(celula -> {
-			celula.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(celula)));
-			if(celula.getIdUsuario() != null) {
-				celula.setLider(usuarioService.buscarRegistro(celula.getIdUsuario()).getLogin());
-			} else {
-				celula.setLider("");
-			}
-		});
-		
+		registros.getContent().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
+	}
+	
+	private List<Supervisor> getSupervisor(Celula celula) {
+		List<Supervisor> supervisores = new ArrayList<>();
+		
+		if(celula.getSupervisor() != null) {
+			supervisores.add(celula.getSupervisor());
+			supervisores.addAll(supervisorService.buscarTodos(SupervisorPredicate.buscarPorSupervisoresDiferente(celula.getSupervisor())));
+		} else {
+			supervisores.addAll(supervisorService.buscarTodos());
+		}
+		return supervisores;
+	}
+
+	private List<Usuario> getLideres(Celula celula) {
+		List<Usuario> lideres = new ArrayList<>();
+		
+		if(celula.getUsuario() != null) {
+			lideres.add(celula.getUsuario());
+			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
+		} else {
+			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelula()));
+		}
+		return lideres;
 	}
 	
 }

@@ -42,13 +42,20 @@ public class CelulaServiceImpl implements CelulaService {
 	}
 
 	@Override
-	public void excluir(Celula celula) {
-		this.repository.delete(celula);
+	public void excluir(Celula celula) throws Exception {
+		celula.setSupervisor(null);
+		celula.setUsuario(null);
+		celula.setApagada(true);
+		this.salvar(celula);
 	}
 
 	@Override
-	public void excluir(Long id) {
-		this.repository.delete(id);
+	public void excluir(Long id) throws Exception {
+		Celula celula = this.buscarRegistro(id);
+		celula.setSupervisor(null);
+		celula.setUsuario(null);
+		celula.setApagada(true);
+		this.salvar(celula);
 	}
 
 	@Override
@@ -101,6 +108,11 @@ public class CelulaServiceImpl implements CelulaService {
 		Celula retorno = this.buscarRegistro(CelulaPredicate.buscarPorNome(celula.getNome()));
 		
 		return celula.getId() != null && celula.getId().equals(retorno.getId());
+	}
+
+	@Override
+	public void salvar(List<Celula> celulas) {
+		this.repository.save(celulas);
 	}
 	
 }

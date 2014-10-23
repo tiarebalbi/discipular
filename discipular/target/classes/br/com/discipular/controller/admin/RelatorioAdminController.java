@@ -83,8 +83,6 @@ public class RelatorioAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		
-		
 		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);

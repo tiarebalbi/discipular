@@ -32,7 +32,7 @@ public class RelatorioPredicate {
 
 	public static Predicate buscarPor(Usuario usuario) {
 		QRelatorio condicao = QRelatorio.relatorio;
-		return condicao.usuario.eq(usuario);
+		return condicao.usuario.id.eq(usuario.getId());
 	}
 
 }

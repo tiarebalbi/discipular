@@ -33,7 +33,7 @@
 			</div>
 			<div class="form-group">
 				<form:label path="data">Data</form:label> 
-				<form:input path="data" class="form-control" />
+				<form:input path="data" class="form-control" id="maskedDate" placeholder="__/__/____" />
 				<form:errors path="data" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
@@ -75,9 +75,10 @@
 					</div>
 				</div>
 				<c:forEach items="${membros}" var="membro" varStatus="i">
+					<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
 					<div class="col-lg-12">
 						<div class="col-lg-4">
-							<div class="form-group">
+							<div class="form-group"> 
 								<input disabled value="${membro.nome}" class="form-control" />
 								<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 							</div>
@@ -97,3 +98,5 @@
 	</div>
 </div>
 <script src="${path}resources/templates/centaurus/js/jquery.js"></script>
+<script src="${path}resources/both/js/jquery.mask.min.js"></script>
+<script src="${path}resources/both/js/mask.js"></script>

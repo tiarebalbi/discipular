@@ -60,7 +60,7 @@
 																<h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4>
 															</div>
 															<div class="modal-body">
-																<p>Você realmente deseja excluir o relatório da data ${registro.data}?</p>
+																<p>Você realmente deseja excluir o relatório do dia ${registro.dataFormat}?</p>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

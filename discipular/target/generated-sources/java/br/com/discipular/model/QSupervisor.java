@@ -26,12 +26,8 @@ public class QSupervisor extends EntityPathBase<Supervisor> {
 
     public final NumberPath<Integer> area = createNumber("area", Integer.class);
 
-    public final ListPath<Celula, QCelula> celulas = this.<Celula, QCelula>createList("celulas", Celula.class, QCelula.class, PathInits.DIRECT2);
-
     //inherited
     public final NumberPath<Long> id = _super.id;
-
-    public final StringPath nome = createString("nome");
 
     public final QUsuario usuario;
 
@@ -53,7 +49,7 @@ public class QSupervisor extends EntityPathBase<Supervisor> {
 
     public QSupervisor(Class<? extends Supervisor> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario"), inits.get("usuario")) : null;
+        this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario")) : null;
     }
 
 }

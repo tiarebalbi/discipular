@@ -6,6 +6,8 @@ import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.QCelula;
+import br.com.discipular.model.Supervisor;
+import br.com.discipular.model.Usuario;
 
 import com.mysema.query.types.Predicate;
 
@@ -26,7 +28,7 @@ public class CelulaPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QCelula condicao = QCelula.celula;
-		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome));
+		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome)).and(condicao.apagada.eq(false));
 	}
 
 	public static Predicate buscarPorNome(String nome) {
@@ -34,14 +36,24 @@ public class CelulaPredicate {
 		return condicao.nome.eq(nome);
 	}
 
+	public static Predicate buscarPor(Supervisor supervisor) {
+		QCelula condicao = QCelula.celula;
+		return condicao.supervisor.id.eq(supervisor.getId());
+	}
+
+	public static Predicate buscarPorCelulaAtiva() {
+		QCelula condicao = QCelula.celula;
+		return condicao.apagada.eq(false);
+	}
+
 	public static Predicate buscarPorUsuarioNulo() {
 		QCelula condicao = QCelula.celula;
-		return condicao.idUsuario.isNull();
+		return condicao.usuario.isNull();
 	}
-	
-	public static Predicate buscarPorIdUsuario(Long idUsuario) {
+
+	public static Predicate buscarPor(Usuario usuario) {
 		QCelula condicao = QCelula.celula;
-		return condicao.idUsuario.eq(idUsuario);
+		return condicao.usuario.id.eq(usuario.getId());
 	}
 
 }

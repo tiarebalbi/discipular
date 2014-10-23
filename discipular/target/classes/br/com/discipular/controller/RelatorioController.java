@@ -18,11 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoChamada;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Chamada;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
+import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.ChamadaService;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
@@ -48,6 +51,7 @@ public class RelatorioController extends AbstractController {
 	private final static String VIEW_FORM = "relatorio/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/relatorio";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private static final String REDIRECT_INDEX = "redirect:/";
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -61,6 +65,9 @@ public class RelatorioController extends AbstractController {
 	private ChamadaService chamadaService;
 	
 	@Autowired
+	private CelulaService celulaService;
+	
+	@Autowired
 	private RelatorioValidator validator;
 	
 	@InitBinder("relatorio")
@@ -69,8 +76,16 @@ public class RelatorioController extends AbstractController {
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
+		
+		if(!haveCelula()) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+			return view;
+		}
 		
 		marker = 0;
 		
@@ -84,10 +99,18 @@ public class RelatorioController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
-	public ModelAndView novo() {
+	public ModelAndView novo(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
-		view.addObject("chamadas", TipoChamada.values());
+		
+		if(!haveCelula()) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+			return view;
+		}
+		
+		carregarContexto(view);
 		return view;
 	}
 	
@@ -106,15 +129,17 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-			view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
-			view.addObject("chamadas", TipoChamada.values());
+			carregarContexto(view);
 			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {
 			try {
 				chamadaService.salvar(relatorio.getChamada());
-				relatorio.setCelula(getCurrentUser().getCelula());
+				
+				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
+				
+				relatorio.setCelula(celula);
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
 				relatorio.getChamada().forEach(chamada -> chamada.setRelatorio(relatorio));
@@ -124,8 +149,7 @@ public class RelatorioController extends AbstractController {
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-				view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(getCurrentUser().getCelula())));
-				view.addObject("chamadas", TipoChamada.values());
+				carregarContexto(view);
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "error");
 				view.addObject("icon", "times");
@@ -171,4 +195,12 @@ public class RelatorioController extends AbstractController {
 		return view;
 	}
 	
+	private ModelAndView carregarContexto(ModelAndView view) {
+		List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+		
+		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0))));
+		view.addObject("chamadas", TipoChamada.values());
+		
+		return view;
+	}
 }

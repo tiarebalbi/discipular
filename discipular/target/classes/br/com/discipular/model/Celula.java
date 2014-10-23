@@ -48,19 +48,21 @@ public class Celula extends AbstractModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
-	private Long idUsuario;
-	
 	@Enumerated(EnumType.STRING)
 	private TipoRede tipoRede;
 	
 	@ManyToOne
 	private Supervisor supervisor;
 	
+	private boolean apagada;
+
 	@Transient
 	private long qtdeMembros;
 	
-	@Transient
-	private String lider;
+	@ManyToOne
+	private Usuario usuario;
+	
+	private int area;
 	
 	public String getNome() {
 		return nome;
@@ -102,16 +104,24 @@ public class Celula extends AbstractModel {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-	
 	public long getQtdeMembros() {
 		return qtdeMembros;
+	}
+
+	public int getArea() {
+		return area;
+	}
+
+	public void setArea(int area) {
+		this.area = area;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public void setQtdeMembros(long qtdeMembros) {
@@ -134,12 +144,12 @@ public class Celula extends AbstractModel {
 		this.supervisor = supervisor;
 	}
 
-	public String getLider() {
-		return lider;
+	public boolean isApagada() {
+		return apagada;
 	}
 
-	public void setLider(String lider) {
-		this.lider = lider;
+	public void setApagada(boolean apagada) {
+		this.apagada = apagada;
 	}
-	
+
 }

@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="row">
+		<div class="row">	
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
@@ -31,7 +31,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="celula">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
@@ -48,8 +48,8 @@
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
-											<td>${registro.lider}</td>
-											<td>${registro.supervisor.nome}</td>
+											<td>${registro.usuario.nome}</td>
+											<td>${registro.supervisor.usuario.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario}</td>
 											<td>${registro.qtdeMembros}</td>
@@ -90,9 +90,23 @@
 							</table>
 						</div>
 					</div>
+					<div class="text-center" data-marker="${marker}">
+						<ul class="pagination pagination-sm">
+							<li class="disabled"><a class="anterior"><i class="fa fa-chevron-left"></i></a></li>
+							<c:choose>
+								<c:when test="${pagina > 1}">
+									<li><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="disabled"><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+					</div>	
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/busca-paginacao.js"></script>
 <script src="${path}resources/admin/js/celula-index.js"></script>

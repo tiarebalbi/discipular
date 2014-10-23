@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
-import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
@@ -36,16 +35,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario salvar(Usuario entidade) throws Exception {
 		
-		if(entidade.getSenha() != null) {
+		if(entidade.getSenha() != null && entidade.getId() == null) {
 			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
 		}
 		
 		if(!isLoginValido(entidade)) {
-			throw new Exception("Já existe um usuário com este login, favor utilizar outro login.");
+			throw new Exception("Já existe um líder/supervisor cadastrado com este login, favor utilizar outro login.");
 		}
 		
-		if(!entidade.getTipo().equals(TipoUsuario.ADMINISTRADOR) && !isCelulaOk(entidade.getCelula().getNome())) {
-			throw new Exception("Está célula já tem um líder cadastrado.");
+		if(!isNomeValido(entidade)) {
+			throw new Exception("Já existe um líder/supervisor cadastrado com este nome, favor utilizar outro nome.");
 		}
 		
 		return this.repository.save(entidade);
@@ -112,8 +111,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}
 	
-	private boolean isCelulaOk(String celula) {
-		return this.count(UsuarioPredicate.buscarPorCelula(celula)) == 0;
+	private boolean isNomeValido(Usuario usuario) {
+		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorNome(usuario.getNome()));
+	
+		if(qtdeUsuarios == 0) {
+			return true;
+		} 
+		
+		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorNome(usuario.getNome()));
+		
+		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}
-
+	
 }
