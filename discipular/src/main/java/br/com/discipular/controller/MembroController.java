@@ -93,9 +93,19 @@ public class MembroController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
-	public ModelAndView novo() {
+	public ModelAndView novo(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", new Membro());
-		view.addObject("tipos", TipoMembro.values());
+
+		if(!haveCelula()) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+			return view;
+		}
+		
+		view.addObject("tipos", TipoMembro.values());	
+
 		return view;
 	}
 	

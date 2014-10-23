@@ -21,7 +21,7 @@ function addMenu(xhr) {
 				value.email +
 				"</td>" +
 				"<td>" +
-				value.dataNascimento +
+				value.data +
 				"</td>" +
 				"</tr>");
     		});

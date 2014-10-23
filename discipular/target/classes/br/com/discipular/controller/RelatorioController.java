@@ -51,6 +51,7 @@ public class RelatorioController extends AbstractController {
 	private final static String VIEW_FORM = "relatorio/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/relatorio";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private static final String REDIRECT_INDEX = "redirect:/";
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -75,8 +76,16 @@ public class RelatorioController extends AbstractController {
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView index() {
+	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
+		
+		if(!haveCelula()) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+			return view;
+		}
 		
 		marker = 0;
 		
@@ -90,8 +99,17 @@ public class RelatorioController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
-	public ModelAndView novo() {
+	public ModelAndView novo(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
+		
+		if(!haveCelula()) {
+			view = new ModelAndView(REDIRECT_INDEX);
+			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("status", "danger");
+			redirect.addFlashAttribute("icon", "times");
+			return view;
+		}
+		
 		carregarContexto(view);
 		return view;
 	}

@@ -79,9 +79,9 @@ public class UsuarioAdminController {
 				u.setCelula(celula.get(0).getNome());
 			}
 		});
-		
-		qtdePaginas = registros.getTotalPages();
 		view.addObject("registros", registros.getContent());
+		qtdePaginas = registros.getTotalPages();
+		
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;

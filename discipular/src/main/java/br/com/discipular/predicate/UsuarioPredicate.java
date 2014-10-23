@@ -44,9 +44,9 @@ public class UsuarioPredicate {
 		return condicao.tipo.eq(tipo);
 	}
 
-	public static Predicate buscarTipoEDiferentes(Usuario lider) {
+	public static Predicate buscarLiderSemCelulaDiferente(Usuario lider) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.tipo.eq(lider.getTipo()).and(condicao.id.ne(lider.getId()));
+		return condicao.tipo.eq(lider.getTipo()).and(condicao.id.ne(lider.getId())).and(condicao.celulas.isEmpty());
 	}
 
 	public static Predicate buscarLiderSemCelula() {
