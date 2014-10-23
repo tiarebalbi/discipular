@@ -103,7 +103,10 @@ public class CelulaAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
+		
+		//view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER)));
+		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelula()));
+		
 		view.addObject("supervisores", supervisorService.buscarTodos());
 		return view;
 	}

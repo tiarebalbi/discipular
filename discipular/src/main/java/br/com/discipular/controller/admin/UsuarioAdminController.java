@@ -2,6 +2,7 @@ package br.com.discipular.controller.admin;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import br.com.discipular.annotations.Administrador;
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
@@ -63,14 +66,19 @@ public class UsuarioAdminController {
 	}
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public ModelAndView index() {
+	public @ResponseBody ModelAndView index() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		marker = 0;
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		registros.getContent().forEach(u ->  {
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(u));
+			if(celula != null && celula.size() > 0) {
+				u.setCelula(celula.get(0).getNome());
+			}
+		});
 		
 		qtdePaginas = registros.getTotalPages();
 		view.addObject("registros", registros.getContent());
