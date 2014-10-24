@@ -12,9 +12,6 @@ function addMenu(xhr) {
 					value.nome +
 					"</td>" +
 					"<td>" +
-					value.tipo +
-					"</td>" +
-					"<td>" +
 					value.celula +
 					"</td>" +
 					"<td>" +
@@ -32,13 +29,13 @@ function addMenu(xhr) {
 					'<h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4></div><div class="modal-body"><div class="text-center">' +
 					'<i class="fa fa-lock fa-5x"></i></div><div class="text-center"><p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) líder <strong>' + value.nome + '</strong>?</p>' +
 					'</div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>' +
-					'<a href="' + urlBase + 'admin/usuario/alterar-senha/' + value.id + '" class="btn btn-danger">Alterar</a></div></div></div></div>' +
+					'<a href="' + urlBase + 'admin/lider/alterar-senha/' + value.id + '" class="btn btn-danger">Alterar</a></div></div></div></div>' +
 					
 					'</div> <div class="modal fade" id="excluir-' + value.id + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">' +
 					'<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header" style="background-color: #1a2d69; color:#FFF"> <button type="button" class="close" data-dismiss="modal">' +
 					'<span aria-hidden="true">&times;</span><span class="sr-only">Close</span> </button> <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4> </div>' +
 					'<div class="modal-body">  <p>Você realmente deseja excluir o usuário ' + value.nome + '?</p> </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>' +
-					'<a href=" ' + urlBase + 'admin/usuario/excluir/ '+ value.id + '" class="btn btn-danger">Excluir</a> </div> </div> </div> </div>' +
+					'<a href=" ' + urlBase + 'admin/lider/excluir/ '+ value.id + '" class="btn btn-danger">Excluir</a> </div> </div> </div> </div>' +
 					"</td>" +
 					"</tr>");
 		});

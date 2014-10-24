@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 
-<div class="row">
+<div class="row text-center">
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
@@ -12,12 +12,12 @@
 			<li class="active"><span><i class="fa fa-plus-circle"></i> Novo Célula</span></li>
 		</ol>
 		<h1>
-			Cadastrar <strong>Célula</strong>
+			Cadastro de <strong>Célula</strong>
 		</h1>
 	</div>
 </div>
 
-<div class="main-box">
+<div class="main-box" style=" width: 50%; margin: 0 auto;">
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>

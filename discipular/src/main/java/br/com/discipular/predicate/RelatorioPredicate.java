@@ -4,6 +4,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.QRelatorio;
 import br.com.discipular.model.Relatorio;
 import br.com.discipular.model.Usuario;
@@ -24,7 +25,7 @@ public class RelatorioPredicate {
 	public static Pageable buscarPaginacao(int pagina, int quantidade) {
 		return new PageRequest(pagina, quantidade, Direction.DESC, "data");
 	}
-
+	
 	public static Predicate buscarPor(String celula) {
 		QRelatorio condicao = QRelatorio.relatorio;
 		return condicao.celula.nome.startsWithIgnoreCase(celula).or(condicao.celula.nome.endsWithIgnoreCase(celula));
@@ -33,6 +34,11 @@ public class RelatorioPredicate {
 	public static Predicate buscarPor(Usuario usuario) {
 		QRelatorio condicao = QRelatorio.relatorio;
 		return condicao.usuario.id.eq(usuario.getId());
+	}
+
+	public static Predicate buscarPorUsuarioECelula(Celula celula) {
+		QRelatorio condicao = QRelatorio.relatorio;
+		return condicao.usuario.id.eq(celula.getUsuario().getId()).and(condicao.celula.eq(celula));
 	}
 
 }

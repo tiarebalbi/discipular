@@ -31,7 +31,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="supervisor">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="admin/supervisor">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>

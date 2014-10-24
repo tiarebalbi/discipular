@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 
-<div class="row">
+<div class="row text-center">
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
@@ -19,7 +19,7 @@
 	</div>
 </div>
 
-<div class="main-box">
+<div class="main-box"  style=" width: 60%; margin: 0 auto;">
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>
@@ -67,23 +67,23 @@
 			</div>
 			<div class="main-box clearfix" style="background-color: #afc7c7;"> 
 				<div class="col-lg-12">
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<label><span>Nome</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<label><span>Chamada</span></label>
 					</div>
 				</div>
 				<c:forEach items="${membros}" var="membro" varStatus="i">
 					<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
 					<div class="col-lg-12">
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<div class="form-group"> 
 								<input disabled value="${membro.nome}" class="form-control" />
 								<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<form:select path="chamada[${i.count - 1}].tipo" class="form-control" items="${chamadas}"> 
 							</form:select>
 						</div>

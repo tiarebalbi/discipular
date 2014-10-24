@@ -13,13 +13,13 @@ function buscar() {
 		$.ajax({
 	        type: 'POST',
 	        dataType: 'json',
-	        url: urlBase + "admin/" + modulo + "/find/" + condicao, 
+	        url: urlBase + modulo + "/find/" + condicao, 
 	        complete : function(xhr, status) {
 				addMenu(xhr);
 	        },
 		});
 	} else {
-		window.location = urlBase + "admin/" + modulo;
+		window.location = urlBase + modulo;
 	}
 }
 
@@ -31,7 +31,7 @@ $('.proximo').on('click', function(e) {
 		$.ajax({
 	        type: "POST",
 	        dataType: 'json',
-	        url: urlBase + "admin/" + modulo + "/next",
+	        url: urlBase + modulo + "/next",
 	        complete : function(xhr, status) {
 	    		addMenu(xhr);
 	        },
@@ -50,7 +50,7 @@ $('.anterior').on('click', function(e) {
 		$.ajax({
 	        type: "POST",
 	        dataType: 'json',
-	        url: urlBase + "admin/" + modulo + "/previous",
+	        url: urlBase + modulo + "/previous",
 	        complete : function(xhr, status) {
 	    		addMenu(xhr);
 	        },

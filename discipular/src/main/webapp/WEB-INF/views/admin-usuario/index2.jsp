@@ -9,12 +9,12 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-					<li class="active"><i class="fa fa-users"></i> Usuários</li>
+					<li class="active"><i class="fa fa-users"></i> Líderes</li>
 				</ol>
 			</div>
 		</div>
-		<a type="button" href="${path}admin/usuario/novo" class="btn btn-primary btn-lg">
-			<span class="fa fa-plus-circle"></span> Novo Usuário
+		<a type="button" href="${path}admin/lider/novo" class="btn btn-primary btn-lg">
+			<span class="fa fa-plus-circle"></span> Novo Líder
 		</a>
 		<p></p>
 		<div class="row">
@@ -30,13 +30,12 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="usuario">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="admin/lider">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
 										<th>#Código</th>
 										<th>Nome</th>
-										<th>Tipo Usuário</th>
 										<th>Célula</th>
 										<th>Login</th>
 										<th>Menu</th>
@@ -47,10 +46,8 @@
 										<tr>
 											<td>${registro.id}</td>
 											<td>${registro.nome}</td>
-											<td>${registro.tipo}</td>
 											<td>${registro.celula}</td>
 											<td>${registro.login}</td>
-											
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -81,7 +78,7 @@
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-																<a href="${path}admin/usuario/alterar-senha/${registro.id}" class="btn btn-danger">Alterar</a>
+																<a href="${path}admin/lider/alterar-senha/${registro.id}" class="btn btn-danger">Alterar</a>
 															</div>
 														</div>
 													</div>
@@ -100,7 +97,7 @@
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-																<a href="${path}admin/usuario/excluir/${registro.id}" class="btn btn-danger">Excluir</a>
+																<a href="${path}admin/lider/excluir/${registro.id}" class="btn btn-danger">Excluir</a>
 															</div>
 														</div>
 													</div>

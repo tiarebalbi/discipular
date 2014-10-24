@@ -34,7 +34,6 @@ public class SupervisorValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "area", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.nome", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.senha", "campo.vazio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.login", "campo.vazio", "Este campo é obrigatório");
 		
 		Supervisor supervisor = (Supervisor) target;

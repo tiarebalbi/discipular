@@ -94,7 +94,7 @@
 							<ul class="nav nav-pills nav-stacked">
 								<sec:authorize access="hasRole('ROLE_ADMINISTRADOR')">
 									<li>
-										<a href="${path}admin/usuario"> <i class="fa fa-users"></i><span>Usuários</span></a>
+										<a href="${path}admin/lider"> <i class="fa fa-users"></i><span>Líderes</span></a>
 									</li>
 									<li>
 										<a href="${path}admin/celula"> <i class="fa fa-sitemap"></i><span>Células</span></a>

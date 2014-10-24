@@ -29,7 +29,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="membro">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="admin/membro">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>

@@ -41,12 +41,12 @@ import br.com.discipular.validator.UsuarioValidator;
  */
 @Controller
 @Administrador
-@RequestMapping(value = "/admin/usuario")
+@RequestMapping(value = "/admin/lider")
 public class UsuarioAdminController {
 
 	private final static String VIEW_INDEX = "admin-usuario/index";
 	private final static String VIEW_FORM = "admin-usuario/form";
-	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/usuario";
+	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/lider";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -90,7 +90,6 @@ public class UsuarioAdminController {
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
-		view.addObject("tipos", TipoUsuario.values());
 		return view;
 	}
 	
@@ -100,12 +99,12 @@ public class UsuarioAdminController {
 		if(errors.hasErrors()) {
 			usuario.setSenha("");
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-			view.addObject("tipos", TipoUsuario.values());
 			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
 		} else {
 			try {
+				usuario.setTipo(TipoUsuario.LIDER);
 				this.service.salvar(usuario);
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");
@@ -113,7 +112,6 @@ public class UsuarioAdminController {
 			} catch(Exception e) {
 				usuario.setSenha("");
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-				view.addObject("tipos", TipoUsuario.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
@@ -171,7 +169,16 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		
+		registros.getContent().forEach(u -> {
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(u));
+			if(celula != null && celula.size() > 0) {
+				u.setCelula(celula.get(0).getNome());
+			} else {
+				u.setCelula("");
+			}
+		});
+		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

@@ -31,7 +31,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="celula">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="admin/celula">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>

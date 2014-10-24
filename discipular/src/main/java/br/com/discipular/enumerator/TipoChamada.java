@@ -11,6 +11,6 @@ package br.com.discipular.enumerator;
  */
 public enum TipoChamada {
 
-	AUSENTE, JUSTIFICADO, PRESENTE;
+	PRESENTE, AUSENTE, JUSTIFICADO;
 	
 }
