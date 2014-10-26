@@ -36,7 +36,6 @@ import br.com.discipular.validator.MembroValidator;
  *
  * 	08/09/2014 
  * 
- * TODO buscar por usuário logado
  */
 @Lider
 @Controller
@@ -47,9 +46,7 @@ public class MembroController extends AbstractController {
 	private final static String VIEW_FORM = "membro/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
 	private final static String REDIRECT_INDEX = "redirect:/";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 14;
-	private int qtdePaginas;
-	private int marker = 0;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
 	
 	@Autowired
 	private MembroService service;
@@ -69,19 +66,16 @@ public class MembroController extends AbstractController {
 	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		marker = 0;
 		
 		try {
 			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
 			
 			Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-			qtdePaginas = registros.getTotalPages();
 			
 			registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 			
 			view.addObject("registros", registros.getContent());
 			view.addObject("celula", celula.get(0).getNome());
-			view.addObject("pagina", qtdePaginas);
 		} catch (Exception e) {
 			view = new ModelAndView(REDIRECT_INDEX);
 			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
@@ -161,37 +155,5 @@ public class MembroController extends AbstractController {
 		
 		return view;
 	}
-	
-	@RequestMapping(value = "previous", method = RequestMethod.POST)
-	public ModelAndView apiPrevious() {
-		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("registros", registros.getContent());
-		
-		return view;
-	}
-	
-	@RequestMapping(value = "next", method = RequestMethod.POST)
-	public ModelAndView apiNext() {
-		ModelAndView view = new ModelAndView(VIEW_INDEX);
-		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("registros", registros.getContent());
-		
-		return view;
-	}
-	
-	@RequestMapping(value = "find/{condicao}", method = RequestMethod.POST)
-	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
-		ModelAndView view = new ModelAndView();
-		
-		Page<Membro> users = service.buscarTodos(MembroPredicate.buscarPorNomeComFiltro(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		
-		view.addObject("registros", users.getContent());
-		view.addObject("pagina", qtdePaginas);
-		
-		return view;
-	}
-	
 }

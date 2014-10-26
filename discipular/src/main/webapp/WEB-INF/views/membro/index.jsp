@@ -27,16 +27,16 @@
 						<h2><i class="fa fa-list"></i> Lista de registros</h2>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="memro">
+						<div class="table-responsive">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>Nome</span></th>
-										<th><span>Tipo</span></th>
-										<th><span>Celular</span></th>
-										<th><span>Email</span></th>
-										<th><span>Data de Nascimento</span></th>
-										<th><span>Menu</span></th>
+										<th>Nome</th>
+										<th>Tipo</th>
+										<th>Celular</th>
+										<th>Email</th>
+										<th>Data de Nascimento</th>
+										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -84,23 +84,8 @@
 							</table>
 						</div>
 					</div>
-					<div class="text-center" data-marker="${marker}">
-						<ul class="pagination pagination-sm">
-							<li class="disabled"><a class="anterior"><i class="fa fa-chevron-left"></i></a></li>
-							<c:choose>
-								<c:when test="${pagina > 1}">
-									<li><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
-								</c:when>
-								<c:otherwise>
-									<li class="disabled"><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
-								</c:otherwise>
-							</c:choose>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<script src="${path}resources/admin/js/busca-paginacao.js"></script>
-<script src="${path}resources/user/js/membro-index.js"></script>

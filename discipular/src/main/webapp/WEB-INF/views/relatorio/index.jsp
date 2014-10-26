@@ -24,19 +24,22 @@
 						<h2><i class="fa fa-list"></i> Lista de registros</h2>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive">
+						<div class="table-responsive" data-modulo="relatorio" data-pagina="${pagina}">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>#Código</span></th>
-										<th><span>Responsável</span></th>
-										<th><span>Data</span></th>
+										<th>#Código</th>
+										<th>Nome</th>
+										<th>Responsável</th>
+										<th>Data</th>
+										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.id}</td>
+											<td>${registro.usuario.nome}</td>
 											<td>${registro.usuario.login}</td>
 											<td>${registro.dataFormat}</td>
 											<td>
@@ -76,8 +79,23 @@
 							</table>
 						</div>
 					</div>
+					<div class="text-center" data-marker="${marker}">
+						<ul class="pagination pagination-sm">
+							<li class="disabled"><a class="anterior"><i class="fa fa-chevron-left"></i></a></li>
+							<c:choose>
+								<c:when test="${pagina > 1}">
+									<li><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="disabled"><a class="proximo"><i class="fa fa-chevron-right proximo"></i></a></li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="${path}resources/admin/js/busca-paginacao.js"></script>
+<script src="${path}resources/user/js/relatorio-index.js"></script>

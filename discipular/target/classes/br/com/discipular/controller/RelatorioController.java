@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -50,7 +51,7 @@ public class RelatorioController extends AbstractController {
 	private final static String VIEW_INDEX = "relatorio/index";
 	private final static String VIEW_FORM = "relatorio/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/relatorio";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
 	private static final String REDIRECT_INDEX = "redirect:/";
 	private int qtdePaginas;
 	private int marker = 0;
@@ -137,6 +138,7 @@ public class RelatorioController extends AbstractController {
 			view.addObject("icon", "times");
 		} else {
 			try {
+				Assert.notNull(relatorio.getChamada(), "Nenhum membro cadastrado nesta célula, favor cadastrar os membros antes de fazer o relatório.");
 				chamadaService.salvar(relatorio.getChamada());
 				
 				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
@@ -153,7 +155,7 @@ public class RelatorioController extends AbstractController {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 				carregarContexto(view);
 				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "error");
+				view.addObject("status", "danger");
 				view.addObject("icon", "times");
 			}
 		}
@@ -170,7 +172,7 @@ public class RelatorioController extends AbstractController {
 			redirect.addFlashAttribute("icon", "check");
 		} catch(Exception e) {
 			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "error");
+			redirect.addFlashAttribute("status", "danger");
 			redirect.addFlashAttribute("icon", "times");
 		}
 		
@@ -183,6 +185,7 @@ public class RelatorioController extends AbstractController {
 	
 		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -194,6 +197,7 @@ public class RelatorioController extends AbstractController {
 		
 		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
