@@ -11,8 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -71,7 +69,6 @@ public class Relatorio extends AbstractModel {
 	private Celula celula;
 	
 	@OneToMany(mappedBy = "relatorio", cascade = CascadeType.REMOVE)
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@JsonIgnore
 	private List<Chamada> chamada;
 	

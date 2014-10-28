@@ -11,9 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import br.com.discipular.enumerator.TipoUsuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,7 +48,6 @@ public class Usuario extends AbstractModel implements Serializable {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
-	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Celula> celulas;
 	
 	@Transient
