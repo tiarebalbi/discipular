@@ -5,10 +5,10 @@
 
 <tiles-definitions>
 	<definition name="admin-usuario/index" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/index2.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/index.jsp" />
 	</definition>
 	
 	<definition name="admin-usuario/form" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/form2.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/admin-usuario/form.jsp" />
 	</definition>
 </tiles-definitions>

@@ -93,6 +93,13 @@ public class UsuarioAdminController {
 		return view;
 	}
 	
+	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
+	public ModelAndView editar(@PathVariable ("id") Long id) {
+		Usuario usuario = service.buscarRegistro(id);
+		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+		return view;
+	}
+	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Usuario usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
