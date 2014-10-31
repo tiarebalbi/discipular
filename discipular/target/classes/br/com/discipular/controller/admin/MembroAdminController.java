@@ -25,7 +25,7 @@ import br.com.discipular.validator.MembroValidator;
 public class MembroAdminController extends AbstractController {
 	
 	private final static String VIEW_INDEX = "admin/membro/index";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 20;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -49,7 +49,7 @@ public class MembroAdminController extends AbstractController {
 		
 		marker = 0;
 		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
 		
@@ -61,6 +61,7 @@ public class MembroAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -71,6 +72,7 @@ public class MembroAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -81,7 +83,7 @@ public class MembroAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorCelulaComFiltro(nome), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

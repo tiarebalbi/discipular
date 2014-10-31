@@ -25,7 +25,7 @@ import br.com.discipular.validator.RelatorioValidator;
 public class RelatorioAdminController extends AbstractController {
 
 	private final static String VIEW_INDEX = "admin/relatorio/index";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 14;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -51,7 +51,7 @@ public class RelatorioAdminController extends AbstractController {
 		
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
-		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
@@ -63,6 +63,7 @@ public class RelatorioAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -73,6 +74,7 @@ public class RelatorioAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -83,7 +85,7 @@ public class RelatorioAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

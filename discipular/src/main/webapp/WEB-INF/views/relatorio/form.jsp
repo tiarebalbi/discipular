@@ -23,7 +23,7 @@
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>
-	<div class="main-box-body clearfix">
+	<div class="main-box-body clearfix" style="margin-bottom: 20px;">
 		<form:form role="form" action="${path}relatorio/salvar" method="post" modelAttribute="relatorio">
 			<form:hidden path="id"/>
 			<div class="form-group">

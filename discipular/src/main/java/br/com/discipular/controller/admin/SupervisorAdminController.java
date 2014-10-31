@@ -36,7 +36,7 @@ public class SupervisorAdminController {
 	private final static String VIEW_INDEX = "admin-supervisor/index";
 	private final static String REDIRECT_VIEW_INDEX = "redirect:/admin/supervisor";
 	private final static String VIEW_FORM = "admin-supervisor/form";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
 	

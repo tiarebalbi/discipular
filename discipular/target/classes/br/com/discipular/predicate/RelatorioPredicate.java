@@ -1,5 +1,7 @@
 package br.com.discipular.predicate;
 
+import java.time.LocalDate;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -39,6 +41,11 @@ public class RelatorioPredicate {
 	public static Predicate buscarPorUsuarioECelula(Celula celula) {
 		QRelatorio condicao = QRelatorio.relatorio;
 		return condicao.usuario.id.eq(celula.getUsuario().getId()).and(condicao.celula.eq(celula));
+	}
+
+	public static Predicate buscarPorPeriodoE(Usuario usuario, LocalDate inicio, LocalDate fim) {
+		QRelatorio condicao = QRelatorio.relatorio;
+		return condicao.usuario.id.eq(usuario.getId()).and(condicao.data.between(inicio, fim));
 	}
 
 }

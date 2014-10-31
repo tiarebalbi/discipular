@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -46,7 +47,7 @@ public class MembroController extends AbstractController {
 	private final static String VIEW_FORM = "membro/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
 	private final static String REDIRECT_INDEX = "redirect:/";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	
 	@Autowired
 	private MembroService service;
@@ -66,19 +67,20 @@ public class MembroController extends AbstractController {
 	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		
 		try {
 			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
 			
+			Assert.notEmpty(celula, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			
 			Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 			
-			registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+			registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 			
 			view.addObject("registros", registros.getContent());
 			view.addObject("celula", celula.get(0).getNome());
 		} catch (Exception e) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			redirect.addFlashAttribute("mensagem", e.getMessage());
 			redirect.addFlashAttribute("status", "danger");
 			redirect.addFlashAttribute("icon", "times");
 		}
