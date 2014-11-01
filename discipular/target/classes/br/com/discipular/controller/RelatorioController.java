@@ -141,6 +141,13 @@ public class RelatorioController extends AbstractController {
 		} else {
 			try {
 				Assert.notNull(relatorio.getChamada(), "Nenhum membro cadastrado nesta célula, favor cadastrar os membros antes de fazer o relatório.");
+				int total = 0;
+				for(Chamada chamada : relatorio.getChamada()) {
+					if(chamada.getTipo() != TipoChamada.PRESENTE) {total++;}
+				};
+				
+				Assert.state(total > 0, "Nenhum membro esteve presente nesta célula!");
+				
 				chamadaService.salvar(relatorio.getChamada());
 				
 				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
@@ -148,7 +155,7 @@ public class RelatorioController extends AbstractController {
 				relatorio.setCelula(celula);
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
-				relatorio.getChamada().forEach(chamada -> chamada.setRelatorio(relatorio));
+				relatorio.getChamada().stream().parallel().forEach(chamada -> chamada.setRelatorio(relatorio));
 				chamadaService.salvar(relatorio.getChamada());
 				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 				redirect.addFlashAttribute("status", "success");

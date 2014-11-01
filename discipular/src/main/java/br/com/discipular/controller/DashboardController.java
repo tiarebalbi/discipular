@@ -63,7 +63,7 @@ public class DashboardController extends AbstractController {
 		
 		TemplateGraficoDTO dto = new TemplateGraficoDTO(); 
 		List<Relatorio> relatorios = relatorioService.buscarTodos(RelatorioPredicate.buscarPorPeriodoE(getCurrentUser(), LocalDate.now().minusMonths(2), LocalDate.now()));
-
+	
 		for (Relatorio relatorio : relatorios) {
 			long total = chamadaService.count(ChamadaPredicate.buscarPor(relatorio));
 			long chamadas = chamadaService.count(ChamadaPredicate.buscarPorRelatorioEStatus(relatorio, TipoChamada.PRESENTE));
@@ -72,10 +72,10 @@ public class DashboardController extends AbstractController {
 			dto.getData().add(porcentagem);
 			dto.getLabel().add(DataUtils.formatDataPtBr(relatorio.getData()));
 			
+			view.addObject("dados", dto.getData());
+			view.addObject("labels", dto.getLabel());
 		}
 		
-		view.addObject("dados", dto.getData());
-		view.addObject("labels", dto.getLabel());
 		return view;
 	}
 	
