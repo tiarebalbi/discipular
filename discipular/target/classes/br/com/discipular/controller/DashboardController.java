@@ -36,11 +36,11 @@ public class DashboardController extends AbstractController {
 	@Autowired
 	private ChamadaService chamadaService;
 	
-//	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-//	public ModelAndView index() {
-//		ModelAndView view = new ModelAndView(VIEW_INDEX);
-//		return view;
-//	}
+	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+	public ModelAndView index() {
+		ModelAndView view = new ModelAndView(VIEW_INDEX);
+		return view;
+	}
 	
 	@RequestMapping(value = "/trocar-senha/{senha}/{confirm}")
 	public ModelAndView trocarSenha(@PathVariable ("senha") String senha, @PathVariable ("confirm") String confirm) {
@@ -58,7 +58,7 @@ public class DashboardController extends AbstractController {
 		return view;
 	}
 
-	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/grafico", method = RequestMethod.GET)
 	public ModelAndView graficoFalta() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		

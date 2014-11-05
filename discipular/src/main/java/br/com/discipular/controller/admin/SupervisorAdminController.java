@@ -92,36 +92,40 @@ public class SupervisorAdminController {
 	@RequestMapping(value = "salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute("supervisor") @Validated Supervisor supervisor, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_INDEX);
-		if (errors.hasErrors()) {
-			supervisor.getUsuario().setSenha("");
-			view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
-			view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
-		} else {
-			try {
-				supervisor.getUsuario().setTipo(TipoUsuario.SUPERVISOR);
-				usuarioService.salvar(supervisor.getUsuario());
-				this.service.salvar(supervisor);
-				
-				if(supervisor.getUsuario().getCelulas() != null && supervisor.getUsuario().getCelulas().size() > 0) {
-					supervisor.getUsuario().getCelulas().forEach(c -> c.setSupervisor(supervisor));
-					celulaService.salvar(supervisor.getUsuario().getCelulas());
+		try {
+			if (errors.hasErrors()) {
+				if(supervisor.getUsuario().getId() == null) {
+					supervisor.getUsuario().setSenha("");
 				}
-				
-				service.salvar(supervisor);
-				
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-			} catch (Exception e) {
-				supervisor.getUsuario().setSenha("");
 				view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
 				view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
-				view.addObject("mensagem", e.getMessage());
+				view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
 			}
+			
+			supervisor.getUsuario().setTipo(TipoUsuario.SUPERVISOR);
+			usuarioService.salvar(supervisor.getUsuario());
+			this.service.salvar(supervisor);
+			
+			if(supervisor.getUsuario().getCelulas() != null && supervisor.getUsuario().getCelulas().size() > 0) {
+				supervisor.getUsuario().getCelulas().forEach(c -> c.setSupervisor(supervisor));
+				celulaService.salvar(supervisor.getUsuario().getCelulas());
+			}
+			
+			service.salvar(supervisor);
+			
+			redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
+			redirect.addFlashAttribute("status", "success");
+		} catch (Exception e) {
+			if(supervisor.getUsuario().getId() == null) {
+				supervisor.getUsuario().setSenha("");
+			}
+			view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
+			view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
+			view.addObject("mensagem", e.getMessage());
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 		}
 		return view;
 	}

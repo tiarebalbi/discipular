@@ -74,8 +74,10 @@
 						<label><span>Chamada</span></label>
 					</div>
 				</div>
-				<c:forEach items="${relatorio.chamada}" var="membro" varStatus="i">
-					<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
+				<c:forEach items="${membros}" var="membro" varStatus="i">
+					<c:if test="${membro.id != null}">
+						<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
+					</c:if>
 					<div class="col-lg-12">
 						<div class="col-lg-6">
 							<div class="form-group"> 

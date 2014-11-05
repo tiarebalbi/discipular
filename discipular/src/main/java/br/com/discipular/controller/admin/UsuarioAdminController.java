@@ -103,26 +103,31 @@ public class UsuarioAdminController {
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Usuario usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
-		if(errors.hasErrors()) {
-			usuario.setSenha("");
-			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
-		} else {
-			try {
-				usuario.setTipo(TipoUsuario.LIDER);
-				this.service.salvar(usuario);
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
-			} catch(Exception e) {
-				usuario.setSenha("");
+		try {
+			if(errors.hasErrors()) {
+				if(usuario.getId() == null) {
+					usuario.setSenha("");
+				}
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-				view.addObject("mensagem", e.getMessage());
+				view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
+				return view;
+			} 
+			
+			usuario.setTipo(TipoUsuario.LIDER);
+			this.service.salvar(usuario);
+			redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
+			redirect.addFlashAttribute("status", "success");
+			redirect.addFlashAttribute("icon", "check");
+		} catch(Exception e) {
+			if(usuario.getId() == null) {
+				usuario.setSenha("");
 			}
+			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+			view.addObject("mensagem", e.getMessage());
+			view.addObject("status", "danger");
+			view.addObject("icon", "times");
 		}
 		return view;
 	}

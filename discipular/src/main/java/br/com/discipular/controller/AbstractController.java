@@ -2,6 +2,7 @@ package br.com.discipular.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.context.security.DiscipularUserDetail;
 import br.com.discipular.model.Usuario;
@@ -22,5 +23,20 @@ public abstract class AbstractController {
 		long total = celulaService.count(CelulaPredicate.buscarPor(getCurrentUser()));
 		return total > 0;
 	}
+	
+	protected RedirectAttributes loadRedirectSuccessView(RedirectAttributes redirect, String mensagem) {
+		redirect.addFlashAttribute("mensagem", mensagem);
+		redirect.addFlashAttribute("status", "success");
+		redirect.addFlashAttribute("icon", "check");
+		return redirect;
+	}
+	
+	protected RedirectAttributes loadRedirectDangerView(RedirectAttributes redirect, String mensagem) {
+		redirect.addFlashAttribute("mensagem", mensagem);
+		redirect.addFlashAttribute("status", "danger");
+		redirect.addFlashAttribute("icon", "times");
+		return redirect;
+	}
+	
 
 }

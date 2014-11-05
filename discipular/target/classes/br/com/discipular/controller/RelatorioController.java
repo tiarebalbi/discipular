@@ -135,7 +135,9 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-			carregarContexto(view);
+			List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+			view.addObject("membros", chamada);
+			view.addObject("chamadas", TipoChamada.values());
 			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 			view.addObject("status", "danger");
 			view.addObject("icon", "times");
@@ -163,7 +165,9 @@ public class RelatorioController extends AbstractController {
 				redirect.addFlashAttribute("icon", "check");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-				carregarContexto(view);
+				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+				view.addObject("membros", chamada);
+				view.addObject("chamadas", TipoChamada.values());
 				view.addObject("mensagem", e.getMessage());
 				view.addObject("status", "danger");
 				view.addObject("icon", "times");
@@ -177,13 +181,9 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;

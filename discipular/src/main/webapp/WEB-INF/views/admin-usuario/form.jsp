@@ -34,13 +34,18 @@
 				<form:input path="login" class="form-control" />
 				<form:errors path="login" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
-			<c:if test="${usuario.id == null}">
-				<div class="form-group">
-					<form:label path="senha">Senha</form:label> 
-					<form:input type="password" path="senha" class="form-control" />
-					<form:errors path="senha" style="color:#FFF" cssClass="label label-danger" element="span" />
-				</div>
-			</c:if>
+			<c:choose>
+				<c:when test="${usuario.id == null}">
+					<div class="form-group">
+						<form:label path="senha">Senha</form:label> 
+						<form:input type="password" path="senha" class="form-control" />
+						<form:errors path="senha" style="color:#FFF" cssClass="label label-danger" element="span" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<form:hidden path="senha" value="${usuario.senha}"/>
+				</c:otherwise>
+			</c:choose>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}admin/lider" class="btn btn-danger btn-lg pull-right">Cancelar</a> 
