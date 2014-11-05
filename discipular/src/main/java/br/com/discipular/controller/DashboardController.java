@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.domain.dto.TemplateGraficoDTO;
 import br.com.discipular.enumerator.TipoChamada;
 import br.com.discipular.model.Relatorio;
@@ -47,7 +48,7 @@ public class DashboardController extends AbstractController {
 		Usuario usuario = getCurrentUser();
 		try {
 			if(senha.equals(confirm)) {
-				usuario.setSenha(senha);
+				usuario.setSenha(new DiscipularPasswordEncoder().encode(senha));
 				usuarioService.salvar(usuario);
 			}
 		} catch (Exception e) {

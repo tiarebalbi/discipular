@@ -124,6 +124,7 @@ public class RelatorioController extends AbstractController {
 		Relatorio relatorio = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 		List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+		relatorio.setChamada(chamada);
 		view.addObject("membros", chamada);
 		view.addObject("chamadas", TipoChamada.values());
 		return view;
@@ -143,10 +144,10 @@ public class RelatorioController extends AbstractController {
 				Assert.notNull(relatorio.getChamada(), "Nenhum membro cadastrado nesta célula, favor cadastrar os membros antes de fazer o relatório.");
 				int total = 0;
 				for(Chamada chamada : relatorio.getChamada()) {
-					if(chamada.getTipo() != TipoChamada.PRESENTE) {total++;}
+					if(chamada.getTipo() == TipoChamada.PRESENTE) {total++;}
 				};
 				
-				Assert.state(total > 0, "Nenhum membro esteve presente nesta célula!");
+				Assert.isTrue(total > 0, "Nenhum membro esteve presente nesta célula!");
 				
 				chamadaService.salvar(relatorio.getChamada());
 				

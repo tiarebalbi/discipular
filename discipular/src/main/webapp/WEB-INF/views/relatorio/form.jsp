@@ -25,7 +25,7 @@
 	</header>
 	<div class="main-box-body clearfix" style="margin-bottom: 20px;">
 		<form:form role="form" action="${path}relatorio/salvar" method="post" modelAttribute="relatorio">
-			<form:hidden path="id"/>
+			<form:hidden path="id" value="${relatorio.id}" />
 			<div class="form-group">
 				<form:label path="tema"><span>Tema</span></form:label>
 				<form:input path="tema" class="form-control" />
@@ -74,7 +74,7 @@
 						<label><span>Chamada</span></label>
 					</div>
 				</div>
-				<c:forEach items="${membros}" var="membro" varStatus="i">
+				<c:forEach items="${relatorio.chamada}" var="membro" varStatus="i">
 					<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
 					<div class="col-lg-12">
 						<div class="col-lg-6">
