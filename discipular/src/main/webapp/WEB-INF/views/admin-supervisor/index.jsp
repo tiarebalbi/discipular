@@ -53,8 +53,8 @@
 														Opções <span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu" role="menu">
-														<li><a data-toggle="modal" data-target="#trocar-senha-${registro.id}"><i class="fa fa-key"></i>Alterar Senha</a></li>
 														<li><a href="${path}admin/supervisor/editar/${registro.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
+														<li><a data-toggle="modal" data-target="#trocar-senha-${registro.id}"><i class="fa fa-key"></i>Resetar Senha</a></li>
 														<li class="divider"></li>
 														<li><a data-toggle="modal" data-target="#excluir-${registro.id}"><i class="fa fa-trash-o"></i> Excluir</a></li>
 													</ul>
@@ -78,7 +78,7 @@
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-																<a href="${path}admin/supervisor/alterar-senha/${registro.usuario.id}" class="btn btn-danger">Alterar</a>
+																<a href="${path}admin/supervisor/alterar-senha/${registro.usuario.id}" class="btn btn-danger">Resetar</a>
 															</div>
 														</div>
 													</div>

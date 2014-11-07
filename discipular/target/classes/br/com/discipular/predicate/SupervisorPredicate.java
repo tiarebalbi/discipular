@@ -35,4 +35,9 @@ public class SupervisorPredicate {
 		return condicao.area.eq(area);
 	}
 
+	public static Predicate buscarPorAreaRepitida(Supervisor supervisor) {
+		QSupervisor condicao = QSupervisor.supervisor;
+		return condicao.area.eq(supervisor.getArea()).and(condicao.id.ne(supervisor.getId()));
+	}
+
 }

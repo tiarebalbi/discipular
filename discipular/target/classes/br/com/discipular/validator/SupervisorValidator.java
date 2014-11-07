@@ -37,8 +37,12 @@ public class SupervisorValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "usuario.login", "campo.vazio", "Este campo é obrigatório");
 		
 		Supervisor supervisor = (Supervisor) target;
-		
-		long total = service.count(SupervisorPredicate.buscarPorArea(supervisor.getArea()));
+		long total = 0;
+		if(supervisor.getId() != null) {
+			total = service.count(SupervisorPredicate.buscarPorAreaRepitida(supervisor));
+		} else {
+			total = service.count(SupervisorPredicate.buscarPorArea(supervisor.getArea()));
+		}
 		
 		if(total > 0) {
 			errors.rejectValue("area", "campo.duplicado", "Já existe um supervisor responsável por esta área, tente outra.");
