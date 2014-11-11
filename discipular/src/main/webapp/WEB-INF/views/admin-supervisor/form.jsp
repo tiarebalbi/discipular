@@ -21,7 +21,7 @@
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>
-	<div class="main-box-body clearfix">
+	<div class="main-box-body clearfix"  style="margin-bottom: 20px;">
 		<form:form role="form" action="${path}admin/supervisor/salvar" method="post" modelAttribute="supervisor">
 			<form:hidden path="id" value="${supervisor.id}"/>
 			<form:hidden path="usuario.id" value="${supervisor.usuario.id}" />

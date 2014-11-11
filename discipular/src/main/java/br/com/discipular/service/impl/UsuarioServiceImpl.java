@@ -100,8 +100,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	private boolean isLoginValido(Usuario usuario) {
+		if(usuario.getLogin().startsWith(" ")) {
+			usuario.setLogin(usuario.getLogin().substring(1, usuario.getLogin().length()));
+		}
+		
 		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
-	
+
 		if(qtdeUsuarios == 0) {
 			return true;
 		} 
