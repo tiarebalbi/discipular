@@ -46,6 +46,16 @@
 					<form:hidden path="senha" value="${usuario.senha}"/>
 				</c:otherwise>
 			</c:choose>
+			<div class="form-group">
+				<form:label path="telefone">Telefone</form:label> 
+				<form:input path="telefone" class="form-control" id="maskedPhone" placeholder="99999-9999" />
+				<form:errors path="telefone" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
+			<div class="form-group">
+				<form:label path="email">Email</form:label> 
+				<form:input path="email" class="form-control" />
+				<form:errors path="email" style="color:#FFF" cssClass="label label-danger" element="span" />
+			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>
 				<a type="button" href="${path}admin/lider" class="btn btn-danger btn-lg pull-right">Cancelar</a> 
@@ -53,3 +63,5 @@
 		</form:form>
 	</div>
 </div>
+<script src="${path}resources/both/js/jquery.mask.min.js"></script>
+<script src="${path}resources/both/js/mask.js"></script>

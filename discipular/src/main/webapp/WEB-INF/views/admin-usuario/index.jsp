@@ -36,8 +36,10 @@
 									<tr>
 										<th>#Código</th>
 										<th>Nome</th>
-										<th>Célula</th>
 										<th>Login</th>
+										<th>Célula</th>
+										<th>Telefone</th>
+										<th>Email</th>
 										<th>Menu</th>
 									</tr>
 								</thead>
@@ -46,8 +48,10 @@
 										<tr>
 											<td>${registro.id}</td>
 											<td>${registro.nome}</td>
-											<td>${registro.celula}</td>
 											<td>${registro.login}</td>
+											<td>${registro.celula}</td>
+											<td>${registro.telefone}</td>
+											<td>${registro.email}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">

@@ -42,6 +42,10 @@ public class Usuario extends AbstractModel implements Serializable {
 	@NotNull
 	private String senha;
 	
+	private String email;
+	
+	private String telefone;
+	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
@@ -75,6 +79,22 @@ public class Usuario extends AbstractModel implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public TipoUsuario getTipo() {

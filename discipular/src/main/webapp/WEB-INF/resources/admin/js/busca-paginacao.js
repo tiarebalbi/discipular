@@ -6,6 +6,7 @@ var marker = 0;
 var modulo = $(".table-responsive").data('modulo');
 
 function buscar() {
+	var urlFinal;
 	var condicao = $('#condicao').val();
 	if(condicao.length > 0) {
 		$('.anterior').parent().addClass('disabled');

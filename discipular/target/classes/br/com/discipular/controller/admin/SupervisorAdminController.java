@@ -75,7 +75,10 @@ public class SupervisorAdminController {
 
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "supervisor", new Supervisor());
+		Supervisor supervisor = new Supervisor();
+		supervisor.setUsuario(new Usuario());
+		supervisor.getUsuario().setLogin(" ");
+		ModelAndView view = new ModelAndView(VIEW_FORM, "supervisor", supervisor);
 		view.addObject("celulas", celulaService.buscarTodos(CelulaPredicate.buscarPorUsuarioNulo()));
 		return view;
 	}
@@ -176,6 +179,20 @@ public class SupervisorAdminController {
 
 		Page<Supervisor> users = service.buscarTodos(
 				SupervisorPredicate.buscarPorNomeComFiltro(nome), 
+				SupervisorPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+
+		view.addObject("registros", users.getContent());
+		view.addObject("pagina", qtdePaginas);
+
+		return view;
+	}
+	
+	@RequestMapping(value = "find/area/{condicao}", method = RequestMethod.POST)
+	public ModelAndView apiFind(@PathVariable("condicao") Integer area) {
+		ModelAndView view = new ModelAndView();
+
+		Page<Supervisor> users = service.buscarTodos(
+				SupervisorPredicate.buscarPorArea(area), 
 				SupervisorPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 
 		view.addObject("registros", users.getContent());

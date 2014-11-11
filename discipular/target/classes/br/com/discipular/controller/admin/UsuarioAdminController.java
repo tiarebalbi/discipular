@@ -89,7 +89,9 @@ public class UsuarioAdminController {
 	
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
+		Usuario usuario = new Usuario();
+		usuario.setLogin(" ");
+		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		return view;
 	}
 	

@@ -26,9 +26,11 @@ public class UsuarioValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nome", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "senha", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nome", "campo.obrigatorio", "haha pegadinha seu bobóca");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "senha", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telefone", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "campo.obrigatorio", "Este campo é obrigatório");
 		
 		Usuario usuario = (Usuario) target;
 		

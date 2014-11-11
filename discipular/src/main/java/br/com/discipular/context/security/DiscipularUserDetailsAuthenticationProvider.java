@@ -37,7 +37,7 @@ public class DiscipularUserDetailsAuthenticationProvider extends AbstractUserDet
 		DiscipularPasswordEncoder fitnessPasswordEncoder = new DiscipularPasswordEncoder();
 		String origem = authentication.getCredentials().toString();
 		if(!fitnessPasswordEncoder.matches(origem, user.getPassword())) {
-			throw new BadCredentialsException(this.message.getMessage("validation.auth.password.notequal"));
+			throw new BadCredentialsException(this.message.getMessage("senha.errada"));
 		}
 		
 		return user;

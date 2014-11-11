@@ -12,7 +12,7 @@ import com.mysema.query.types.Predicate;
 public class SupervisorPredicate {
 
 	public static Pageable buscarPaginacao(int pagina,int quantidade) {
-		return new PageRequest(pagina, quantidade, Direction.ASC, "usuario.nome");
+		return new PageRequest(pagina, quantidade, Direction.ASC, "area");
 	}
 
 	public static Predicate buscarPorNomeComFiltro(String nome) {

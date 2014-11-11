@@ -28,6 +28,10 @@
 								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Nome...">
 								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
+							<div class="form-group pull-left">
+								<input type="text" class="form-control" id="condicao-area" placeholder="Buscar Por Área...">
+								<a href="javascript:void(0);" onclick="buscarArea()"><i class="fa fa-search search-icon"></i></a>
+							</div>
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
@@ -35,18 +39,22 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
+										<th>Área</th>
 										<th>Nome</th>
 										<th>Login</th>
-										<th>Área</th>
+										<th>Telefone</th>
+										<th>Email</th>
 										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
+											<td>${registro.area}</td>
 											<td>${registro.usuario.nome}</td>
 											<td>${registro.usuario.login}</td>
-											<td>${registro.area}</td>
+											<td>${registro.usuario.telefone}</td>
+											<td>${registro.usuario.email}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">

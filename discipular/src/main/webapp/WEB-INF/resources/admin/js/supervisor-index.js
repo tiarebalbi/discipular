@@ -6,13 +6,19 @@ function addMenu(xhr) {
 		$(response.registros).each(function (index, value) {
 			$('tbody').append("<tr>" +
 					"<td>" +
+					value.area +
+					"</td>" +
+					"<td>" +
 					value.usuario.nome +
 					"</td>" +
 					"<td>" +
 					value.usuario.login +
 					"</td>" +
 					"<td>" +
-					value.area +
+					value.usuario.telefone +
+					"</td>" +
+					"<td>" +
+					value.usuario.email +
 					"</td>" +
 					"<td>" +
 					
@@ -37,5 +43,24 @@ function addMenu(xhr) {
 		});
 	}  else {
 		$('table').append("<span class='label label-danger text-center'>Nenhum registro foi encontrado.</span>");
+	}
+}
+
+function buscarArea() {
+	var urlFinal;
+	var condicao = $('#condicao-area').val();
+	if(condicao.length > 0) {
+		$('.anterior').parent().addClass('disabled');
+		$('.proximo').parent().addClass('disabled');
+		$.ajax({
+	        type: 'POST',
+	        dataType: 'json',
+	        url: urlBase + modulo + "/find/area/" + condicao, 
+	        complete : function(xhr, status) {
+				addMenu(xhr);
+	        },
+		});
+	} else {
+		window.location = urlBase + modulo;
 	}
 }

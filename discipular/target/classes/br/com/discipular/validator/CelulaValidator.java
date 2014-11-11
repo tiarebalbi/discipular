@@ -26,11 +26,11 @@ public class CelulaValidator implements Validator {
 
 	@Override
 	public void validate(Object object, Errors e) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "nome", "campo.vazio","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "endereco", "campo.vazio","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dia", "campo.vazio","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "horario", "campo.vazio","Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dataNascimento", "campo.vazio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "nome", "campo.obrigatorio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "endereco", "campo.obrigatorio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dia", "campo.obrigatorio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "horario", "campo.obrigatorio","Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dataNascimento", "campo.obrigatorio","Este campo é obrigatório");
 	}
 
 }
