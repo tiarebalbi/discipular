@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.discipular.annotations.Administrador;
+import br.com.discipular.annotations.SupervisorRoles;
 import br.com.discipular.editor.CustomSupervisorEditor;
 import br.com.discipular.editor.CustomUsuarioEditor;
 import br.com.discipular.enumerator.DiaSemana;
@@ -47,7 +47,7 @@ import br.com.discipular.validator.CelulaValidator;
  * 	Sep 09, 2014 
  */
 @Controller
-@Administrador
+@SupervisorRoles
 @RequestMapping(value = "/admin/celula")
 public class CelulaAdminController {
 
@@ -87,10 +87,7 @@ public class CelulaAdminController {
 		marker = 0;
 		
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-//		long startTime = System.currentTimeMillis();
 		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
-//		long stopTime = System.currentTimeMillis();
-//		System.out.println(stopTime - startTime);
 
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
@@ -120,8 +117,6 @@ public class CelulaAdminController {
 
 		return view;
 	}
-
-	
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("celula") @Validated Celula celula, BindingResult errors, RedirectAttributes redirect) {

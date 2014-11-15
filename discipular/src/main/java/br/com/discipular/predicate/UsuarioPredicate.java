@@ -21,12 +21,12 @@ import com.mysema.query.types.Predicate;
 public class UsuarioPredicate {
 
 	public static PageRequest buscarPaginacao(int pagina, int tamanho) {
-		return new PageRequest(pagina, tamanho, Direction.ASC, "login");
+		return new PageRequest(pagina, tamanho, Direction.ASC, "nome");
 	}
 
-	public static Predicate buscarPorNomeComFiltro(String login) {
+	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.nome.startsWithIgnoreCase(login).and(condicao.tipo.eq(TipoUsuario.LIDER));
+		return condicao.nome.startsWithIgnoreCase(nome).and(condicao.nome.containsIgnoreCase(nome)).and(condicao.tipo.eq(TipoUsuario.LIDER));
 	}
 
 	public static Predicate buscarPorLogin(String login) {

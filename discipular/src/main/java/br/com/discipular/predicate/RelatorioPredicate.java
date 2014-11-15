@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.QRelatorio;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.model.Supervisor;
 import br.com.discipular.model.Usuario;
 
 import com.mysema.query.types.Predicate;
@@ -30,7 +31,7 @@ public class RelatorioPredicate {
 	
 	public static Predicate buscarPor(String celula) {
 		QRelatorio condicao = QRelatorio.relatorio;
-		return condicao.celula.nome.startsWithIgnoreCase(celula).or(condicao.celula.nome.endsWithIgnoreCase(celula));
+		return condicao.celula.nome.startsWithIgnoreCase(celula).or(condicao.celula.nome.containsIgnoreCase(celula));
 	}
 
 	public static Predicate buscarPor(Usuario usuario) {
@@ -46,6 +47,11 @@ public class RelatorioPredicate {
 	public static Predicate buscarPorPeriodoE(Usuario usuario, LocalDate inicio, LocalDate fim) {
 		QRelatorio condicao = QRelatorio.relatorio;
 		return condicao.usuario.id.eq(usuario.getId()).and(condicao.data.between(inicio, fim));
+	}
+
+	public static Predicate buscarPor(Supervisor supervisor) {
+		QRelatorio condicao = QRelatorio.relatorio;
+		return condicao.celula.area.eq(supervisor.getArea());
 	}
 
 }

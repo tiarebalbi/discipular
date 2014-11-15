@@ -28,7 +28,7 @@ public class CelulaPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QCelula condicao = QCelula.celula;
-		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome)).and(condicao.apagada.eq(false));
+		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.containsIgnoreCase(nome)).and(condicao.apagada.eq(false));
 	}
 
 	public static Predicate buscarPorNome(String nome) {

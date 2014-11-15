@@ -10,19 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.discipular.annotations.Administrador;
-import br.com.discipular.controller.AbstractController;
+import br.com.discipular.annotations.SupervisorRoles;
 import br.com.discipular.model.Membro;
+import br.com.discipular.model.Supervisor;
+import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.MembroPredicate;
+import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
+import br.com.discipular.service.SupervisorService;
 import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
 @Controller
-@Administrador
+@SupervisorRoles
 @RequestMapping(value = "admin/membro")
-public class MembroAdminController extends AbstractController {
+public class MembroAdminController extends AbstractAdminController {
 	
 	private final static String VIEW_INDEX = "admin/membro/index";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
@@ -34,6 +37,9 @@ public class MembroAdminController extends AbstractController {
 	
 	@Autowired
 	private CelulaService celulaService;
+	
+	@Autowired
+	private SupervisorService supervisorService;
 
 	@Autowired
 	private MembroValidator validator;
@@ -48,8 +54,16 @@ public class MembroAdminController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		marker = 0;
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = null;
+		Usuario usuario = getCurrentUser();
+		if(usuario.getLogin().equals("admin")) {
+			registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		} else {
+			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
+			registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		}
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
 		

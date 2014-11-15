@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Usuario;
 
 public class DiscipularUserDetail implements UserDetails {
@@ -38,12 +37,7 @@ public class DiscipularUserDetail implements UserDetails {
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			
 			Collection<SimpleGrantedAuthority> listAuthorities = new ArrayList<>();
-			if(usuario.getTipo().equals(TipoUsuario.ADMINISTRADOR)) {
-				listAuthorities.add(new SimpleGrantedAuthority(TipoUsuario.ADMINISTRADOR.getRegra()));	
-			}else if(usuario.getTipo().equals(TipoUsuario.LIDER)) {
-				listAuthorities.add(new SimpleGrantedAuthority(TipoUsuario.LIDER.getRegra()));
-			}
-			
+			listAuthorities.add(new SimpleGrantedAuthority(usuario.getTipo().getRegra()));
 			return listAuthorities;
 		}
 
