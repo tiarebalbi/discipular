@@ -1,4 +1,4 @@
-package br.com.discipular.controller.admin;
+package br.com.discipular.controller.supervisor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.discipular.annotations.Administrador;
+import br.com.discipular.annotations.SupervisorRoles;
+import br.com.discipular.controller.admin.AbstractAdminController;
 import br.com.discipular.model.Membro;
 import br.com.discipular.model.Supervisor;
 import br.com.discipular.model.Usuario;
@@ -23,9 +24,9 @@ import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
 @Controller
-@Administrador
-@RequestMapping(value = "admin/membro")
-public class MembroAdminController extends AbstractAdminController {
+@SupervisorRoles
+@RequestMapping(value = "supervisor/membro")
+public class MembroSupervisorController extends AbstractAdminController {
 	
 	private final static String VIEW_INDEX = "admin/membro/index";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
@@ -56,12 +57,9 @@ public class MembroAdminController extends AbstractAdminController {
 		marker = 0;
 		Page<Membro> registros;
 		Usuario usuario = getCurrentUser();
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
+
+		Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
+		registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		
 		view.addObject("registros", registros.getContent());
@@ -76,12 +74,9 @@ public class MembroAdminController extends AbstractAdminController {
 		
 		Page<Membro> registros;
 		Usuario usuario = getCurrentUser();
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
+
+		Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
+		registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
@@ -95,12 +90,9 @@ public class MembroAdminController extends AbstractAdminController {
 		
 		Page<Membro> registros;
 		Usuario usuario = getCurrentUser();
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(MembroPredicate.buscarPaginacaoAdmin(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
+
+		Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
+		registros = service.buscarTodos(MembroPredicate.buscarPorArea(supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
@@ -114,12 +106,8 @@ public class MembroAdminController extends AbstractAdminController {
 		
 		Page<Membro> registros;
 		Usuario usuario = getCurrentUser();
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(MembroPredicate.buscarPorCelulaComFiltro(nome), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(MembroPredicate.buscarPorAreaECelulaFiltro(nome, supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
+		Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
+		registros = service.buscarTodos(MembroPredicate.buscarPorAreaECelulaFiltro(nome, supervisor.getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
@@ -130,3 +118,4 @@ public class MembroAdminController extends AbstractAdminController {
 	}
 
 }
+

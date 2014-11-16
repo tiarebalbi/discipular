@@ -54,4 +54,9 @@ public class RelatorioPredicate {
 		return condicao.celula.area.eq(supervisor.getArea());
 	}
 
+	public static Predicate buscarPorSupervisorECelula(String celula, Supervisor supervisor) {
+		QRelatorio condicao = QRelatorio.relatorio;
+		return condicao.celula.area.eq(supervisor.getArea()).and(condicao.celula.nome.startsWithIgnoreCase(celula).or(condicao.celula.nome.containsIgnoreCase(celula)));
+	}
+
 }

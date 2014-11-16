@@ -51,6 +51,11 @@ public class MembroPredicate {
 	public static Predicate buscarPorArea(int area) {
 		QMembro condicao = QMembro.membro;
 		return condicao.celula.area.eq(area);
+	}
+
+	public static Predicate buscarPorAreaECelulaFiltro(String nome, int area) {
+		QMembro condicao = QMembro.membro;
+		return condicao.celula.nome.startsWithIgnoreCase(nome).or(condicao.celula.nome.containsIgnoreCase(nome)).and(condicao.celula.area.eq(area));
 	}	
 	
 }
