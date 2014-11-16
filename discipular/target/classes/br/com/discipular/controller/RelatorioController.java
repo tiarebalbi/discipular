@@ -94,9 +94,7 @@ public class RelatorioController extends AbstractController {
 			view.addObject("pagina", qtdePaginas);
 		} catch (Exception e) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
@@ -109,9 +107,7 @@ public class RelatorioController extends AbstractController {
 		
 		if(!haveCelula()) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
 			return view;
 		}
 		
@@ -138,9 +134,7 @@ public class RelatorioController extends AbstractController {
 			List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
 			view.addObject("membros", chamada);
 			view.addObject("chamadas", TipoChamada.values());
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
+			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
 				Assert.notNull(relatorio.getChamada(), "Nenhum membro cadastrado nesta célula, favor cadastrar os membros antes de fazer o relatório.");
@@ -160,17 +154,14 @@ public class RelatorioController extends AbstractController {
 				this.service.salvar(relatorio);
 				relatorio.getChamada().stream().parallel().forEach(chamada -> chamada.setRelatorio(relatorio));
 				chamadaService.salvar(relatorio.getChamada());
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
+				
+				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
 				view.addObject("membros", chamada);
 				view.addObject("chamadas", TipoChamada.values());
-				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "danger");
-				view.addObject("icon", "times");
+				loadViewDangerView(view, e.getMessage());
 			}
 		}
 		return view;
@@ -179,6 +170,7 @@ public class RelatorioController extends AbstractController {
 	@RequestMapping(value = "excluir/{id}", method = RequestMethod.GET)
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
+
 		try {
 			this.service.excluir(id);
 			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");

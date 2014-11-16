@@ -56,4 +56,14 @@ public class CelulaPredicate {
 		return condicao.usuario.id.eq(usuario.getId());
 	}
 
+	public static Predicate buscarPorCelulaAtivaEArea(int area) {
+		QCelula condicao = QCelula.celula;
+		return condicao.apagada.eq(false).and(condicao.area.eq(area));
+	}
+
+	public static Predicate buscarPorNomeComFiltroCelulaAtivaEArea(String nome, Usuario usuario) {
+		QCelula condicao = QCelula.celula;
+		return condicao.apagada.eq(false).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.eq(nome));
+	}
+
 }

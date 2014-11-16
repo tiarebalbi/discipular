@@ -2,6 +2,7 @@ package br.com.discipular.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.context.security.DiscipularUserDetail;
@@ -29,6 +30,20 @@ public abstract class AbstractController {
 		redirect.addFlashAttribute("status", "success");
 		redirect.addFlashAttribute("icon", "check");
 		return redirect;
+	}
+	
+	protected ModelAndView loadViewSuccessView(ModelAndView view, String mensagem) {
+		view.addObject("mensagem", mensagem);
+		view.addObject("status", "success");
+		view.addObject("icon", "check");
+		return view;
+	}
+	
+	protected ModelAndView loadViewDangerView(ModelAndView view, String mensagem) {
+		view.addObject("mensagem", mensagem);
+		view.addObject("status", "danger");
+		view.addObject("icon", "times");
+		return view;
 	}
 	
 	protected RedirectAttributes loadRedirectDangerView(RedirectAttributes redirect, String mensagem) {

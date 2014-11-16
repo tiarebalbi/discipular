@@ -22,6 +22,8 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
+    public final NumberPath<Integer> area = createNumber("area", Integer.class);
+
     public final ListPath<Celula, QCelula> celulas = this.<Celula, QCelula>createList("celulas", Celula.class, QCelula.class, PathInits.DIRECT2);
 
     public final StringPath email = createString("email");

@@ -80,9 +80,7 @@ public class MembroController extends AbstractController {
 			view.addObject("celula", celula.get(0).getNome());
 		} catch (Exception e) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
@@ -94,9 +92,9 @@ public class MembroController extends AbstractController {
 
 		if(!haveCelula()) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			
+			loadRedirectDangerView(redirect, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+
 			return view;
 		}
 		
@@ -118,24 +116,19 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "membro", membro);
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
 			view.addObject("tipos", TipoMembro.values());
+			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
 				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
 				membro.setCelula(celula.get(0));
 				this.service.salvar(membro);
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
+				
+				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "membro", membro);
 				view.addObject("tipos", TipoMembro.values());
-				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "danger");
-				view.addObject("icon", "times");
+				loadViewDangerView(view, e.getMessage());
 			}
 		}
 		return view;
@@ -146,13 +139,9 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;

@@ -54,4 +54,14 @@ public class UsuarioPredicate {
 		return condicao.tipo.eq(TipoUsuario.LIDER).and(condicao.celulas.isEmpty());
 	}
 
+	public static Predicate buscarTipoEArea(TipoUsuario tipo, Usuario usuario) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(tipo).and(condicao.area.eq(usuario.getArea()));
+	}
+
+	public static Predicate buscarPorNomeComFiltroTipoEArea(String nome, TipoUsuario tipo, Usuario usuario) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(tipo).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.startsWithIgnoreCase(nome).and(condicao.nome.containsIgnoreCase(nome)));
+	}
+
 }

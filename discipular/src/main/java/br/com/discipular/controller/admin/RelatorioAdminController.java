@@ -12,13 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.discipular.annotations.Administrador;
 import br.com.discipular.model.Relatorio;
-import br.com.discipular.model.Supervisor;
-import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.RelatorioPredicate;
-import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
-import br.com.discipular.service.SupervisorService;
 import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
 
@@ -39,9 +35,6 @@ public class RelatorioAdminController extends AbstractAdminController {
 	private MembroService membroService;
 	
 	@Autowired
-	private SupervisorService supervisorService;
-
-	@Autowired
 	private RelatorioValidator validator;
 	
 	@InitBinder("relatorio")
@@ -55,14 +48,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 		
 		marker = 0;
 		
-		Page<Relatorio> registros;
-		Usuario usuario = getCurrentUser();
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(RelatorioPredicate.buscarPor(supervisor), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		qtdePaginas = registros.getTotalPages();
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
@@ -76,17 +62,9 @@ public class RelatorioAdminController extends AbstractAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> registros;
-		Usuario usuario = getCurrentUser();
-		
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(RelatorioPredicate.buscarPor(supervisor), RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
-		
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+		
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -96,17 +74,9 @@ public class RelatorioAdminController extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> registros;
-		Usuario usuario = getCurrentUser();
-		
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(RelatorioPredicate.buscarPor(supervisor), RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
-		
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+		
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -116,17 +86,9 @@ public class RelatorioAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String celula) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Relatorio> registros;
-		Usuario usuario = getCurrentUser();
-		
-		if(usuario.getLogin().equals("admin")) {
-			registros = service.buscarTodos(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		} else {
-			Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-			registros = service.buscarTodos(RelatorioPredicate.buscarPorSupervisorECelula(celula, supervisor), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		}
-		
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

@@ -96,8 +96,6 @@
 									<li>
 										<a href="${path}admin/supervisor"> <i class="fa fa-trophy"></i><span>Supervisores</span></a>
 									</li>
-								</sec:authorize>
-								<sec:authorize access="hasRole('ROLE_SUPERVISOR') or hasRole('ROLE_ADMINISTRADOR')">
 									<li>
 										<a href="${path}admin/lider"> <i class="fa fa-users"></i><span>Líderes</span></a>
 									</li>
@@ -109,6 +107,20 @@
 									</li>
 									<li>
 										<a href="${path}admin/relatorio"> <i class="fa fa-file-text-o"></i><span>Relatórios</span></a>
+									</li>
+								</sec:authorize>
+								<sec:authorize access="hasRole('ROLE_SUPERVISOR')">
+									<li>
+										<a href="${path}supervisor/lider"> <i class="fa fa-users"></i><span>Líderes</span></a>
+									</li>
+									<li>
+										<a href="${path}supervisor/celula"> <i class="fa fa-sitemap"></i><span>Células</span></a>
+									</li>
+									<li>
+										<a href="${path}supervisor/membro"> <i class="fa fa-child"></i><span>Membros</span></a>
+									</li>
+									<li>
+										<a href="${path}supervisor/relatorio"> <i class="fa fa-file-text-o"></i><span>Relatórios</span></a>
 									</li>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ROLE_LIDER')">

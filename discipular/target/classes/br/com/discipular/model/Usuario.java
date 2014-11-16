@@ -42,6 +42,8 @@ public class Usuario extends AbstractModel implements Serializable {
 	@NotNull
 	private String senha;
 	
+	private int area;
+	
 	private String email;
 	
 	private String telefone;
@@ -81,6 +83,14 @@ public class Usuario extends AbstractModel implements Serializable {
 		this.senha = senha;
 	}
 	
+	public int getArea() {
+		return area;
+	}
+
+	public void setArea(int area) {
+		this.area = area;
+	}
+
 	public String getEmail() {
 		return email;
 	}
