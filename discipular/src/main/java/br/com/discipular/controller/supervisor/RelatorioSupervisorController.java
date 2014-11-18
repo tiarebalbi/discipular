@@ -13,13 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.discipular.annotations.SupervisorRoles;
 import br.com.discipular.controller.admin.AbstractAdminController;
 import br.com.discipular.model.Relatorio;
-import br.com.discipular.model.Supervisor;
-import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.RelatorioPredicate;
-import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
-import br.com.discipular.service.SupervisorService;
 import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
 
@@ -39,9 +35,6 @@ public class RelatorioSupervisorController extends AbstractAdminController {
 	@Autowired
 	private MembroService membroService;
 	
-	@Autowired
-	private SupervisorService supervisorService;
-
 	@Autowired
 	private RelatorioValidator validator;
 	
@@ -92,13 +85,9 @@ public class RelatorioSupervisorController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String celula) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Relatorio> registros;
-		Usuario usuario = getCurrentUser();
-		
-		Supervisor supervisor = supervisorService.buscarRegistro(SupervisorPredicate.buscarPor(usuario));
-		registros = service.buscarTodos(RelatorioPredicate.buscarPorSupervisorECelula(celula, supervisor), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorSupervisorECelula(celula, getCurrentUser()), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

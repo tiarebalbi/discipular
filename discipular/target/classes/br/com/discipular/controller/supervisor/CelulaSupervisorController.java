@@ -19,20 +19,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.discipular.annotations.SupervisorRoles;
 import br.com.discipular.controller.admin.AbstractAdminController;
-import br.com.discipular.editor.CustomSupervisorEditor;
 import br.com.discipular.editor.CustomUsuarioEditor;
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
+import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
-import br.com.discipular.model.Supervisor;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
-import br.com.discipular.predicate.SupervisorPredicate;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
-import br.com.discipular.service.SupervisorService;
 import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.CelulaValidator;
 
@@ -69,14 +66,10 @@ public class CelulaSupervisorController extends AbstractAdminController {
 	private UsuarioService usuarioService;
 	
 	@Autowired
-	private SupervisorService supervisorService;
-
-	@Autowired
 	private CelulaValidator validator;
 	
 	@InitBinder("celula")
 	public void a(WebDataBinder binder) {
-		binder.registerCustomEditor(Supervisor.class, new CustomSupervisorEditor(supervisorService));
 		binder.registerCustomEditor(Usuario.class, new CustomUsuarioEditor(usuarioService));
 		binder.setValidator(validator);
 	}
@@ -101,8 +94,8 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelula()));
-		view.addObject("supervisores", supervisorService.buscarTodos());
+		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
+		view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 		return view;
 	}
 
@@ -202,18 +195,17 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		return view;
 	}
 	
-	private List<Supervisor> getSupervisor(Celula celula) {
-		List<Supervisor> supervisores = new ArrayList<>();
+	private List<Usuario> getSupervisor(Celula celula) {
+		List<Usuario> supervisores = usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR));
 		
 		if(celula.getSupervisor() != null) {
-			supervisores.add(celula.getSupervisor());
-			supervisores.addAll(supervisorService.buscarTodos(SupervisorPredicate.buscarPorSupervisoresDiferente(celula.getSupervisor())));
-		} else {
-			supervisores.addAll(supervisorService.buscarTodos());
+			supervisores.removeIf(s -> s.getId() == celula.getSupervisor().getId());
 		}
+		
 		return supervisores;
+				
 	}
-
+	
 	private List<Usuario> getLideres(Celula celula) {
 		List<Usuario> lideres = new ArrayList<>();
 		
@@ -221,7 +213,7 @@ public class CelulaSupervisorController extends AbstractAdminController {
 			lideres.add(celula.getUsuario());
 			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
 		} else {
-			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelula()));
+			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
 		}
 		return lideres;
 	}

@@ -21,7 +21,7 @@ public abstract class AbstractController {
 	}
 	
 	protected Boolean haveCelula() {
-		long total = celulaService.count(CelulaPredicate.buscarPor(getCurrentUser()));
+		long total = celulaService.count(CelulaPredicate.buscarPorLider(getCurrentUser()));
 		return total > 0;
 	}
 	

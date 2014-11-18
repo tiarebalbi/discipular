@@ -73,7 +73,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().forEach(u ->  {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(u));
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
 			if(celula != null && celula.size() > 0) {
 				u.setCelula(celula.get(0).getNome());
 			}
@@ -140,7 +140,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			Usuario usuario = this.service.buscarRegistro(id);
-			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPor(usuario));
+			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPorLider(usuario));
 			celulas.forEach(c -> c.setUsuario(null));
 			this.celulaService.salvar(celulas);
 			
@@ -162,7 +162,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -173,7 +173,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -186,7 +186,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltroTipoEArea(nome, TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().forEach(u -> {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(u));
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
 			if(celula != null && celula.size() > 0) {
 				u.setCelula(celula.get(0).getNome());
 			} else {

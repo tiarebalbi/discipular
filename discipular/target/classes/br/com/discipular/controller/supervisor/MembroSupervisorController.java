@@ -16,7 +16,6 @@ import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
-import br.com.discipular.service.SupervisorService;
 import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
@@ -36,9 +35,6 @@ public class MembroSupervisorController extends AbstractAdminController {
 	@Autowired
 	private CelulaService celulaService;
 	
-	@Autowired
-	private SupervisorService supervisorService;
-
 	@Autowired
 	private MembroValidator validator;
 	

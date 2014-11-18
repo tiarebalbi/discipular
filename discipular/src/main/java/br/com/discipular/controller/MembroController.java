@@ -68,7 +68,7 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		try {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
 			
 			Assert.notEmpty(celula, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
 			
@@ -120,7 +120,7 @@ public class MembroController extends AbstractController {
 			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
-				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
 				membro.setCelula(celula.get(0));
 				this.service.salvar(membro);
 				
