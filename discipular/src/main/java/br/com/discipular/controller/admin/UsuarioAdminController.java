@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.discipular.annotations.SupervisorRoles;
+import br.com.discipular.annotations.Administrador;
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
@@ -38,7 +38,7 @@ import br.com.discipular.validator.UsuarioValidator;
  * 	10/09/2014 
  */
 @Controller
-@SupervisorRoles
+@Administrador
 @RequestMapping(value = "/admin/lider")
 public class UsuarioAdminController {
 

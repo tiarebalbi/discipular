@@ -52,9 +52,9 @@ import br.com.discipular.validator.CelulaValidator;
 @RequestMapping(value = "/supervisor/celula")
 public class CelulaSupervisorController extends AbstractAdminController {
 
-	private final static String VIEW_INDEX = "admin-celula/index";
-	private final static String VIEW_FORM = "admin-celula/form";
-	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/celula";
+	private final static String VIEW_INDEX = "supervisor-celula/index";
+	private final static String VIEW_FORM = "supervisor-celula/form";
+	private final static String VIEW_REDIRECT_INDEX = "redirect:/supervisor/celula";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;

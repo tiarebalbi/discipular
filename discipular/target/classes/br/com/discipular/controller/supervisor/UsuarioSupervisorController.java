@@ -43,9 +43,9 @@ import br.com.discipular.validator.UsuarioValidator;
 @RequestMapping(value = "/supervisor/lider")
 public class UsuarioSupervisorController  extends AbstractAdminController {
 
-	private final static String VIEW_INDEX = "admin-usuario/index";
-	private final static String VIEW_FORM = "admin-usuario/form";
-	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/lider";
+	private final static String VIEW_INDEX = "supervisor-usuario/index";
+	private final static String VIEW_FORM = "supervisor-usuario/form";
+	private final static String VIEW_REDIRECT_INDEX = "redirect:/supervisor/lider";
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -119,6 +119,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 			
 			usuario.setTipo(TipoUsuario.LIDER);
 			this.service.salvar(usuario);
+			
 			redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
 			redirect.addFlashAttribute("status", "success");
 			redirect.addFlashAttribute("icon", "check");

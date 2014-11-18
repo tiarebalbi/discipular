@@ -63,7 +63,7 @@ public class CelulaPredicate {
 
 	public static Predicate buscarPorNomeComFiltroCelulaAtivaEArea(String nome, Usuario usuario) {
 		QCelula condicao = QCelula.celula;
-		return condicao.apagada.eq(false).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.eq(nome));
+		return condicao.apagada.eq(false).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.containsIgnoreCase(nome)));
 	}
 
 }

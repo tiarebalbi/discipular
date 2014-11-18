@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.model.Usuario;
@@ -39,12 +40,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
 		}
 		
+		Assert.notNull(entidade.getArea(), "Favor preencher o campo área.");
+		
 		if(!isLoginValido(entidade)) {
 			throw new Exception("Já existe um líder/supervisor cadastrado com este login, favor utilizar outro login.");
-		}
-		
-		if(!isNomeValido(entidade)) {
-			throw new Exception("Já existe um líder/supervisor cadastrado com este nome, favor utilizar outro nome.");
 		}
 		
 		return this.repository.save(entidade);
@@ -111,18 +110,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		} 
 		
 		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
-		
-		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
-	}
-	
-	private boolean isNomeValido(Usuario usuario) {
-		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorNome(usuario.getNome()));
-	
-		if(qtdeUsuarios == 0) {
-			return true;
-		} 
-		
-		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorNome(usuario.getNome()));
 		
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}

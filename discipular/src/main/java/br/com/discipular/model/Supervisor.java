@@ -16,18 +16,9 @@ import javax.persistence.OneToOne;
 @Entity
 public class Supervisor extends AbstractModel {
 
-	private int area;
-	
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Usuario usuario;
 
-	public int getArea() {
-		return area;
-	}
-
-	public void setArea(int area) {
-		this.area = area;
-	}
 
 	public Usuario getUsuario() {
 		return usuario;

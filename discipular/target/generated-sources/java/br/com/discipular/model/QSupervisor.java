@@ -24,8 +24,6 @@ public class QSupervisor extends EntityPathBase<Supervisor> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
-    public final NumberPath<Integer> area = createNumber("area", Integer.class);
-
     //inherited
     public final NumberPath<Long> id = _super.id;
 

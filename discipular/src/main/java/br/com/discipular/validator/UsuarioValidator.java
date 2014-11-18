@@ -1,5 +1,8 @@
 package br.com.discipular.validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -19,6 +22,11 @@ import br.com.discipular.model.Usuario;
 @Component
 public class UsuarioValidator implements Validator {
 
+	private Pattern pattern;
+	private Matcher matcher;
+	
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 	@Override
 	public boolean supports(Class<?> classe) {
 		return Usuario.class.equals(classe);
@@ -41,6 +49,19 @@ public class UsuarioValidator implements Validator {
 		if(usuario.getSenha().length() < 6) {
 			errors.rejectValue("senha", "campo.pequeno", "A senha deve ter no mínimo 6 dígitos");			
 		}
+		
+		if(usuario.getEmail() != null && validarEmail(usuario)) {
+			errors.rejectValue("email", "email.invalido", "Email inválido.");
+		}
+		
+	}
+	
+	private boolean validarEmail(Usuario usuario) {
+		
+		pattern = Pattern.compile(EMAIL_PATTERN);
+		matcher = pattern.matcher(usuario.getEmail());
+		
+		return matcher.matches();
 	}
 
 }
