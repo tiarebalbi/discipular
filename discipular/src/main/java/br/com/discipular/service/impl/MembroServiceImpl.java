@@ -38,10 +38,6 @@ public class MembroServiceImpl implements MembroService {
 			throw new Exception("Está célula já está lotada, favor encaminhar o membro para outra célula.");
 		}
 		
-		if(!isNomeValido(entidade)) {
-			throw new Exception("Este nome já está cadastrado, favor utilizar outro nome.");
-		}
-		
 		return repository.save(entidade);
 		
 	}
@@ -96,16 +92,4 @@ public class MembroServiceImpl implements MembroService {
 		return qtdeMembros >= 14; 
 	}
 	
-	private boolean isNomeValido(Membro membro) {
-		long qtdeUsuarios = this.count(MembroPredicate.buscarPorNome(membro.getNome()));
-	
-		if(qtdeUsuarios == 0) {
-			return true;
-		} 
-		
-		Membro retorno = this.buscarRegistro(MembroPredicate.buscarPorNome(membro.getNome()));
-		
-		return membro.getId() != null && membro.getId().equals(retorno.getId());
-	}
-
 }
