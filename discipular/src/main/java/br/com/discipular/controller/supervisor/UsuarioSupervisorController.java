@@ -111,26 +111,19 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 					usuario.setSenha("");
 				}
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-				view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-				view.addObject("status", "danger");
-				view.addObject("icon", "times");
+				loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 				return view;
 			} 
 			
 			usuario.setTipo(TipoUsuario.LIDER);
 			this.service.salvar(usuario);
-			
-			redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 		} catch(Exception e) {
 			if(usuario.getId() == null) {
 				usuario.setSenha("");
 			}
 			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-			view.addObject("mensagem", e.getMessage());
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
+			loadViewDangerView(view, e.getMessage());
 		}
 		return view;
 	}
@@ -145,13 +138,9 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 			this.celulaService.salvar(celulas);
 			
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "success");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "error");
-			redirect.addFlashAttribute("icon", "danger");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
@@ -207,13 +196,9 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 			Usuario usuario = service.buscarRegistro(id);
 			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
-			redirect.addFlashAttribute("mensagem", "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
 		} catch (Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		return view;
 	}

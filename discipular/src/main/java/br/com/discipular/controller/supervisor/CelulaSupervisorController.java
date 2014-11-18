@@ -117,29 +117,22 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "celula", celula);
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
 			view.addObject("usuarios", getLideres(celula));
 			view.addObject("supervisores", getSupervisor(celula));
-			
+			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
 				this.service.salvar(celula);
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
+				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
 				view.addObject("usuarios", getLideres(celula));
 				view.addObject("supervisores", getSupervisor(celula));
-				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "danger");
-				view.addObject("icon", "times");
+				loadViewDangerView(view, e.getMessage());
 			}
 		}
 		return view;
@@ -150,13 +143,9 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "error");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
