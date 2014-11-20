@@ -24,9 +24,9 @@ public class UsuarioPredicate {
 		return new PageRequest(pagina, tamanho, Direction.ASC, "nome");
 	}
 
-	public static Predicate buscarPorNomeComFiltro(String nome) {
+	public static Predicate buscarPorNomeComFiltro(String nome, TipoUsuario tipo) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.nome.startsWithIgnoreCase(nome).and(condicao.nome.containsIgnoreCase(nome)).and(condicao.tipo.eq(TipoUsuario.LIDER));
+		return condicao.nome.startsWithIgnoreCase(nome).and(condicao.nome.containsIgnoreCase(nome)).and(condicao.tipo.eq(tipo));
 	}
 
 	public static Predicate buscarPorLogin(String login) {
@@ -62,6 +62,11 @@ public class UsuarioPredicate {
 	public static Predicate buscarPorNomeComFiltroTipoEArea(String nome, TipoUsuario tipo, Usuario usuario) {
 		QUsuario condicao = QUsuario.usuario;
 		return condicao.tipo.eq(tipo).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.startsWithIgnoreCase(nome).and(condicao.nome.containsIgnoreCase(nome)));
+	}
+
+	public static Predicate buscarTipoEArea(TipoUsuario tipo, int area) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(tipo).and(condicao.area.eq(area));
 	}
 
 }

@@ -22,29 +22,28 @@
 		<h2>Formulário</h2>
 	</header>
 	<div class="main-box-body clearfix"  style="margin-bottom: 20px;">
-		<form:form role="form" action="${path}admin/supervisor/salvar" method="post" modelAttribute="supervisor">
-			<form:hidden path="id" value="${supervisor.id}"/>
-			<form:hidden path="usuario.id" value="${supervisor.usuario.id}" />
+		<form:form role="form" action="${path}admin/supervisor/salvar" method="post" modelAttribute="usuario">
+			<form:hidden path="id" value="${usuario.id}"/>
 			<div class="form-group">
-				<form:label path="usuario.nome">Nome</form:label>
-				<form:input path="usuario.nome" class="form-control" />
-				<form:errors path="usuario.nome" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="nome">Nome</form:label>
+				<form:input path="nome" class="form-control" />
+				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="usuario.login">Login</form:label> 
-				<form:input path="usuario.login" class="form-control" />
-				<form:errors path="usuario.login" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="login">Login</form:label> 
+				<form:input path="login" class="form-control" />
+				<form:errors path="login" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<c:choose>
-				<c:when test="${supervisor.id == nul}">
+				<c:when test="${usuario.id == nul}">
 					<div class="form-group">
-						<form:label path="usuario.senha">Senha</form:label> 
-						<form:input path="usuario.senha" type="password" class="form-control" />
-						<form:errors path="usuario.senha" style="color:#FFF" cssClass="label label-danger" element="span" />
+						<form:label path="senha">Senha</form:label> 
+						<form:input path="senha" type="password" class="form-control" />
+						<form:errors path="senha" style="color:#FFF" cssClass="label label-danger" element="span" />
 					</div>	
 				</c:when>
 				<c:otherwise>
-					<form:hidden path="usuario.senha" value="${usuario.senha}"/>
+					<form:hidden path="senha" value="${senha}"/>
 				</c:otherwise>
 			</c:choose>
 			<div class="form-group">
@@ -53,14 +52,14 @@
 				<form:errors path="area" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="usuario.telefone">Telefone</form:label>
-				<form:input path="usuario.telefone" class="form-control"  id="maskedPhone" placeholder="99999-9999" />
-				<form:errors path="usuario.telefone" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="telefone">Telefone</form:label>
+				<form:input path="telefone" class="form-control"  id="maskedPhone" placeholder="99999-9999" />
+				<form:errors path="telefone" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="usuario.email">Email</form:label>
-				<form:input path="usuario.email" class="form-control" />
-				<form:errors path="usuario.email" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="email">Email</form:label>
+				<form:input path="email" class="form-control" />
+				<form:errors path="email" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

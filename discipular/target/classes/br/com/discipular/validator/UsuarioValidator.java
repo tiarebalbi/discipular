@@ -50,9 +50,9 @@ public class UsuarioValidator implements Validator {
 			errors.rejectValue("senha", "campo.pequeno", "A senha deve ter no mínimo 6 dígitos");			
 		}
 		
-		if(usuario.getEmail() != null && validarEmail(usuario)) {
-			errors.rejectValue("email", "email.invalido", "Email inválido.");
-		}
+//		if(usuario.getEmail() != null && validarEmail(usuario)) {
+//			errors.rejectValue("email", "email.invalido", "Email inválido.");
+//		}
 		
 	}
 	

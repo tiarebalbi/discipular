@@ -136,7 +136,7 @@ public class UsuarioAdminController extends AbstractAdminController {
 			celulas.forEach(c -> c.setUsuario(null));
 			this.celulaService.salvar(celulas);
 			this.service.excluir(id);
-			loadRedirectDangerView(redirect, "Registro excluído com sucesso.");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());
 		}
@@ -170,7 +170,7 @@ public class UsuarioAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome, TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().forEach(u -> {
 			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
@@ -194,7 +194,7 @@ public class UsuarioAdminController extends AbstractAdminController {
 			Usuario usuario = service.buscarRegistro(id);
 			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
-			loadRedirectDangerView(redirect, "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
+			loadRedirectSuccessView(redirect, "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
 		} catch (Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());
 		}

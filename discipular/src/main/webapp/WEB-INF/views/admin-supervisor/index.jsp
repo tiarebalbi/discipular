@@ -51,10 +51,10 @@
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.area}</td>
-											<td>${registro.usuario.nome}</td>
-											<td>${registro.usuario.login}</td>
-											<td>${registro.usuario.telefone}</td>
-											<td>${registro.usuario.email}</td>
+											<td>${registro.nome}</td>
+											<td>${registro.login}</td>
+											<td>${registro.telefone}</td>
+											<td>${registro.email}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -81,12 +81,12 @@
 																	<i class="fa fa-lock fa-5x"></i>
 																</div>
 																<div class="text-center">
-																	<p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) supervisor(a) <strong>${registro.usuario.nome}</strong>?</p>
+																	<p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) supervisor(a) <strong>${registro.nome}</strong>?</p>
 																</div>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-																<a href="${path}admin/supervisor/alterar-senha/${registro.usuario.id}" class="btn btn-danger">Resetar</a>
+																<a href="${path}admin/supervisor/alterar-senha/${registro.id}" class="btn btn-danger">Resetar</a>
 															</div>
 														</div>
 													</div>
@@ -101,7 +101,7 @@
 																<h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4>
 															</div>
 															<div class="modal-body">
-																<p>Você realmente deseja excluir o(a) supervisor(a) ${registro.usuario.nome}?</p>
+																<p>Você realmente deseja excluir o(a) supervisor(a) ${registro.nome}?</p>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

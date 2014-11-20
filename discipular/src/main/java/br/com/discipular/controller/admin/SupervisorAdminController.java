@@ -151,7 +151,19 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome, TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		
+		view.addObject("registros", registros.getContent());
+		view.addObject("pagina", qtdePaginas);
+		
+		return view;
+	}
+	
+	@RequestMapping(value = "/find/area/{condicao}", method = RequestMethod.POST)
+	public ModelAndView apiFind(@PathVariable ("condicao") int area) {
+		ModelAndView view = new ModelAndView();
+		
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.SUPERVISOR, area), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
@@ -166,7 +178,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 			Usuario usuario = service.buscarRegistro(id);
 			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
-			loadRedirectSuccessView(redirect, "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
+			loadRedirectSuccessView(redirect, "Senha do supervisor " + usuario.getNome() + " foi alterada com sucesso.");
 		} catch (Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());
 		}
