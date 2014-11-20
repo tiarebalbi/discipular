@@ -73,10 +73,10 @@
 					<c:choose>
 						<c:when test="${celula.supervisor eq null}">
 							<form:option value=""></form:option>
-							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+							<form:options items="${supervisores}" itemLabel="nome" itemValue="id"></form:options>
 						</c:when>
 						<c:otherwise>
-							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
+							<form:options items="${supervisores}" itemLabel="nome" itemValue="id"></form:options>
 							<form:option value="">---------- Sem Supervisor ----------</form:option>
 						</c:otherwise>
 					</c:choose>

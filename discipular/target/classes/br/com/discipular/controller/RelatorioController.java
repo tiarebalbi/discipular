@@ -21,6 +21,7 @@ import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoChamada;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Chamada;
+import br.com.discipular.model.Membro;
 import br.com.discipular.model.Relatorio;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.ChamadaPredicate;
@@ -208,7 +209,10 @@ public class RelatorioController extends AbstractController {
 	private ModelAndView carregarContexto(ModelAndView view) {
 		List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
 		
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0))));
+		List<Membro> membros = membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0)));
+		membros.forEach(m -> m.setId(null));
+		
+		view.addObject("membros", membros);
 		view.addObject("chamadas", TipoChamada.values());
 		
 		return view;

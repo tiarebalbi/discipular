@@ -13,7 +13,7 @@ function addMenu(xhr) {
 			}
 			
 			if(value.supervisor != null) {
-				supervisor = value.supervisor.usuario.nome;
+				supervisor = value.supervisor.nome;
 			}
 			
 			$('tbody').append("<tr>" +
