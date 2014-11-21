@@ -42,7 +42,7 @@
 			</div>
 			<div class="form-group">
 				<form:label path="horario">Horário</form:label> 
-				<form:select class="form-control" path="horario" items="${horarios}">
+				<form:select class="form-control" path="horario" items="${horarios}" itemLabel="horario">
 				</form:select>
 				<form:errors path="horario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>

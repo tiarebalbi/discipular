@@ -54,6 +54,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
+		view.addObject("modulo", "admin/relatorio");
 		
 		return view;
 	}

@@ -3,14 +3,14 @@ package br.com.discipular.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.query.RelatorioQuery;
 import br.com.discipular.repository.RelatorioRepository;
 import br.com.discipular.service.RelatorioService;
 
@@ -29,8 +29,11 @@ import com.mysema.query.types.Predicate;
 @Service
 public class RelatorioServiceImpl implements RelatorioService {
 
-	@Resource
+	@Autowired
 	private RelatorioRepository repository;
+	
+	@Autowired
+	private RelatorioQuery query;
 	
 	public Relatorio salvar(Relatorio relatorio) {
 		
@@ -82,6 +85,24 @@ public class RelatorioServiceImpl implements RelatorioService {
 	@Override
 	public Page<Relatorio> buscarTodos(Pageable paginacao) {
 		return repository.findAll(paginacao);
+	}
+
+	@Override
+	public List<Relatorio> salvar(List<Relatorio> relatorios) {
+		Assert.notNull(relatorios, "Registro nulo, não foi possível salvar este registro.");
+		
+		relatorios.forEach(r -> {
+			if(r.getId() == null) {
+				r.setDataCriacao(LocalDate.now());
+			}
+		});
+		
+		return repository.save(relatorios);
+	}
+
+	@Override
+	public List<Relatorio> buscarPorSupervisor(String loginSupervisor) {
+		return query.buscarPorSupervisor(loginSupervisor);
 	}	
 	
 }

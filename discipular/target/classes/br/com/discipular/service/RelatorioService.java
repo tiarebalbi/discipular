@@ -40,5 +40,9 @@ public interface RelatorioService {
 	public Page<Relatorio> buscarTodos(Predicate condicao, Pageable paginacao);
 	
 	public List<Relatorio> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
+
+	public List<Relatorio> salvar(List<Relatorio> relatorios);
+	
+	public List<Relatorio> buscarPorSupervisor(String loginSupervisor);
 	
 }

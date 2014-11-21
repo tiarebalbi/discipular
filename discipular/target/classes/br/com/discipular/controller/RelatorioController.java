@@ -149,7 +149,6 @@ public class RelatorioController extends AbstractController {
 				chamadaService.salvar(relatorio.getChamada());
 				
 				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
-				
 				relatorio.setCelula(celula);
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);

@@ -42,7 +42,7 @@
 			</div>
 			<div class="form-group">
 				<form:label path="horario">Horário</form:label> 
-				<form:select class="form-control" path="horario" items="${horarios}">
+				<form:select class="form-control" path="horario" items="${horarios}" itemValue="horario">
 				</form:select>
 				<form:errors path="horario" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
@@ -66,23 +66,6 @@
 					</c:choose>
 				</form:select>
 				<form:errors path="usuario" style="color:#FFF" cssClass="label label-danger" element="span" />
-			</div>
-			<div class="form-group">
-				<form:label path="supervisor">Supervisor</form:label> 
-				<form:select path="supervisor" class="form-control" >
-					<c:choose>
-						<c:when test="${celula.supervisor eq null}">
-							<form:option value=""></form:option>
-							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
-						</c:when>
-						<c:otherwise>
-							<form:options items="${supervisores}" itemLabel="usuario.nome" itemValue="id"></form:options>
-							<form:option value="">---------- Sem Supervisor ----------</form:option>
-						</c:otherwise>
-					</c:choose>
-					
-				</form:select>
-				<form:errors path="supervisor" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="col-lg-12">
 				<button type="submit" class="btn btn-primary btn-lg pull-right" style="margin-left: 20px;">Salvar</button>

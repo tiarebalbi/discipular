@@ -95,7 +95,6 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
 		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
-		view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 		return view;
 	}
 
@@ -107,7 +106,6 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
 		view.addObject("usuarios", getLideres(celula));
-		view.addObject("supervisores", getSupervisor(celula));
 
 		return view;
 	}
@@ -120,10 +118,11 @@ public class CelulaSupervisorController extends AbstractAdminController {
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
 			view.addObject("usuarios", getLideres(celula));
-			view.addObject("supervisores", getSupervisor(celula));
 			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
+				Usuario usuario = usuarioService.buscarRegistro(UsuarioPredicate.buscarPorLogin(getCurrentUser().getLogin()));
+				celula.setSupervisor(usuario);
 				this.service.salvar(celula);
 				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
@@ -131,7 +130,6 @@ public class CelulaSupervisorController extends AbstractAdminController {
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
 				view.addObject("usuarios", getLideres(celula));
-				view.addObject("supervisores", getSupervisor(celula));
 				loadViewDangerView(view, e.getMessage());
 			}
 		}
@@ -182,17 +180,6 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
-	}
-	
-	private List<Usuario> getSupervisor(Celula celula) {
-		List<Usuario> supervisores = usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR));
-		
-		if(celula.getSupervisor() != null) {
-			supervisores.removeIf(s -> s.getId() == celula.getSupervisor().getId());
-		}
-		
-		return supervisores;
-				
 	}
 	
 	private List<Usuario> getLideres(Celula celula) {

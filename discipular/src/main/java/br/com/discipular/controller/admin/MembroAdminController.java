@@ -52,6 +52,7 @@ public class MembroAdminController extends AbstractAdminController {
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
+		view.addObject("modulo", "admin/membro");
 		
 		return view;
 	}

@@ -96,7 +96,6 @@ public class SupervisorAdminController extends AbstractAdminController {
 				loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 				return view;
 			} 
-			
 			usuario.setTipo(TipoUsuario.SUPERVISOR);
 			this.service.salvar(usuario);
 			loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");

@@ -22,10 +22,13 @@ import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.controller.admin.AbstractAdminController;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
+import br.com.discipular.model.Relatorio;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.CelulaPredicate;
+import br.com.discipular.predicate.RelatorioPredicate;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.service.CelulaService;
+import br.com.discipular.service.RelatorioService;
 import br.com.discipular.service.UsuarioService;
 import br.com.discipular.validator.UsuarioValidator;
 
@@ -55,6 +58,9 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	
 	@Autowired
 	private CelulaService celulaService;
+	
+	@Autowired
+	private RelatorioService relatorioService;
 	
 	@Autowired
 	private UsuarioValidator validator;
@@ -114,7 +120,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 				loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 				return view;
 			} 
-			
+			usuario.setArea(getCurrentUser().getArea());
 			usuario.setTipo(TipoUsuario.LIDER);
 			this.service.salvar(usuario);
 			loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
@@ -133,9 +139,14 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			Usuario usuario = this.service.buscarRegistro(id);
+			
 			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPorLider(usuario));
 			celulas.forEach(c -> c.setUsuario(null));
 			this.celulaService.salvar(celulas);
+			
+			List<Relatorio> relatorios = this.relatorioService.buscarTodos(RelatorioPredicate.buscarPor(usuario));
+			relatorios.forEach(r -> r.setUsuario(null));
+			this.relatorioService.salvar(relatorios);
 			
 			this.service.excluir(id);
 			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
