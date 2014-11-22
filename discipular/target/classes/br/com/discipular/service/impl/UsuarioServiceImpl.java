@@ -14,7 +14,6 @@ import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
 import br.com.discipular.service.UsuarioService;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -50,11 +49,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public void excluir(Usuario entidade) {
-		this.repository.delete(entidade);
-	}
-
-	@Override
 	public void excluir(Long id) {
 		this.repository.delete(id);
 	}
@@ -70,16 +64,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> buscarTodos() {
-		return this.repository.findAll();
-	}
-
-	@Override
-	public Page<Usuario> buscarTodos(Pageable paginacao) {
-		return this.repository.findAll(paginacao);
-	}
-
-	@Override
 	public List<Usuario> buscarTodos(Predicate condicao) {
 		return (List<Usuario>) this.repository.findAll(condicao);
 	}
@@ -90,10 +74,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Usuario>) this.repository.findAll(condicao, ordem);
-	}
-	
 	public long count(Predicate condicao) {
 		return this.repository.count(condicao);
 	}

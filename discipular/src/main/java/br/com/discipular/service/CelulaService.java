@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 import br.com.discipular.model.Celula;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -23,7 +22,7 @@ public interface CelulaService {
 
 	public Celula salvar(Celula usuario) throws Exception;
 	
-	public void excluir(Celula usuario) throws Exception;
+	void salvar(List<Celula> celulas);
 	
 	public void excluir(Long id) throws Exception;
 	
@@ -31,18 +30,10 @@ public interface CelulaService {
 	
 	public Celula buscarRegistro(Predicate condicao);
 	
-	public List<Celula> buscarTodos();
-	
-	public Page<Celula> buscarTodos(Pageable paginacao);
-	
 	public List<Celula> buscarTodos(Predicate condicao);
 	
 	public Page<Celula> buscarTodos(Predicate condicao, Pageable paginacao);
 
-	public List<Celula> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
-
 	long count(Predicate condicao);
 
-	void salvar(List<Celula> celulas);
-	
 }

@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 import br.com.discipular.model.Membro;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -23,15 +22,11 @@ public interface MembroService {
 
 	public Membro salvar(Membro usuario) throws Exception;
 	
-	public void excluir(Membro usuario);
-	
 	public void excluir(Long id);
 	
 	public Membro buscarRegistro(Long id);
 	
 	public Membro buscarRegistro(Predicate condicao);
-	
-	public List<Membro> buscarTodos();
 	
 	public Page<Membro> buscarTodos(Pageable paginacao);
 
@@ -39,9 +34,6 @@ public interface MembroService {
 	
 	public Page<Membro> buscarTodos(Predicate condicao, Pageable paginacao);
 	
-	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem);
-
 	long count(Predicate condicao);
-
 	
 }

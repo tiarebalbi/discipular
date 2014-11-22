@@ -14,7 +14,6 @@ import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.repository.MembroRepository;
 import br.com.discipular.service.MembroService;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -32,6 +31,7 @@ public class MembroServiceImpl implements MembroService {
 	@Resource
 	private MembroRepository repository;
 	
+	@Override
 	public Membro salvar(Membro entidade) throws Exception {
 		
 		if(isFull(entidade) && entidade.getId() == null) {
@@ -41,35 +41,26 @@ public class MembroServiceImpl implements MembroService {
 		return repository.save(entidade);
 		
 	}
-
-	public void excluir(Membro entidade) {
-		Assert.notNull(entidade, "Registro nulo, não foi possível excluir este registro.");
-		repository.delete(entidade);
-	}
 	
+	@Override
 	public void excluir(Long id) {
 		Assert.notNull(id, "ID nulo, não foi possível excluir este registro.");
 		repository.delete(id);
 	}
 
+	@Override
 	public Membro buscarRegistro(Long id) {
 		return repository.findOne(id);
 	}
 
+	@Override
 	public Membro buscarRegistro(Predicate condicao) {
 		return repository.findOne(condicao);
 	}
 
-	public List<Membro> buscarTodos() {
-		return repository.findAll();
-	}
-
+	@Override
 	public List<Membro> buscarTodos(Predicate condicao) {
 		return (List<Membro>) repository.findAll(condicao);
-	}
-
-	public List<Membro> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Membro>) repository.findAll(condicao, ordem);
 	}
 
 	@Override
