@@ -45,11 +45,6 @@ public class CelulaPredicate {
 		return condicao.apagada.eq(false);
 	}
 
-	public static Predicate buscarPorUsuarioNulo() {
-		QCelula condicao = QCelula.celula;
-		return condicao.usuario.isNull();
-	}
-
 	public static Predicate buscarPorLider(Usuario usuario) {
 		QCelula condicao = QCelula.celula;
 		return condicao.usuario.id.eq(usuario.getId());

@@ -49,7 +49,7 @@ public class MembroSupervisorController extends AbstractAdminController {
 		
 		marker = 0;
 
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		
 		view.addObject("registros", registros.getContent());
@@ -63,7 +63,7 @@ public class MembroSupervisorController extends AbstractAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacaoAdmin(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
@@ -75,7 +75,7 @@ public class MembroSupervisorController extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacaoAdmin(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());
@@ -87,7 +87,7 @@ public class MembroSupervisorController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorAreaECelulaFiltro(nome, getCurrentUser().getArea()), MembroPredicate.buscarPaginacaoAdmin(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPorAreaECelulaFiltro(nome, getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());

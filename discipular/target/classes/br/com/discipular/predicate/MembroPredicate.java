@@ -21,16 +21,7 @@ import com.mysema.query.types.Predicate;
 public class MembroPredicate {
 
 	public static PageRequest buscarPaginacao(int pagina, int tamanho) {
-		return new PageRequest(pagina, tamanho, Direction.ASC, "nome");
-	}
-	
-	public static PageRequest buscarPaginacaoAdmin(int pagina, int tamanho) {
 		return new PageRequest(pagina, tamanho, Direction.ASC, "nome", "dataNascimento");
-	}
-	
-	public static Predicate buscarPorNomeComFiltro(String nome) {
-		QMembro condicao = QMembro.membro;
-		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.containsIgnoreCase(nome));
 	}
 	
 	public static Predicate buscarPorCelulaComFiltro(String nome) {
