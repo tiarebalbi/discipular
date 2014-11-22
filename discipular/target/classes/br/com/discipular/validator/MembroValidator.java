@@ -29,13 +29,6 @@ public class MembroValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "nome", "campo.obrigatorio","Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "tipo", "campo.obrigatorio","Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(e, "dataNascimento", "campo.obrigatorio","Este campo é obrigatório");
-
-		Membro membro = (Membro) object;
-		
-		if(membro.getDataNascimento() == null) {
-			e.rejectValue("dataNascimento", "data.invalida", "Favor preencher o campo corretamente! [dd/mm/yyyy]");
-		}
-		
 	}
 	
 }

@@ -54,8 +54,8 @@ public class RelatorioValidator implements Validator {
 		
 		if(relatorio.getAsk5() > 5 || relatorio.getAsk5() < 0) {
 			errors.rejectValue("ask5", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
-		}	
-	
+		}
+		
 	}
 
 }
