@@ -4,6 +4,7 @@ function addMenu(xhr) {
 	$('table').find('span').html("");
 	if(response.registros.length > 0) {
 		$(response.registros).each(function (index, value) {
+			var responsavel = (value.usuario == "null" ? value.usuario.login : "");
 			$('tbody').append("<tr>" +
 					"<td>" +
 					value.id +
@@ -12,7 +13,7 @@ function addMenu(xhr) {
 					value.celula.nome +
 					"</td>" +
 					"<td>" +
-					value.usuario.login +
+					responsavel +
 					"</td>" +
 					"<td>" +
 					value.dataFormat +
