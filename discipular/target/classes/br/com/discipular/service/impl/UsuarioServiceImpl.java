@@ -1,5 +1,6 @@
 package br.com.discipular.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
+import br.com.discipular.enumerator.TipoUsuario;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
@@ -92,6 +95,32 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 		
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
+	}
+	
+	@Override
+	public List<Usuario> buscarLideresSemCelula(Celula celula) {
+		List<Usuario> lideres = new ArrayList<>();
+		
+		if(celula.getUsuario() != null) {
+			lideres.add(celula.getUsuario());
+			lideres.addAll(this.buscarTodos(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
+		} else {
+			lideres.addAll(this.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
+		}
+		
+		return lideres;
+	}
+	
+	@Override
+	public List<Usuario> buscarSupervisores(Celula celula) {
+		List<Usuario> supervisores = this.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR));
+		
+		if(celula.getSupervisor() != null) {
+			supervisores.removeIf(s -> s.getId() == celula.getSupervisor().getId());
+		}
+		
+		return supervisores;
+				
 	}
 	
 }

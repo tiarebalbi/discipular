@@ -1,8 +1,5 @@
 package br.com.discipular.controller.supervisor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -105,7 +102,7 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", getLideres(celula));
+		view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
 
 		return view;
 	}
@@ -117,7 +114,7 @@ public class CelulaSupervisorController extends AbstractAdminController {
 			view = new ModelAndView(VIEW_FORM, "celula", celula);
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
-			view.addObject("usuarios", getLideres(celula));
+			view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
 			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
@@ -129,7 +126,7 @@ public class CelulaSupervisorController extends AbstractAdminController {
 				view = new ModelAndView(VIEW_FORM, "celula", celula);
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
-				view.addObject("usuarios", getLideres(celula));
+				view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
 				loadViewDangerView(view, e.getMessage());
 			}
 		}
@@ -180,18 +177,6 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		view.addObject("pagina", qtdePaginas);
 		
 		return view;
-	}
-	
-	private List<Usuario> getLideres(Celula celula) {
-		List<Usuario> lideres = new ArrayList<>();
-		
-		if(celula.getUsuario() != null) {
-			lideres.add(celula.getUsuario());
-			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
-		} else {
-			lideres.addAll(usuarioService.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
-		}
-		return lideres;
 	}
 	
 }
