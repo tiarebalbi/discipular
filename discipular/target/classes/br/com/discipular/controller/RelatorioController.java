@@ -132,9 +132,16 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-			List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
-			view.addObject("membros", chamada);
-			view.addObject("chamadas", TipoChamada.values());
+
+			if(relatorio.getId() != null) {
+				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+				view.addObject("membros", chamada);
+				view.addObject("chamadas", TipoChamada.values());
+			} else {
+				carregarContexto(view);
+			}
+			
+			
 			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {

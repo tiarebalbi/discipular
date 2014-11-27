@@ -38,27 +38,27 @@
 			</div>
 			<div class="form-group">
 				<form:label path="ask1"><span>1) De um modo geral como foi a Célula "HOJE"?</span></form:label>
-				<form:input type="number" path="ask1" class="form-control" />
+				<form:input path="ask1" class="form-control" />
 				<form:errors path="ask1" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask2"><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega) </span></form:label>
-				<form:input type="number" path="ask2" class="form-control" />
+				<form:input path="ask2" class="form-control" />
 				<form:errors path="ask2" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask3"><span>3) Como foi a participação dos membros?</span></form:label>
-				<form:input type="number" path="ask3" class="form-control" />
+				<form:input path="ask3" class="form-control" />
 				<form:errors path="ask3" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask4"><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?</span></form:label>
-				<form:input type="number" path="ask4" class="form-control" />
+				<form:input path="ask4" class="form-control" />
 				<form:errors path="ask4" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask5"><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?</span></form:label>
-				<form:input type="number" path="ask5" class="form-control" />
+				<form:input path="ask5" class="form-control" />
 				<form:errors path="ask5" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">

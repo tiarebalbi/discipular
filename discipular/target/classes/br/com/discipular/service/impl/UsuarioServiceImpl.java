@@ -120,7 +120,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		return supervisores;
-				
 	}
 	
 }
