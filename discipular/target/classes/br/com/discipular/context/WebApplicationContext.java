@@ -2,7 +2,6 @@ package br.com.discipular.context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -141,26 +139,6 @@ public class WebApplicationContext extends WebMvcConfigurerAdapter {
         messageSource.setBasenames("i18n/messages_pt_BR", "i18n/messages_en_US");
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
-    }
-	
-	/**
-	 * Bean de configuração dos erros HTTPs
-	 * @return
-	 */
-	@Bean(name="simpleMappingExceptionResolver")
-    public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
-        SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
-
-        Properties mappings = new Properties();
-        mappings.setProperty("DatabaseException", "databaseError");
-        mappings.setProperty("InvalidCreditCardException", "creditCardError");
-
-        
-        r.setExceptionMappings(mappings);  // None by default
-        r.setDefaultErrorView("error");    // No default
-        r.setExceptionAttribute("ex");     // Default is "exception"
-        r.setWarnLogCategory("example.MvcLogger");     // No default
-        return r;
     }
 	
 }
