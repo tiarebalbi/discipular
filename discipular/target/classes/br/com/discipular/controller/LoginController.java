@@ -28,25 +28,16 @@ public class LoginController {
 	@RequestMapping(value = "/login/install", method = RequestMethod.GET)
 	public ModelAndView adm() {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_LOGIN);
-		
-		Usuario usuario = new Usuario();
-		
-		usuario.setNome("Lucas Campos");
-		usuario.setLogin("admin");
-		usuario.setSenha("123");
-		usuario.setArea(0);
-		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
-
-		Usuario ademir = new Usuario();
-		usuario.setNome("Ademir e Sandra");
-		usuario.setLogin("adolivei");
-		usuario.setSenha("123");
-		usuario.setArea(0);
-		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
-		
 		try {
+			Usuario usuario = new Usuario();
+			
+			usuario.setNome("Lucas Campos");
+			usuario.setLogin("admin");
+			usuario.setSenha("123");
+			usuario.setArea(0);
+			usuario.setTipo(TipoUsuario.ADMINISTRADOR);
+	
 			usuarioService.salvar(usuario);
-			usuarioService.salvar(ademir);
 		} catch (Exception e) {
 			System.out.println("Deu erro.");
 		}
