@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,6 +21,7 @@ import br.com.discipular.annotations.Lider;
 import br.com.discipular.enumerator.TipoChamada;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Chamada;
+import br.com.discipular.model.Membro;
 import br.com.discipular.model.Relatorio;
 import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.ChamadaPredicate;
@@ -50,7 +52,7 @@ public class RelatorioController extends AbstractController {
 	private final static String VIEW_INDEX = "relatorio/index";
 	private final static String VIEW_FORM = "relatorio/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/relatorio";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 8;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private static final String REDIRECT_INDEX = "redirect:/";
 	private int qtdePaginas;
 	private int marker = 0;
@@ -79,23 +81,25 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		if(!haveCelula()) {
+		try {
+			Assert.state(haveCelula(), "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+			
+			marker = 0;
+			
+			Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
+			
+			Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+			qtdePaginas = registros.getTotalPages();
+			registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
+			view.addObject("registros", registros.getContent());
+			view.addObject("pagina", qtdePaginas);
+		} catch (Exception e) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
-			return view;
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
-		marker = 0;
-		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPor(getCurrentUser()) , RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		qtdePaginas = registros.getTotalPages();
-		registros.getContent().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
-		view.addObject("registros", registros.getContent());
-		view.addObject("pagina", qtdePaginas);
-		
 		return view;
+		
 	}
 	
 	@RequestMapping(value = "novo", method = RequestMethod.GET)
@@ -104,9 +108,7 @@ public class RelatorioController extends AbstractController {
 		
 		if(!haveCelula()) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
 			return view;
 		}
 		
@@ -119,6 +121,7 @@ public class RelatorioController extends AbstractController {
 		Relatorio relatorio = service.buscarRegistro(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 		List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+		relatorio.setChamada(chamada);
 		view.addObject("membros", chamada);
 		view.addObject("chamadas", TipoChamada.values());
 		return view;
@@ -129,30 +132,43 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-			carregarContexto(view);
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
+
+			if(relatorio.getId() != null) {
+				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+				view.addObject("membros", chamada);
+				view.addObject("chamadas", TipoChamada.values());
+			} else {
+				carregarContexto(view);
+			}
+			
+			
+			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
+				Assert.notNull(relatorio.getChamada(), "Nenhum membro cadastrado nesta célula, favor cadastrar os membros antes de fazer o relatório.");
+				int total = 0;
+				for(Chamada chamada : relatorio.getChamada()) {
+					if(chamada.getTipo() == TipoChamada.PRESENTE) {total++;}
+				};
+				
+				Assert.isTrue(total > 0, "Nenhum membro esteve presente nesta célula!");
+				
 				chamadaService.salvar(relatorio.getChamada());
 				
-				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPor(getCurrentUser()));
-				
+				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
 				relatorio.setCelula(celula);
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
-				relatorio.getChamada().forEach(chamada -> chamada.setRelatorio(relatorio));
+				relatorio.getChamada().stream().parallel().forEach(chamada -> chamada.setRelatorio(relatorio));
 				chamadaService.salvar(relatorio.getChamada());
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
+				
+				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-				carregarContexto(view);
-				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "error");
-				view.addObject("icon", "times");
+				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+				view.addObject("membros", chamada);
+				view.addObject("chamadas", TipoChamada.values());
+				loadViewDangerView(view, e.getMessage());
 			}
 		}
 		return view;
@@ -161,15 +177,12 @@ public class RelatorioController extends AbstractController {
 	@RequestMapping(value = "excluir/{id}", method = RequestMethod.GET)
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
+
 		try {
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "error");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
@@ -178,8 +191,10 @@ public class RelatorioController extends AbstractController {
 	@RequestMapping(value = "previous", method = RequestMethod.POST)
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
-		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+	
+		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -189,16 +204,21 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
+		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
 	}
 	
 	private ModelAndView carregarContexto(ModelAndView view) {
-		List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+		List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
 		
-		view.addObject("membros", membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0))));
+		List<Membro> membros = membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0)));
+		membros.forEach(m -> m.setId(null));
+		
+		view.addObject("membros", membros);
 		view.addObject("chamadas", TipoChamada.values());
 		
 		return view;

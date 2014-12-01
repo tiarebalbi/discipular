@@ -22,7 +22,11 @@ public class QUsuario extends EntityPathBase<Usuario> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
+    public final NumberPath<Integer> area = createNumber("area", Integer.class);
+
     public final ListPath<Celula, QCelula> celulas = this.<Celula, QCelula>createList("celulas", Celula.class, QCelula.class, PathInits.DIRECT2);
+
+    public final StringPath email = createString("email");
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -32,6 +36,8 @@ public class QUsuario extends EntityPathBase<Usuario> {
     public final StringPath nome = createString("nome");
 
     public final StringPath senha = createString("senha");
+
+    public final StringPath telefone = createString("telefone");
 
     public final EnumPath<br.com.discipular.enumerator.TipoUsuario> tipo = createEnum("tipo", br.com.discipular.enumerator.TipoUsuario.class);
 

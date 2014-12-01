@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,7 @@ import br.com.discipular.context.security.DiscipularUserDetailsAuthenticationPro
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true, jsr250Enabled=true, securedEnabled=true)
 @ComponentScan(basePackages={"br.com.discipular.context.security", "br.com.discipular.service"})
+@PropertySource({"classpath:application.properties", "classpath:i18n/messages_pt_BR.properties", "classpath:i18n/messages_en_US.properties"})
 public class SecurityApplicationContext extends WebSecurityConfigurerAdapter {
 
 	@Autowired

@@ -35,7 +35,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="br.com.discipular.controller")
-@PropertySource({"classpath:application.properties", "classpath:i18n/messages_pt_BR.properties"})
+@PropertySource({"classpath:application.properties", "classpath:i18n/messages_pt_BR.properties", "classpath:i18n/messages_en_US.properties"})
 public class WebApplicationContext extends WebMvcConfigurerAdapter {
 
 	private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/views/";
@@ -135,9 +135,9 @@ public class WebApplicationContext extends WebMvcConfigurerAdapter {
 	@Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
         messageSource.setBasenames("i18n/messages_pt_BR", "i18n/messages_en_US");
         messageSource.setUseCodeAsDefaultMessage(true);
-        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 	

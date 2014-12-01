@@ -6,7 +6,6 @@ import org.springframework.data.domain.Sort.Direction;
 
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.QCelula;
-import br.com.discipular.model.Supervisor;
 import br.com.discipular.model.Usuario;
 
 import com.mysema.query.types.Predicate;
@@ -28,7 +27,7 @@ public class CelulaPredicate {
 
 	public static Predicate buscarPorNomeComFiltro(String nome) {
 		QCelula condicao = QCelula.celula;
-		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome)).and(condicao.apagada.eq(false));
+		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.containsIgnoreCase(nome)).and(condicao.apagada.eq(false));
 	}
 
 	public static Predicate buscarPorNome(String nome) {
@@ -36,7 +35,7 @@ public class CelulaPredicate {
 		return condicao.nome.eq(nome);
 	}
 
-	public static Predicate buscarPor(Supervisor supervisor) {
+	public static Predicate buscarPorSupervisor(Usuario supervisor) {
 		QCelula condicao = QCelula.celula;
 		return condicao.supervisor.id.eq(supervisor.getId());
 	}
@@ -46,14 +45,19 @@ public class CelulaPredicate {
 		return condicao.apagada.eq(false);
 	}
 
-	public static Predicate buscarPorUsuarioNulo() {
-		QCelula condicao = QCelula.celula;
-		return condicao.usuario.isNull();
-	}
-
-	public static Predicate buscarPor(Usuario usuario) {
+	public static Predicate buscarPorLider(Usuario usuario) {
 		QCelula condicao = QCelula.celula;
 		return condicao.usuario.id.eq(usuario.getId());
+	}
+
+	public static Predicate buscarPorCelulaAtivaEArea(int area) {
+		QCelula condicao = QCelula.celula;
+		return condicao.apagada.eq(false).and(condicao.area.eq(area));
+	}
+
+	public static Predicate buscarPorNomeComFiltroCelulaAtivaEArea(String nome, Usuario usuario) {
+		QCelula condicao = QCelula.celula;
+		return condicao.apagada.eq(false).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.containsIgnoreCase(nome)));
 	}
 
 }

@@ -16,11 +16,6 @@
 			<dir name="${rebel.workspace.path}/discipular/src/main/webapp">
 			</dir>
 		</link>
-		<link target="/">
-			<dir name="${rebel.workspace.path}/discipular/src/main/webapp/WEB-INF/resources">
-				<exclude name="/"/>
-			</dir>
-		</link>
 	</web>
 
 </application>

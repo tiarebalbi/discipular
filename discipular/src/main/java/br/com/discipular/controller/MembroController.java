@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -36,7 +37,6 @@ import br.com.discipular.validator.MembroValidator;
  *
  * 	08/09/2014 
  * 
- * TODO buscar por usuário logado
  */
 @Lider
 @Controller
@@ -47,9 +47,7 @@ public class MembroController extends AbstractController {
 	private final static String VIEW_FORM = "membro/form";
 	private final static String VIEW_REDIRECT_INDEX = "redirect:/membro";
 	private final static String REDIRECT_INDEX = "redirect:/";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 14;
-	private int qtdePaginas;
-	private int marker = 0;
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	
 	@Autowired
 	private MembroService service;
@@ -69,24 +67,20 @@ public class MembroController extends AbstractController {
 	public ModelAndView index(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		marker = 0;
-		
 		try {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
+			
+			Assert.notEmpty(celula, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
 			
 			Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-			qtdePaginas = registros.getTotalPages();
 			
-			registros.getContent().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
+			registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 			
 			view.addObject("registros", registros.getContent());
 			view.addObject("celula", celula.get(0).getNome());
-			view.addObject("pagina", qtdePaginas);
 		} catch (Exception e) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
@@ -98,9 +92,9 @@ public class MembroController extends AbstractController {
 
 		if(!haveCelula()) {
 			view = new ModelAndView(REDIRECT_INDEX);
-			redirect.addFlashAttribute("mensagem", "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			
+			loadRedirectDangerView(redirect, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+
 			return view;
 		}
 		
@@ -122,24 +116,19 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		if(errors.hasErrors()) {
 			view = new ModelAndView(VIEW_FORM, "membro", membro);
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
 			view.addObject("tipos", TipoMembro.values());
+			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
-				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(getCurrentUser()));
+				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
 				membro.setCelula(celula.get(0));
 				this.service.salvar(membro);
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
+				
+				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "membro", membro);
 				view.addObject("tipos", TipoMembro.values());
-				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "danger");
-				view.addObject("icon", "times");
+				loadViewDangerView(view, e.getMessage());
 			}
 		}
 		return view;
@@ -150,48 +139,12 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
 	}
-	
-	@RequestMapping(value = "previous", method = RequestMethod.POST)
-	public ModelAndView apiPrevious() {
-		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("registros", registros.getContent());
-		
-		return view;
-	}
-	
-	@RequestMapping(value = "next", method = RequestMethod.POST)
-	public ModelAndView apiNext() {
-		ModelAndView view = new ModelAndView(VIEW_INDEX);
-		
-		Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		view.addObject("registros", registros.getContent());
-		
-		return view;
-	}
-	
-	@RequestMapping(value = "find/{condicao}", method = RequestMethod.POST)
-	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
-		ModelAndView view = new ModelAndView();
-		
-		Page<Membro> users = service.buscarTodos(MembroPredicate.buscarPorNomeComFiltro(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		
-		view.addObject("registros", users.getContent());
-		view.addObject("pagina", qtdePaginas);
-		
-		return view;
-	}
-	
 }

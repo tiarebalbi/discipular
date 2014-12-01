@@ -1,19 +1,22 @@
 package br.com.discipular.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
+import br.com.discipular.enumerator.TipoUsuario;
+import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
 import br.com.discipular.service.UsuarioService;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -39,20 +42,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
 		}
 		
+		Assert.notNull(entidade.getArea(), "Favor preencher o campo área.");
+		
 		if(!isLoginValido(entidade)) {
 			throw new Exception("Já existe um líder/supervisor cadastrado com este login, favor utilizar outro login.");
 		}
 		
-		if(!isNomeValido(entidade)) {
-			throw new Exception("Já existe um líder/supervisor cadastrado com este nome, favor utilizar outro nome.");
-		}
-		
 		return this.repository.save(entidade);
-	}
-
-	@Override
-	public void excluir(Usuario entidade) {
-		this.repository.delete(entidade);
 	}
 
 	@Override
@@ -71,16 +67,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> buscarTodos() {
-		return this.repository.findAll();
-	}
-
-	@Override
-	public Page<Usuario> buscarTodos(Pageable paginacao) {
-		return this.repository.findAll(paginacao);
-	}
-
-	@Override
 	public List<Usuario> buscarTodos(Predicate condicao) {
 		return (List<Usuario>) this.repository.findAll(condicao);
 	}
@@ -91,17 +77,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Usuario>) this.repository.findAll(condicao, ordem);
-	}
-	
 	public long count(Predicate condicao) {
 		return this.repository.count(condicao);
 	}
 	
 	private boolean isLoginValido(Usuario usuario) {
+		if(usuario.getLogin().startsWith(" ")) {
+			usuario.setLogin(usuario.getLogin().substring(1, usuario.getLogin().length()));
+		}
+		
 		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
-	
+
 		if(qtdeUsuarios == 0) {
 			return true;
 		} 
@@ -111,16 +97,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}
 	
-	private boolean isNomeValido(Usuario usuario) {
-		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorNome(usuario.getNome()));
+	@Override
+	public List<Usuario> buscarLideresSemCelula(Celula celula) {
+		List<Usuario> lideres = new ArrayList<>();
+		
+		if(celula.getUsuario() != null) {
+			lideres.add(celula.getUsuario());
+			lideres.addAll(this.buscarTodos(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
+		} else {
+			lideres.addAll(this.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
+		}
+		
+		return lideres;
+	}
 	
-		if(qtdeUsuarios == 0) {
-			return true;
-		} 
+	@Override
+	public List<Usuario> buscarSupervisores(Celula celula) {
+		List<Usuario> supervisores = this.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR));
 		
-		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorNome(usuario.getNome()));
+		if(celula.getSupervisor() != null) {
+			supervisores.removeIf(s -> s.getId() == celula.getSupervisor().getId());
+		}
 		
-		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
+		return supervisores;
 	}
 	
 }

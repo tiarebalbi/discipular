@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <spring:url value="/" var="path"></spring:url>
 
-<div class="row">
+<div class="row text-center">
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
@@ -19,13 +19,13 @@
 	</div>
 </div>
 
-<div class="main-box">
+<div class="main-box"  style=" width: 60%; margin: 0 auto;">
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>
-	<div class="main-box-body clearfix">
+	<div class="main-box-body clearfix" style="margin-bottom: 20px;">
 		<form:form role="form" action="${path}relatorio/salvar" method="post" modelAttribute="relatorio">
-			<form:hidden path="id"/>
+			<form:hidden path="id" value="${relatorio.id}" />
 			<div class="form-group">
 				<form:label path="tema"><span>Tema</span></form:label>
 				<form:input path="tema" class="form-control" />
@@ -38,27 +38,27 @@
 			</div>
 			<div class="form-group">
 				<form:label path="ask1"><span>1) De um modo geral como foi a Célula "HOJE"?</span></form:label>
-				<form:input type="number" path="ask1" class="form-control" />
+				<form:input path="ask1" class="form-control" />
 				<form:errors path="ask1" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask2"><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega) </span></form:label>
-				<form:input type="number" path="ask2" class="form-control" />
+				<form:input path="ask2" class="form-control" />
 				<form:errors path="ask2" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask3"><span>3) Como foi a participação dos membros?</span></form:label>
-				<form:input type="number" path="ask3" class="form-control" />
+				<form:input path="ask3" class="form-control" />
 				<form:errors path="ask3" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask4"><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?</span></form:label>
-				<form:input type="number" path="ask4" class="form-control" />
+				<form:input path="ask4" class="form-control" />
 				<form:errors path="ask4" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="ask5"><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?</span></form:label>
-				<form:input type="number" path="ask5" class="form-control" />
+				<form:input path="ask5" class="form-control" />
 				<form:errors path="ask5" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
@@ -67,23 +67,25 @@
 			</div>
 			<div class="main-box clearfix" style="background-color: #afc7c7;"> 
 				<div class="col-lg-12">
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<label><span>Nome</span></label>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<label><span>Chamada</span></label>
 					</div>
 				</div>
 				<c:forEach items="${membros}" var="membro" varStatus="i">
-					<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
+					<c:if test="${membro.id != null}">
+						<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
+					</c:if>
 					<div class="col-lg-12">
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<div class="form-group"> 
 								<input disabled value="${membro.nome}" class="form-control" />
 								<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<form:select path="chamada[${i.count - 1}].tipo" class="form-control" items="${chamadas}"> 
 							</form:select>
 						</div>

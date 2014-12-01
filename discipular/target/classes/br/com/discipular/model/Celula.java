@@ -52,7 +52,7 @@ public class Celula extends AbstractModel {
 	private TipoRede tipoRede;
 	
 	@ManyToOne
-	private Supervisor supervisor;
+	private Usuario supervisor;
 	
 	private boolean apagada;
 
@@ -64,6 +64,9 @@ public class Celula extends AbstractModel {
 	
 	private int area;
 	
+	@Transient
+	private String horarioFormatado;
+
 	public String getNome() {
 		return nome;
 	}
@@ -104,28 +107,12 @@ public class Celula extends AbstractModel {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public long getQtdeMembros() {
-		return qtdeMembros;
+	public String getHorarioFormatado() {
+		return horarioFormatado;
 	}
 
-	public int getArea() {
-		return area;
-	}
-
-	public void setArea(int area) {
-		this.area = area;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public void setQtdeMembros(long qtdeMembros) {
-		this.qtdeMembros = qtdeMembros;
+	public void setHorarioFormatado(String horarioFormatado) {
+		this.horarioFormatado = horarioFormatado;
 	}
 
 	public TipoRede getTipoRede() {
@@ -136,11 +123,11 @@ public class Celula extends AbstractModel {
 		this.tipoRede = tipoRede;
 	}
 
-	public Supervisor getSupervisor() {
+	public Usuario getSupervisor() {
 		return supervisor;
 	}
 
-	public void setSupervisor(Supervisor supervisor) {
+	public void setSupervisor(Usuario supervisor) {
 		this.supervisor = supervisor;
 	}
 
@@ -152,4 +139,28 @@ public class Celula extends AbstractModel {
 		this.apagada = apagada;
 	}
 
+	public long getQtdeMembros() {
+		return qtdeMembros;
+	}
+
+	public void setQtdeMembros(long qtdeMembros) {
+		this.qtdeMembros = qtdeMembros;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public int getArea() {
+		return area;
+	}
+
+	public void setArea(int area) {
+		this.area = area;
+	}
+	
 }

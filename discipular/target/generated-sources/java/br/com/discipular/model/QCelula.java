@@ -41,7 +41,7 @@ public class QCelula extends EntityPathBase<Celula> {
 
     public final StringPath nome = createString("nome");
 
-    public final QSupervisor supervisor;
+    public final QUsuario supervisor;
 
     public final EnumPath<br.com.discipular.enumerator.TipoRede> tipoRede = createEnum("tipoRede", br.com.discipular.enumerator.TipoRede.class);
 
@@ -65,7 +65,7 @@ public class QCelula extends EntityPathBase<Celula> {
 
     public QCelula(Class<? extends Celula> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.supervisor = inits.isInitialized("supervisor") ? new QSupervisor(forProperty("supervisor"), inits.get("supervisor")) : null;
+        this.supervisor = inits.isInitialized("supervisor") ? new QUsuario(forProperty("supervisor")) : null;
         this.usuario = inits.isInitialized("usuario") ? new QUsuario(forProperty("usuario")) : null;
     }
 

@@ -3,15 +3,12 @@ package br.com.discipular.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.discipular.model.Chamada;
 import br.com.discipular.repository.ChamadaRepository;
 import br.com.discipular.service.ChamadaService;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -34,35 +31,10 @@ public class ChamadaServiceImpl implements ChamadaService {
 	public Chamada salvar(Chamada entidade) {
 		return this.repository.save(entidade);
 	}
-
+	
 	@Override
-	public void excluir(Chamada entidade) {
-		this.repository.delete(entidade);
-	}
-
-	@Override
-	public void excluir(Long id) {
-		this.repository.delete(id);
-	}
-
-	@Override
-	public Chamada buscarRegistro(Long id) {
-		return this.repository.findOne(id);
-	}
-
-	@Override
-	public Chamada buscarRegistro(Predicate condicao) {
-		return this.repository.findOne(condicao);
-	}
-
-	@Override
-	public List<Chamada> buscarTodos() {
-		return this.repository.findAll();
-	}
-
-	@Override
-	public Page<Chamada> buscarTodos(Pageable paginacao) {
-		return this.repository.findAll(paginacao);
+	public List<Chamada> salvar(List<Chamada> chamada) {
+		return this.repository.save(chamada);
 	}
 
 	@Override
@@ -71,24 +43,8 @@ public class ChamadaServiceImpl implements ChamadaService {
 	}
 
 	@Override
-	public Page<Chamada> buscarTodos(Predicate condicao, Pageable paginacao) {
-		return this.repository.findAll(condicao, paginacao);
-	}
-
-	@Override
-	public List<Chamada> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Chamada>) this.repository.findAll(condicao, ordem);
-	}
-	
-	@Override
 	public long count(Predicate condicao) {
 		return this.repository.count(condicao);
 	}
 
-	@Override
-	public List<Chamada> salvar(List<Chamada> chamada) {
-		return this.repository.save(chamada);
-	}
-
-	
 }

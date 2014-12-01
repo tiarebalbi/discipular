@@ -34,6 +34,7 @@ public class LoginController {
 		usuario.setNome("Lucas Campos");
 		usuario.setLogin("admin");
 		usuario.setSenha("123");
+		usuario.setArea(0);
 		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
 
 		try {

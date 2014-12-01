@@ -21,17 +21,12 @@ import com.mysema.query.types.Predicate;
 public class MembroPredicate {
 
 	public static PageRequest buscarPaginacao(int pagina, int tamanho) {
-		return new PageRequest(pagina, tamanho, Direction.ASC, "nome");
-	}
-	
-	public static Predicate buscarPorNomeComFiltro(String nome) {
-		QMembro condicao = QMembro.membro;
-		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.endsWithIgnoreCase(nome));
+		return new PageRequest(pagina, tamanho, Direction.ASC, "nome", "dataNascimento");
 	}
 	
 	public static Predicate buscarPorCelulaComFiltro(String nome) {
 		QMembro condicao = QMembro.membro;
-		return condicao.celula.nome.startsWithIgnoreCase(nome).or(condicao.celula.nome.endsWithIgnoreCase(nome));
+		return condicao.celula.nome.startsWithIgnoreCase(nome).or(condicao.celula.nome.containsIgnoreCase(nome));
 	}
 
 	public static Predicate buscarPorNome(String text) {
@@ -42,6 +37,16 @@ public class MembroPredicate {
 	public static Predicate buscarPor(Celula celula) {
 		QMembro condicao = QMembro.membro;
 		return condicao.celula.eq(celula);
+	}
+
+	public static Predicate buscarPorArea(int area) {
+		QMembro condicao = QMembro.membro;
+		return condicao.celula.area.eq(area);
+	}
+
+	public static Predicate buscarPorAreaECelulaFiltro(String nome, int area) {
+		QMembro condicao = QMembro.membro;
+		return condicao.celula.nome.startsWithIgnoreCase(nome).or(condicao.celula.nome.containsIgnoreCase(nome)).and(condicao.celula.area.eq(area));
 	}	
 	
 }

@@ -26,7 +26,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="relatorio">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="${modulo}">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>

@@ -28,33 +28,41 @@
 								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Nome...">
 								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
+							<div class="form-group pull-left">
+								<input type="text" class="form-control" id="condicao-area" placeholder="Buscar Por Área...">
+								<a href="javascript:void(0);" onclick="buscarArea()"><i class="fa fa-search search-icon"></i></a>
+							</div>
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="supervisor">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="admin/supervisor">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
+										<th>Área</th>
 										<th>Nome</th>
 										<th>Login</th>
-										<th>Área</th>
+										<th>Telefone</th>
+										<th>Email</th>
 										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
-											<td>${registro.usuario.nome}</td>
-											<td>${registro.usuario.login}</td>
 											<td>${registro.area}</td>
+											<td>${registro.nome}</td>
+											<td>${registro.login}</td>
+											<td>${registro.telefone}</td>
+											<td>${registro.email}</td>
 											<td>
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
 														Opções <span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu" role="menu">
-														<li><a data-toggle="modal" data-target="#trocar-senha-${registro.id}"><i class="fa fa-key"></i>Alterar Senha</a></li>
 														<li><a href="${path}admin/supervisor/editar/${registro.id}"><i class="fa fa-pencil-square-o"></i> Editar</a></li>
+														<li><a data-toggle="modal" data-target="#trocar-senha-${registro.id}"><i class="fa fa-key"></i>Resetar Senha</a></li>
 														<li class="divider"></li>
 														<li><a data-toggle="modal" data-target="#excluir-${registro.id}"><i class="fa fa-trash-o"></i> Excluir</a></li>
 													</ul>
@@ -73,12 +81,12 @@
 																	<i class="fa fa-lock fa-5x"></i>
 																</div>
 																<div class="text-center">
-																	<p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) supervisor(a) <strong>${registro.usuario.nome}</strong>?</p>
+																	<p style="font-size : 2em;">Tem certeza que deseja resetar a senha do(a) supervisor(a) <strong>${registro.nome}</strong>?</p>
 																</div>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-																<a href="${path}admin/supervisor/alterar-senha/${registro.usuario.id}" class="btn btn-danger">Alterar</a>
+																<a href="${path}admin/supervisor/alterar-senha/${registro.id}" class="btn btn-danger">Resetar</a>
 															</div>
 														</div>
 													</div>
@@ -93,7 +101,7 @@
 																<h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning"></i> Atenção!</h4>
 															</div>
 															<div class="modal-body">
-																<p>Você realmente deseja excluir o(a) supervisor(a) ${registro.usuario.nome}?</p>
+																<p>Você realmente deseja excluir o(a) supervisor(a) ${registro.nome}?</p>
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

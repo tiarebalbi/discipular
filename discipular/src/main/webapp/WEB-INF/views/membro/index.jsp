@@ -31,12 +31,12 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th><span>Nome</span></th>
-										<th><span>Tipo</span></th>
-										<th><span>Celular</span></th>
-										<th><span>Email</span></th>
-										<th><span>Data de Nascimento</span></th>
-										<th><span>Menu</span></th>
+										<th>Nome</th>
+										<th>Tipo</th>
+										<th>Celular</th>
+										<th>Email</th>
+										<th>Data de Nascimento</th>
+										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>

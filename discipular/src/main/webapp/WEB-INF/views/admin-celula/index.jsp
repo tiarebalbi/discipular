@@ -31,7 +31,7 @@
 						</div>
 					</header>
 					<div class="main-box-body clearfix">
-						<div class="table-responsive" data-pagina="${pagina}" data-modulo="celula">
+						<div class="table-responsive" data-pagina="${pagina}" data-modulo="admin/celula">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
@@ -49,9 +49,9 @@
 										<tr>
 											<td>${registro.nome}</td>
 											<td>${registro.usuario.nome}</td>
-											<td>${registro.supervisor.usuario.nome}</td>
+											<td>${registro.supervisor.nome}</td>
 											<td>${registro.dia}</td>
-											<td>${registro.horario}</td>
+											<td>${registro.horario.horario}</td>
 											<td>${registro.qtdeMembros}</td>
 											<td>
 												<div class="btn-group">

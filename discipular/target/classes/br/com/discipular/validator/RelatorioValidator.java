@@ -26,13 +26,13 @@ public class RelatorioValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask1", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask2", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask3", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask4", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask5", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tema", "campo.vazio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "data", "campo.vazio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask1", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask2", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask3", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask4", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask5", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tema", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "data", "campo.obrigatorio", "Este campo é obrigatório");
 
 		Relatorio relatorio = (Relatorio) target;
 		
@@ -54,8 +54,8 @@ public class RelatorioValidator implements Validator {
 		
 		if(relatorio.getAsk5() > 5 || relatorio.getAsk5() < 0) {
 			errors.rejectValue("ask5", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
-		}	
-	
+		}
+		
 	}
 
 }

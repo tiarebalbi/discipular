@@ -8,11 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.discipular.model.Celula;
-import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.repository.CelulaRepository;
 import br.com.discipular.service.CelulaService;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -33,20 +31,14 @@ public class CelulaServiceImpl implements CelulaService {
 	
 	@Override
 	public Celula salvar(Celula celula) throws Exception {
-		
-		if(!isNomeValido(celula)) {
-			throw new Exception("Já existe uma célula com este nome, favor utilizar outro nome.");
+
+		if(celula.getSupervisor() == null) {
+			celula.setArea(0);
+		} else {
+			celula.setArea(celula.getSupervisor().getArea());
 		}
 		
 		return this.repository.save(celula);
-	}
-
-	@Override
-	public void excluir(Celula celula) throws Exception {
-		celula.setSupervisor(null);
-		celula.setUsuario(null);
-		celula.setApagada(true);
-		this.salvar(celula);
 	}
 
 	@Override
@@ -69,16 +61,6 @@ public class CelulaServiceImpl implements CelulaService {
 	}
 
 	@Override
-	public List<Celula> buscarTodos() {
-		return this.repository.findAll();
-	}
-
-	@Override
-	public Page<Celula> buscarTodos(Pageable paginacao) {
-		return this.repository.findAll(paginacao);
-	}
-
-	@Override
 	public List<Celula> buscarTodos(Predicate condicao) {
 		return (List<Celula>) this.repository.findAll(condicao);
 	}
@@ -89,25 +71,8 @@ public class CelulaServiceImpl implements CelulaService {
 	}
 
 	@Override
-	public List<Celula> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Celula>) this.repository.findAll(condicao, ordem);
-	}
-	
-	@Override
 	public long count(Predicate condicao) {
 		return this.repository.count(condicao);
-	}
-
-	private boolean isNomeValido(Celula celula) {
-		long qtdeUsuarios = this.count(CelulaPredicate.buscarPorNome(celula.getNome()));
-	
-		if(qtdeUsuarios == 0) {
-			return true;
-		} 
-		
-		Celula retorno = this.buscarRegistro(CelulaPredicate.buscarPorNome(celula.getNome()));
-		
-		return celula.getId() != null && celula.getId().equals(retorno.getId());
 	}
 
 	@Override

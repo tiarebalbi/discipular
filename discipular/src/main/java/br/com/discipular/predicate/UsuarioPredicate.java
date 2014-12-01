@@ -21,22 +21,17 @@ import com.mysema.query.types.Predicate;
 public class UsuarioPredicate {
 
 	public static PageRequest buscarPaginacao(int pagina, int tamanho) {
-		return new PageRequest(pagina, tamanho, Direction.ASC, "login");
+		return new PageRequest(pagina, tamanho, Direction.ASC, "area");
 	}
 
-	public static Predicate buscarPorNomeComFiltro(String login) {
+	public static Predicate buscarPorNomeComFiltro(String nome, TipoUsuario tipo) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.nome.startsWithIgnoreCase(login).and(condicao.tipo.eq(TipoUsuario.LIDER));
+		return condicao.nome.startsWithIgnoreCase(nome).or(condicao.nome.containsIgnoreCase(nome)).and(condicao.tipo.eq(tipo));
 	}
 
 	public static Predicate buscarPorLogin(String login) {
 		QUsuario condicao = QUsuario.usuario;
 		return condicao.login.eq(login);
-	}
-
-	public static Predicate buscarPorNome(String nome) {
-		QUsuario condicao = QUsuario.usuario;
-		return condicao.nome.eq(nome);
 	}
 
 	public static Predicate buscarTipo(TipoUsuario tipo) {
@@ -49,9 +44,24 @@ public class UsuarioPredicate {
 		return condicao.tipo.eq(lider.getTipo()).and(condicao.id.ne(lider.getId())).and(condicao.celulas.isEmpty());
 	}
 
-	public static Predicate buscarLiderSemCelula() {
+	public static Predicate buscarPorTipoSemCelula(TipoUsuario tipo) {
 		QUsuario condicao = QUsuario.usuario;
-		return condicao.tipo.eq(TipoUsuario.LIDER).and(condicao.celulas.isEmpty());
+		return condicao.tipo.eq(tipo).and(condicao.celulas.isEmpty());
+	}
+
+	public static Predicate buscarTipoEArea(TipoUsuario tipo, Usuario usuario) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(tipo).and(condicao.area.eq(usuario.getArea()));
+	}
+
+	public static Predicate buscarPorNomeComFiltroTipoEArea(String nome, TipoUsuario tipo, Usuario usuario) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(tipo).and(condicao.area.eq(usuario.getArea())).and(condicao.nome.startsWithIgnoreCase(nome).and(condicao.nome.containsIgnoreCase(nome)));
+	}
+
+	public static Predicate buscarTipoEArea(TipoUsuario tipo, int area) {
+		QUsuario condicao = QUsuario.usuario;
+		return condicao.tipo.eq(tipo).and(condicao.area.eq(area));
 	}
 
 }

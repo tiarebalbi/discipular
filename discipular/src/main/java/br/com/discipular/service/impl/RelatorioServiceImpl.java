@@ -3,18 +3,17 @@ package br.com.discipular.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.query.RelatorioQuery;
 import br.com.discipular.repository.RelatorioRepository;
 import br.com.discipular.service.RelatorioService;
 
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
 /**
@@ -29,9 +28,13 @@ import com.mysema.query.types.Predicate;
 @Service
 public class RelatorioServiceImpl implements RelatorioService {
 
-	@Resource
+	@Autowired
 	private RelatorioRepository repository;
 	
+	@Autowired
+	private RelatorioQuery query;
+	
+	@Override
 	public Relatorio salvar(Relatorio relatorio) {
 		
 		Assert.notNull(relatorio, "Registro nulo, não foi possível salvar este registro.");
@@ -44,34 +47,20 @@ public class RelatorioServiceImpl implements RelatorioService {
 		
 	}
 
-	public void excluir(Relatorio relatorio) {
-		Assert.notNull(relatorio, "Registro nulo, não foi possível excluir este registro.");
-		repository.delete(relatorio);
-	}
-	
+	@Override
 	public void excluir(Long id) {
 		Assert.notNull(id, "ID nulo, não foi possível excluir este registro.");
 		repository.delete(id);
 	}
 
+	@Override
 	public Relatorio buscarRegistro(Long id) {
 		return repository.findOne(id);
 	}
 
-	public Relatorio buscarRegistro(Predicate condicao) {
-		return repository.findOne(condicao);
-	}
-
-	public List<Relatorio> buscarTodos() {
-		return repository.findAll();
-	}
-
+	@Override
 	public List<Relatorio> buscarTodos(Predicate condicao) {
 		return (List<Relatorio>) repository.findAll(condicao);
-	}
-
-	public List<Relatorio> buscarTodos(Predicate condicao, OrderSpecifier<String> ordem) {
-		return (List<Relatorio>) repository.findAll(condicao, ordem);
 	}
 
 	@Override
@@ -82,6 +71,24 @@ public class RelatorioServiceImpl implements RelatorioService {
 	@Override
 	public Page<Relatorio> buscarTodos(Pageable paginacao) {
 		return repository.findAll(paginacao);
+	}
+
+	@Override
+	public List<Relatorio> salvar(List<Relatorio> relatorios) {
+		Assert.notNull(relatorios, "Registro nulo, não foi possível salvar este registro.");
+		
+		relatorios.forEach(r -> {
+			if(r.getId() == null) {
+				r.setDataCriacao(LocalDate.now());
+			}
+		});
+		
+		return repository.save(relatorios);
+	}
+
+	@Override
+	public List<Relatorio> buscarPorSupervisor(String loginSupervisor) {
+		return query.buscarPorSupervisor(loginSupervisor);
 	}	
 	
 }

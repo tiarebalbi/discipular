@@ -10,5 +10,22 @@ package br.com.discipular.enumerator;
  * 	08/09/2014 
  */
 public enum Horario {
-	DUAS_E_MEIA, SETE_E_MEIA, TRES_HORAS, OITO_HORAS;
+	DUAS_E_MEIA("14:30"),
+	TRES_HORAS("15:00"),
+	SETE_E_MEIA("19:30"), 
+	OITO_HORAS("20:00");
+	
+	private Horario(String horario) {
+		this.horario = horario;
+	}
+	
+	private String horario;
+
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
 }

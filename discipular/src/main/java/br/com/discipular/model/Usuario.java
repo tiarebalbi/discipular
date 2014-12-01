@@ -11,9 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import br.com.discipular.enumerator.TipoUsuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,13 +42,18 @@ public class Usuario extends AbstractModel implements Serializable {
 	@NotNull
 	private String senha;
 	
+	private int area;
+	
+	private String email;
+	
+	private String telefone;
+	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
-	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Celula> celulas;
 	
 	@Transient
@@ -79,6 +81,30 @@ public class Usuario extends AbstractModel implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public int getArea() {
+		return area;
+	}
+
+	public void setArea(int area) {
+		this.area = area;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public TipoUsuario getTipo() {

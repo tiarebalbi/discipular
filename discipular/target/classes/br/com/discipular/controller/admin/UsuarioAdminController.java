@@ -2,7 +2,6 @@ package br.com.discipular.controller.admin;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import br.com.discipular.annotations.Administrador;
 import br.com.discipular.context.security.DiscipularPasswordEncoder;
@@ -41,13 +39,13 @@ import br.com.discipular.validator.UsuarioValidator;
  */
 @Controller
 @Administrador
-@RequestMapping(value = "/admin/usuario")
-public class UsuarioAdminController {
+@RequestMapping(value = "/admin/lider")
+public class UsuarioAdminController extends AbstractAdminController {
 
 	private final static String VIEW_INDEX = "admin-usuario/index";
 	private final static String VIEW_FORM = "admin-usuario/form";
-	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/usuario";
-	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 3;
+	private final static String VIEW_REDIRECT_INDEX = "redirect:/admin/lider";
+	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
 	
@@ -74,7 +72,7 @@ public class UsuarioAdminController {
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().forEach(u ->  {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPor(u));
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
 			if(celula != null && celula.size() > 0) {
 				u.setCelula(celula.get(0).getNome());
 			}
@@ -89,36 +87,43 @@ public class UsuarioAdminController {
 	
 	@RequestMapping(value = "/novo", method = RequestMethod.GET)
 	public ModelAndView novo() {
-		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", new Usuario());
-		view.addObject("tipos", TipoUsuario.values());
+		Usuario usuario = new Usuario();
+		usuario.setLogin(" ");
+		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+		return view;
+	}
+	
+	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
+	public ModelAndView editar(@PathVariable ("id") Long id) {
+		Usuario usuario = service.buscarRegistro(id);
+		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		return view;
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ModelAndView salvar(@ModelAttribute ("usuario") @Validated Usuario usuario, BindingResult errors, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
-		if(errors.hasErrors()) {
-			usuario.setSenha("");
-			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-			view.addObject("tipos", TipoUsuario.values());
-			view.addObject("mensagem", "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
-			view.addObject("status", "danger");
-			view.addObject("icon", "times");
-		} else {
-			try {
-				this.service.salvar(usuario);
-				redirect.addFlashAttribute("mensagem", "Registro salvo com sucesso.");
-				redirect.addFlashAttribute("status", "success");
-				redirect.addFlashAttribute("icon", "check");
-			} catch(Exception e) {
-				usuario.setSenha("");
+		try {
+			if(errors.hasErrors()) {
+				if(usuario.getId() == null) {
+					usuario.setSenha("");
+				}
 				view = new ModelAndView(VIEW_FORM, "usuario", usuario);
-				view.addObject("tipos", TipoUsuario.values());
-				view.addObject("mensagem", e.getMessage());
-				view.addObject("status", "danger");
-				view.addObject("icon", "times");
+				loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
+				return view;
+			} 
+			
+			usuario.setTipo(TipoUsuario.LIDER);
+			this.service.salvar(usuario);
+			loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
+		} catch(Exception e) {
+			if(usuario.getId() == null) {
+				usuario.setSenha("");
 			}
+			view = new ModelAndView(VIEW_FORM, "usuario", usuario);
+			loadViewDangerView(view, e.getMessage());
 		}
+
 		return view;
 	}
 	
@@ -127,18 +132,13 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
 			Usuario usuario = this.service.buscarRegistro(id);
-			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPor(usuario));
+			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPorLider(usuario));
 			celulas.forEach(c -> c.setUsuario(null));
 			this.celulaService.salvar(celulas);
-			
 			this.service.excluir(id);
-			redirect.addFlashAttribute("mensagem", "Registro excluído com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "success");
+			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "error");
-			redirect.addFlashAttribute("icon", "danger");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		
 		return view;
@@ -149,7 +149,7 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -160,7 +160,7 @@ public class UsuarioAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u)).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -170,8 +170,17 @@ public class UsuarioAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPor(u)).get(0).getNome()));
+		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome, TipoUsuario.LIDER), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		
+		registros.getContent().forEach(u -> {
+			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
+			if(celula != null && celula.size() > 0) {
+				u.setCelula(celula.get(0).getNome());
+			} else {
+				u.setCelula("");
+			}
+		});
+		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		
@@ -185,13 +194,9 @@ public class UsuarioAdminController {
 			Usuario usuario = service.buscarRegistro(id);
 			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
-			redirect.addFlashAttribute("mensagem", "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
-			redirect.addFlashAttribute("status", "success");
-			redirect.addFlashAttribute("icon", "check");
+			loadRedirectSuccessView(redirect, "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");
 		} catch (Exception e) {
-			redirect.addFlashAttribute("mensagem", e.getMessage());
-			redirect.addFlashAttribute("status", "danger");
-			redirect.addFlashAttribute("icon", "times");
+			loadRedirectDangerView(redirect, e.getMessage());
 		}
 		return view;
 	}

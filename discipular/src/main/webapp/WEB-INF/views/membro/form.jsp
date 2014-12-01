@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <spring:url value="/" var="path"></spring:url>
 
-<div class="row">
+<div class="row text-center">
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
@@ -14,16 +14,16 @@
 					Novo Membro</span></li>
 		</ol>
 		<h1>
-			Cadastrar <strong>Membro</strong>
+			Cadastro de <strong>Membro</strong>
 		</h1>
 	</div>
 </div>
 
-<div class="main-box">
+<div class="main-box"  style=" width: 50%; margin: 0 auto;">
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>
-	<div class="main-box-body clearfix">
+	<div class="main-box-body clearfix" style="margin-bottom: 20px;">
 		<form:form role="form" action="${path}membro/salvar" method="post" modelAttribute="membro">
 			<form:hidden path="id" value="${membro.id}"/>
 			<div class="form-group">
