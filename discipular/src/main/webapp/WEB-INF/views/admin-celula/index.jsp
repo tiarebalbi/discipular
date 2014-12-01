@@ -51,7 +51,7 @@
 											<td>${registro.usuario.nome}</td>
 											<td>${registro.supervisor.nome}</td>
 											<td>${registro.dia}</td>
-											<td>${registro.horario}</td>
+											<td>${registro.horario.horario}</td>
 											<td>${registro.qtdeMembros}</td>
 											<td>
 												<div class="btn-group">

@@ -63,6 +63,9 @@ public class Celula extends AbstractModel {
 	private Usuario usuario;
 	
 	private int area;
+	
+	@Transient
+	private String horarioFormatado;
 
 	public String getNome() {
 		return nome;
@@ -102,6 +105,14 @@ public class Celula extends AbstractModel {
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public String getHorarioFormatado() {
+		return horarioFormatado;
+	}
+
+	public void setHorarioFormatado(String horarioFormatado) {
+		this.horarioFormatado = horarioFormatado;
 	}
 
 	public TipoRede getTipoRede() {

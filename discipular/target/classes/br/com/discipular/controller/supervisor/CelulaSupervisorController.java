@@ -172,7 +172,11 @@ public class CelulaSupervisorController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltroCelulaAtivaEArea(nome, getCurrentUser()), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		registros.getContent().stream().parallel().forEach(c-> {
+			c.setHorarioFormatado(c.getHorario().getHorario());
+			c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c)));
+		});
+		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

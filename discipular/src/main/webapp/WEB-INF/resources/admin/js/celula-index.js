@@ -15,7 +15,6 @@ function addMenu(xhr) {
 			if(value.supervisor != null) {
 				supervisor = value.supervisor.nome;
 			}
-			
 			$('tbody').append("<tr>" +
 					"<td>" +
 					value.nome +
@@ -30,7 +29,7 @@ function addMenu(xhr) {
 					value.dia +
 					"</td>" +
 					"<td>" +
-					value.horario +
+					value.horarioFormatado +
 					"</td>" +
 					"<td>" +
 					value.qtdeMembros +
