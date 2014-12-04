@@ -19,7 +19,7 @@
 	</div>
 </div>
 
-<div class="main-box"  style=" width: 50%; margin: 0 auto;">
+<div class="main-box">
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>
@@ -27,7 +27,7 @@
 		<form:form role="form" action="${path}membro/salvar" method="post" modelAttribute="membro">
 			<form:hidden path="id" value="${membro.id}"/>
 			<div class="form-group">
-				<form:label path="nome">Nome</form:label>
+				<form:label path="nome">Nome*</form:label>
 				<form:input path="nome" class="form-control" />
 				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
@@ -50,7 +50,7 @@
 				<form:errors path="tipo" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="dataNascimento">Data de Nascimento</form:label> 
+				<form:label path="dataNascimento">Data de Nascimento*</form:label> 
 				<form:input path="dataNascimento" class="form-control" id="maskedDate" placeholder="__/__/____" />
 				<form:errors path="dataNascimento" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>

@@ -30,7 +30,6 @@ public class UsuarioValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "campo.obrigatorio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "senha", "campo.obrigatorio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telefone", "campo.obrigatorio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "campo.obrigatorio", "Este campo é obrigatório");
 		
 		Usuario usuario = (Usuario) target;
 		
