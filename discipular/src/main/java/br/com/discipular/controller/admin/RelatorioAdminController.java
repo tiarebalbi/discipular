@@ -1,5 +1,7 @@
 package br.com.discipular.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.discipular.annotations.Administrador;
+import br.com.discipular.model.Chamada;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
-import br.com.discipular.service.MembroService;
+import br.com.discipular.service.ChamadaService;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
@@ -24,6 +28,8 @@ import br.com.discipular.validator.RelatorioValidator;
 public class RelatorioAdminController extends AbstractAdminController {
 
 	private final static String VIEW_INDEX = "admin/relatorio/index";
+	private final static String VIEW_VISUALIZAR = "admin/relatorio/visualizar";
+	
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -32,7 +38,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 	private RelatorioService service;
 	
 	@Autowired
-	private MembroService membroService;
+	private ChamadaService chamadaService;
 	
 	@Autowired
 	private RelatorioValidator validator;
@@ -55,6 +61,20 @@ public class RelatorioAdminController extends AbstractAdminController {
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		view.addObject("modulo", "admin/relatorio");
+		
+		return view;
+	}
+	
+	@RequestMapping(value = "/visualizar/{id}", method = RequestMethod.GET)
+	public ModelAndView visualizar(@PathVariable ("id") Long id) {
+		ModelAndView view = new ModelAndView(VIEW_VISUALIZAR);
+		
+		Relatorio relatorio = this.service.buscarRegistro(id);
+		List<Chamada> chamadas = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+		relatorio.setChamada(chamadas);
+		
+		view.addObject("relatorio", relatorio);
+		view.addObject("chamadas", chamadas);
 		
 		return view;
 	}
