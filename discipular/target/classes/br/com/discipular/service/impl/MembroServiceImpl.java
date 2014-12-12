@@ -78,9 +78,13 @@ public class MembroServiceImpl implements MembroService {
 		return repository.count(condicao);
 	}
 	
-	private boolean isFull(Membro membro)  {
+	public boolean isFull(Membro membro)  {
 		long qtdeMembros = this.count(MembroPredicate.buscarPor(membro.getCelula()));
 		return qtdeMembros >= 14; 
+	}
+
+	public void setRepository(MembroRepository repository) {
+		this.repository = repository;
 	}
 	
 }

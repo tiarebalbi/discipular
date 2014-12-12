@@ -36,7 +36,7 @@ public class MembroPredicate {
 
 	public static Predicate buscarPor(Celula celula) {
 		QMembro condicao = QMembro.membro;
-		return condicao.celula.eq(celula);
+		return condicao.celula.id.eq(celula.getId());
 	}
 
 	public static Predicate buscarPorArea(int area) {
