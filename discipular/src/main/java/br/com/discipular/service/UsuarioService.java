@@ -37,6 +37,4 @@ public interface UsuarioService {
 
 	List<Usuario> buscarLideresSemCelula(Celula celula);
 
-	List<Usuario> buscarSupervisores(Celula celula);
-	
 }

@@ -103,7 +103,7 @@ public class CelulaAdminController extends AbstractAdminController {
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
 		view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
-		view.addObject("supervisores", usuarioService.buscarSupervisores(celula));
+		view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 
 		return view;
 	}
@@ -119,7 +119,7 @@ public class CelulaAdminController extends AbstractAdminController {
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
 			view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
-			view.addObject("supervisores", usuarioService.buscarSupervisores(celula));
+			view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 			
 		} else {
 			try {
@@ -130,7 +130,7 @@ public class CelulaAdminController extends AbstractAdminController {
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
 				view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
-				view.addObject("supervisores", usuarioService.buscarSupervisores(celula));
+				view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 				loadViewDangerView(view, e.getMessage());
 			}
 		}

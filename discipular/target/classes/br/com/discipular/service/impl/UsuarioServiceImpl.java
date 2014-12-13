@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import br.com.discipular.context.security.DiscipularPasswordEncoder;
+import br.com.discipular.domain.bo.UsuarioBO;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
@@ -38,9 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario salvar(Usuario entidade) throws Exception {
 		
-		if(entidade.getSenha() != null && entidade.getId() == null) {
-			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
-		}
+		UsuarioBO.criptografarSenha(entidade);
 		
 		Assert.notNull(entidade.getArea(), "Favor preencher o campo área.");
 		
@@ -82,15 +80,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	private boolean isLoginValido(Usuario usuario) {
-		if(usuario.getLogin().startsWith(" ")) {
-			usuario.setLogin(usuario.getLogin().substring(1, usuario.getLogin().length()));
-		}
+		usuario.setLogin(UsuarioBO.retirarEspacoBrancoDoInicio(usuario.getLogin()));
 		
 		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 
-		if(qtdeUsuarios == 0) {
-			return true;
-		} 
+		if(qtdeUsuarios == 0) return true;
 		
 		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 		
@@ -110,16 +104,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 		return lideres;
 	}
-	
-	@Override
-	public List<Usuario> buscarSupervisores(Celula celula) {
-		List<Usuario> supervisores = this.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR));
-		
-		if(celula.getSupervisor() != null) {
-			supervisores.removeIf(s -> s.getId() == celula.getSupervisor().getId());
-		}
-		
-		return supervisores;
-	}
-	
+
 }

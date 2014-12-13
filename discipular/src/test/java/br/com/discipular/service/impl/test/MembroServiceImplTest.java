@@ -1,7 +1,10 @@
 package br.com.discipular.service.impl.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -19,10 +22,10 @@ import br.com.discipular.service.impl.MembroServiceImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class MembroServiceImplTest {
 	
-	private MembroServiceImpl serviceImpl;
-	
 	@Mock
 	private MembroRepository repository;
+	
+	private MembroServiceImpl serviceImpl;
 	
 	private Membro membro;
 	
@@ -32,6 +35,7 @@ public class MembroServiceImplTest {
 		serviceImpl.setRepository(repository);
 		
 		membro = new Membro();
+		membro.setNome("Lucas");
 		Celula celula = new Celula();
 		celula.setId(1l);
 		membro.setCelula(celula);
@@ -53,6 +57,27 @@ public class MembroServiceImplTest {
 		boolean resultado = serviceImpl.isFull(membro);
 		
 		assertFalse(resultado);
+	}
+	
+	@Test(expected = Exception.class)
+	public void deveTestarSalvarUmRegistroComACelulaCheia() throws Exception {
+		when(repository.count(MembroPredicate.buscarPor(membro.getCelula()))).thenReturn(14l);
+		
+		serviceImpl.salvar(membro);
+		
+		fail();
+	}
+	
+	@Test
+	public void deveTestarSalvarUmRegistroComACelulaValida() throws Exception {
+		when(repository.count(MembroPredicate.buscarPor(membro.getCelula()))).thenReturn(13l);
+		when(repository.save(membro)).thenReturn(membro);
+		
+		Membro retorno = serviceImpl.salvar(membro);
+		
+		assertEquals("Lucas", retorno.getNome());
+		assertNotNull(retorno);
+		
 	}
 	
 }
