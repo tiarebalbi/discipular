@@ -76,8 +76,8 @@ public class CelulaAdminController extends AbstractAdminController {
 		
 		marker = 0;
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
@@ -90,20 +90,20 @@ public class CelulaAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
-		view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
+		view.addObject("usuarios", usuarioService.getRepositorio().findAll(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
+		view.addObject("supervisores", usuarioService.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 		return view;
 	}
 
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Celula celula = service.buscarRegistro(id);
+		Celula celula = service.getRepositorio().findOne(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
 		
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
 		view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
-		view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
+		view.addObject("supervisores", usuarioService.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 
 		return view;
 	}
@@ -119,7 +119,7 @@ public class CelulaAdminController extends AbstractAdminController {
 			view.addObject("dias", DiaSemana.values());
 			view.addObject("horarios", Horario.values());
 			view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
-			view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
+			view.addObject("supervisores", usuarioService.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 			
 		} else {
 			try {
@@ -130,7 +130,7 @@ public class CelulaAdminController extends AbstractAdminController {
 				view.addObject("dias", DiaSemana.values());
 				view.addObject("horarios", Horario.values());
 				view.addObject("usuarios", usuarioService.buscarLideresSemCelula(celula));
-				view.addObject("supervisores", usuarioService.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
+				view.addObject("supervisores", usuarioService.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR)));
 				loadViewDangerView(view, e.getMessage());
 			}
 		}
@@ -154,8 +154,8 @@ public class CelulaAdminController extends AbstractAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -165,8 +165,8 @@ public class CelulaAdminController extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorCelulaAtiva(), CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -176,8 +176,8 @@ public class CelulaAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltro(nome), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorNomeComFiltro(nome), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		

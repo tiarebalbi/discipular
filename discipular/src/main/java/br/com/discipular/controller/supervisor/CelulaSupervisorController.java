@@ -77,8 +77,8 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		
 		marker = 0;
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtivaEArea(getCurrentUser().getArea()), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorCelulaAtivaEArea(getCurrentUser().getArea()), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
@@ -91,13 +91,13 @@ public class CelulaSupervisorController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", new Celula());
 		view.addObject("dias", DiaSemana.values());
 		view.addObject("horarios", Horario.values());
-		view.addObject("usuarios", usuarioService.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
+		view.addObject("usuarios", usuarioService.getRepositorio().findAll(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
 		return view;
 	}
 
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Celula celula = service.buscarRegistro(id);
+		Celula celula = service.getRepositorio().findOne(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "celula", celula);
 		
 		view.addObject("dias", DiaSemana.values());
@@ -118,7 +118,7 @@ public class CelulaSupervisorController extends AbstractAdminController {
 			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
-				Usuario usuario = usuarioService.buscarRegistro(UsuarioPredicate.buscarPorLogin(getCurrentUser().getLogin()));
+				Usuario usuario = usuarioService.getRepositorio().findOne(UsuarioPredicate.buscarPorLogin(getCurrentUser().getLogin()));
 				celula.setSupervisor(usuario);
 				this.service.salvar(celula);
 				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
@@ -150,8 +150,8 @@ public class CelulaSupervisorController extends AbstractAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtivaEArea(getCurrentUser().getArea()), CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorCelulaAtivaEArea(getCurrentUser().getArea()), CelulaPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -161,8 +161,8 @@ public class CelulaSupervisorController extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorCelulaAtivaEArea(getCurrentUser().getArea()), CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c))));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorCelulaAtivaEArea(getCurrentUser().getArea()), CelulaPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().stream().parallel().forEach(c -> c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c))));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -171,10 +171,10 @@ public class CelulaSupervisorController extends AbstractAdminController {
 	@RequestMapping(value = "/find/{condicao}", method = RequestMethod.POST)
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
-		Page<Celula> registros = service.buscarTodos(CelulaPredicate.buscarPorNomeComFiltroCelulaAtivaEArea(nome, getCurrentUser()), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Celula> registros = service.getRepositorio().findAll(CelulaPredicate.buscarPorNomeComFiltroCelulaAtivaEArea(nome, getCurrentUser()), CelulaPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(c-> {
 			c.setHorarioFormatado(c.getHorario().getHorario());
-			c.setQtdeMembros(membroService.count(MembroPredicate.buscarPor(c)));
+			c.setQtdeMembros(membroService.getRepositorio().count(MembroPredicate.buscarPor(c)));
 		});
 		
 		view.addObject("registros", registros.getContent());

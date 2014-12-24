@@ -60,7 +60,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 		
 		marker = 0;
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		qtdePaginas = registros.getTotalPages();
 		
 		view.addObject("registros", registros.getContent());
@@ -79,7 +79,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 	
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Usuario usuario = service.buscarRegistro(id);
+		Usuario usuario = service.getRepositorio().findOne(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		return view;
 	}
@@ -113,11 +113,11 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
-			Usuario usuario = this.service.buscarRegistro(id);
-			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPorSupervisor(usuario));
+			Usuario usuario = this.service.getRepositorio().findOne(id);
+			List<Celula> celulas = (List<Celula>) this.celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorSupervisor(usuario));
 			celulas.forEach(c -> c.setSupervisor(null));
-			this.celulaService.salvar(celulas);
-			this.service.excluir(id);
+			this.celulaService.getRepositorio().save(celulas);
+			this.service.getRepositorio().delete(id);
 			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());
@@ -130,7 +130,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -140,7 +140,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -150,7 +150,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltro(nome, TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarPorNomeComFiltro(nome, TipoUsuario.SUPERVISOR), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
@@ -162,7 +162,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") int area) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.SUPERVISOR, area), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipoEArea(TipoUsuario.SUPERVISOR, area), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
@@ -174,7 +174,7 @@ public class SupervisorAdminController extends AbstractAdminController {
 	public ModelAndView resetarSenha(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
-			Usuario usuario = service.buscarRegistro(id);
+			Usuario usuario = service.getRepositorio().findOne(id);
 			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
 			loadRedirectSuccessView(redirect, "Senha do supervisor " + usuario.getNome() + " foi alterada com sucesso.");

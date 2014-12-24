@@ -68,11 +68,11 @@ public class MembroController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		try {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
+			List<Celula> celula = (List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(getCurrentUser()));
 			
 			Assert.notEmpty(celula, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
 			
-			Page<Membro> registros = service.buscarTodos(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+			Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 			
 			registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 			
@@ -105,7 +105,7 @@ public class MembroController extends AbstractController {
 	
 	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Membro membro = service.buscarRegistro(id);
+		Membro membro = service.getRepositorio().findOne(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "membro", membro);
 		view.addObject("tipos", TipoMembro.values());
 		return view;
@@ -120,7 +120,7 @@ public class MembroController extends AbstractController {
 			loadViewDangerView(view, "Favor verificar se todos os campos foram preenchidos corretamente, caso o problema insista entre em contato com o administrador do sistema.");
 		} else {
 			try {
-				List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
+				List<Celula> celula = (List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(getCurrentUser()));
 				membro.setCelula(celula.get(0));
 				this.service.salvar(membro);
 				
@@ -138,7 +138,7 @@ public class MembroController extends AbstractController {
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
-			this.service.excluir(id);
+			this.service.getRepositorio().delete(id);
 			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());

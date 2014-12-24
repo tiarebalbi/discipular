@@ -29,10 +29,10 @@ public class CustomUsuarioEditor extends PropertiesEditor {
 		Usuario registro;
 		if(StringUtils.isNumeric(text)) {
 			Long id = new Long(text);
-			registro = this.service.buscarRegistro(id);
+			registro = this.service.getRepositorio().findOne(id);
 			
 		}else {
-			registro = this.service.buscarRegistro(UsuarioPredicate.buscarPorLogin(text));
+			registro = this.service.getRepositorio().findOne(UsuarioPredicate.buscarPorLogin(text));
 		}
 		setValue(registro);
 	}

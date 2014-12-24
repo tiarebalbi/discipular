@@ -2,12 +2,8 @@ package br.com.discipular.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import br.com.discipular.model.Relatorio;
-
-import com.mysema.query.types.Predicate;
+import br.com.discipular.repository.RelatorioRepository;
 	
 /**
  * Métodos de consulta e manipulação do modelo {@link Relatorio}
@@ -20,20 +16,12 @@ import com.mysema.query.types.Predicate;
  */
 public interface RelatorioService {
 	
-	public Relatorio salvar(Relatorio usuario);
+	Relatorio salvar(Relatorio usuario);
 	
-	public void excluir(Long id);
+	List<Relatorio> salvar(List<Relatorio> relatorios);
 	
-	public Relatorio buscarRegistro(Long id);
+	List<Relatorio> buscarPorSupervisor(String loginSupervisor);
 	
-	public Page<Relatorio> buscarTodos(Pageable paginacao);
-
-	public List<Relatorio> buscarTodos(Predicate condicao);
-	
-	public Page<Relatorio> buscarTodos(Predicate condicao, Pageable paginacao);
-	
-	public List<Relatorio> salvar(List<Relatorio> relatorios);
-	
-	public List<Relatorio> buscarPorSupervisor(String loginSupervisor);
+	RelatorioRepository getRepositorio();
 	
 }
