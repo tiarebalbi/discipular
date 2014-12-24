@@ -64,6 +64,10 @@ public class RelatorioServiceImpl implements RelatorioService {
 	@Override
 	public RelatorioRepository getRepositorio() {
 		return this.repository;
-	}	
+	}
+	
+	public void setRepositorio(RelatorioRepository repository) {
+		this.repository = repository;
+	}
 	
 }

@@ -131,7 +131,7 @@ public class Celula extends AbstractModel {
 		this.supervisor = supervisor;
 	}
 
-	public boolean isApagada() {
+	public boolean getApagada() {
 		return apagada;
 	}
 

@@ -48,4 +48,8 @@ public class CelulaServiceImpl implements CelulaService {
 		this.salvar(celula);
 	}
 
+	public void setRepositorio(CelulaRepository repository) {
+		this.repository = repository;
+	}
+
 }
