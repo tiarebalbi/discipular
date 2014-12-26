@@ -19,6 +19,7 @@ public class CelulaPredicateTest {
 	public void init() {
 		usuario = new Usuario();
 		usuario.setId(1L);
+		usuario.setArea(0);
 	}
 	
 	@Test

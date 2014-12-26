@@ -21,6 +21,7 @@ public class UsuarioPredicateTest {
 		usuario = new Usuario();
 		usuario.setId(1L);
 		usuario.setTipo(TipoUsuario.LIDER);
+		usuario.setArea(0);
 	}
 	
 	@Test

@@ -59,7 +59,7 @@ public class RelatorioPredicateTest {
 		LocalDate inicio = LocalDate.now();
 		LocalDate fim = LocalDate.now().minusDays(10);
 		Predicate retorno = RelatorioPredicate.buscarPorPeriodoE(usuario, inicio, fim);
-		assertEquals("relatorio.usuario.id = 1 && relatorio.data between 2014-12-23 and 2014-12-13", retorno.toString());
+		assertEquals("relatorio.usuario.id = 1 && relatorio.data between " + inicio + " and " + fim , retorno.toString());
 	}
 	
 	@Test
