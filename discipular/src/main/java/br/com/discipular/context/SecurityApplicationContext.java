@@ -98,9 +98,6 @@ public class SecurityApplicationContext extends WebSecurityConfigurerAdapter {
 	        .logout()
 	        	.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
 	        	.and()
-	        .rememberMe()
-	        	.key("discipular-remember")
-	        	.and()
 	        .sessionManagement()
 	        	.maximumSessions(this.env.getRequiredProperty("security.session.max", Integer.class))
 	        	.expiredUrl("/login?expired");

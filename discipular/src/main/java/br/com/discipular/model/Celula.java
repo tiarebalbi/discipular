@@ -155,7 +155,7 @@ public class Celula extends AbstractModel {
 		this.usuario = usuario;
 	}
 
-	public int getArea() {
+	public Integer getArea() {
 		return area;
 	}
 

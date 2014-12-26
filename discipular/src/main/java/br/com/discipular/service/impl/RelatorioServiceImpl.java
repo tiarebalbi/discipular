@@ -70,4 +70,13 @@ public class RelatorioServiceImpl implements RelatorioService {
 		this.repository = repository;
 	}
 	
+	@Override
+	public RelatorioQuery getQuery() {
+		return this.query;
+	}
+	
+	public void setQuery(RelatorioQuery query) {
+		this.query = query;
+	}
+	
 }

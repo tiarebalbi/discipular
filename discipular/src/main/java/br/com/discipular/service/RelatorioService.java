@@ -3,6 +3,7 @@ package br.com.discipular.service;
 import java.util.List;
 
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.query.RelatorioQuery;
 import br.com.discipular.repository.RelatorioRepository;
 	
 /**
@@ -23,5 +24,7 @@ public interface RelatorioService {
 	List<Relatorio> buscarPorSupervisor(String loginSupervisor);
 	
 	RelatorioRepository getRepositorio();
+
+	RelatorioQuery getQuery();
 	
 }

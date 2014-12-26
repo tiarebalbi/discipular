@@ -42,7 +42,7 @@ public class Usuario extends AbstractModel implements Serializable {
 	@NotNull
 	private String senha;
 	
-	private int area;
+	private Integer area;
 	
 	private String email;
 	
@@ -83,11 +83,11 @@ public class Usuario extends AbstractModel implements Serializable {
 		this.senha = senha;
 	}
 	
-	public int getArea() {
+	public Integer getArea() {
 		return area;
 	}
 
-	public void setArea(int area) {
+	public void setArea(Integer area) {
 		this.area = area;
 	}
 

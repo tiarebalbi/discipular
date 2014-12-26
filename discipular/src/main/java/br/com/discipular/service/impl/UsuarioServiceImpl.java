@@ -79,4 +79,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return this.repository;
 	}
 
+	public void setRepositorio(UsuarioRepository repository) {
+		this.repository = repository;
+	}
+
 }
