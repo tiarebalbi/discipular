@@ -1,20 +1,13 @@
 package br.com.discipular.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.repository.MembroRepository;
 import br.com.discipular.service.MembroService;
-
-import com.mysema.query.types.Predicate;
 
 /**
  * Implementação dos métodos de consulta e manipulação do modelo {@link Membro}
@@ -31,6 +24,10 @@ public class MembroServiceImpl implements MembroService {
 	@Resource
 	private MembroRepository repository;
 	
+	public MembroRepository getRepositorio() {
+		return this.repository;
+	}
+	
 	@Override
 	public Membro salvar(Membro entidade) throws Exception {
 		
@@ -42,45 +39,13 @@ public class MembroServiceImpl implements MembroService {
 		
 	}
 	
-	@Override
-	public void excluir(Long id) {
-		Assert.notNull(id, "ID nulo, não foi possível excluir este registro.");
-		repository.delete(id);
-	}
-
-	@Override
-	public Membro buscarRegistro(Long id) {
-		return repository.findOne(id);
-	}
-
-	@Override
-	public Membro buscarRegistro(Predicate condicao) {
-		return repository.findOne(condicao);
-	}
-
-	@Override
-	public List<Membro> buscarTodos(Predicate condicao) {
-		return (List<Membro>) repository.findAll(condicao);
-	}
-
-	@Override
-	public Page<Membro> buscarTodos(Predicate condicao, Pageable paginacao) {
-		return repository.findAll(condicao, paginacao);
-	}
-	
-	@Override
-	public Page<Membro> buscarTodos(Pageable paginacao) {
-		return repository.findAll(paginacao);
-	}
-	
-	@Override
-	public long count(Predicate condicao) {
-		return repository.count(condicao);
-	}
-	
-	private boolean isFull(Membro membro)  {
-		long qtdeMembros = this.count(MembroPredicate.buscarPor(membro.getCelula()));
+	public boolean isFull(Membro membro)  {
+		long qtdeMembros = this.repository.count(MembroPredicate.buscarPor(membro.getCelula()));
 		return qtdeMembros >= 14; 
+	}
+
+	public void setRepository(MembroRepository repository) {
+		this.repository = repository;
 	}
 	
 }

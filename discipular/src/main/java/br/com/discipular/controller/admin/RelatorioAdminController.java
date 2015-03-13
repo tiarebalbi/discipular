@@ -1,5 +1,7 @@
 package br.com.discipular.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.discipular.annotations.Administrador;
+import br.com.discipular.model.Chamada;
 import br.com.discipular.model.Relatorio;
+import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
-import br.com.discipular.service.MembroService;
+import br.com.discipular.repository.ChamadaRepository;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
@@ -24,6 +28,8 @@ import br.com.discipular.validator.RelatorioValidator;
 public class RelatorioAdminController extends AbstractAdminController {
 
 	private final static String VIEW_INDEX = "admin/relatorio/index";
+	private final static String VIEW_VISUALIZAR = "admin/relatorio/visualizar";
+	
 	private final static int QUANTIDADE_ELEMENTOS_POR_PAGINA = 15;
 	private int qtdePaginas;
 	private int marker = 0;
@@ -32,7 +38,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 	private RelatorioService service;
 	
 	@Autowired
-	private MembroService membroService;
+	private ChamadaRepository chamadaRepository;
 	
 	@Autowired
 	private RelatorioValidator validator;
@@ -48,7 +54,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 		
 		marker = 0;
 		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		qtdePaginas = registros.getTotalPages();
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
@@ -59,11 +65,25 @@ public class RelatorioAdminController extends AbstractAdminController {
 		return view;
 	}
 	
+	@RequestMapping(value = "/visualizar/{id}", method = RequestMethod.GET)
+	public ModelAndView visualizar(@PathVariable ("id") Long id) {
+		ModelAndView view = new ModelAndView(VIEW_VISUALIZAR);
+		
+		Relatorio relatorio = this.service.getRepositorio().findOne(id);
+		List<Chamada> chamadas = (List<Chamada>) chamadaRepository.findAll(ChamadaPredicate.buscarPor(relatorio));
+		relatorio.setChamada(chamadas);
+		
+		view.addObject("relatorio", relatorio);
+		view.addObject("chamadas", chamadas);
+		
+		return view;
+	}
+	
 	@RequestMapping(value = "previous", method = RequestMethod.POST)
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		
 		view.addObject("registros", registros.getContent());
@@ -75,7 +95,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		
 		view.addObject("registros", registros.getContent());
@@ -87,7 +107,7 @@ public class RelatorioAdminController extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String celula) {
 		ModelAndView view = new ModelAndView();
 		
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 
 		view.addObject("registros", registros.getContent());

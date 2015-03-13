@@ -131,7 +131,7 @@ public class Celula extends AbstractModel {
 		this.supervisor = supervisor;
 	}
 
-	public boolean isApagada() {
+	public boolean getApagada() {
 		return apagada;
 	}
 
@@ -155,7 +155,7 @@ public class Celula extends AbstractModel {
 		this.usuario = usuario;
 	}
 
-	public int getArea() {
+	public Integer getArea() {
 		return area;
 	}
 

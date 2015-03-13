@@ -6,15 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.discipular.enumerator.TipoUsuario;
-import br.com.discipular.model.Usuario;
 import br.com.discipular.service.UsuarioService;
 
 @Controller
 public class LoginController {
 
 	private final static String VIEW_LOGIN = "login/index";
-	private final static String REDIRECT_VIEW_LOGIN = "redirect:/login";
+//	private final static String REDIRECT_VIEW_LOGIN = "redirect:/login";
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -25,19 +23,19 @@ public class LoginController {
 		return view;
 	}
 	
+	/*
 	@RequestMapping(value = "/login/install", method = RequestMethod.GET)
 	public ModelAndView adm() {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_LOGIN);
-		
-		Usuario usuario = new Usuario();
-		
-		usuario.setNome("Lucas Campos");
-		usuario.setLogin("admin");
-		usuario.setSenha("123");
-		usuario.setArea(0);
-		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
-
 		try {
+			Usuario usuario = new Usuario();
+			
+			usuario.setNome("Lucas Campos");
+			usuario.setLogin("admin");
+			usuario.setSenha("123");
+			usuario.setArea(0);
+			usuario.setTipo(TipoUsuario.ADMINISTRADOR);
+	
 			usuarioService.salvar(usuario);
 		} catch (Exception e) {
 			System.out.println("Deu erro.");
@@ -45,5 +43,6 @@ public class LoginController {
 		
 		return view;
 	}
+	*/
 	
 }

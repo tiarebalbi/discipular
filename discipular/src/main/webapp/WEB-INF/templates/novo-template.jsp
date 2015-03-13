@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Discipular</title>
+	<title>Católicos em Células</title>
 	
 	<link rel="stylesheet" href="${path}resources/both/font-awesome-4.1.0/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="${path}resources/both/templates/centaurus/css/bootstrap.min.css"  />
@@ -23,9 +23,9 @@
 <body class="theme-red" data-url="${path}">
 	<header class="navbar" id="header-navbar">
 		<div class="container">
-			<a href="${path}" id="logo" class="navbar-brand"> 
-				<img src="${path}resources/imagens/discipular-logo7.png" alt="" class="normal-logo logo-white" /> 
-			</a>
+<%-- 			<a href="${path}" id="logo" class="navbar-brand">  --%>
+<%-- 				<img src="${path}resources/imagens/discipular-logo7.png" alt="" class="normal-logo logo-white" />  --%>
+<!-- 			</a> -->
 			<div class="clearfix">
 				<button class="navbar-toggle" data-target=".navbar-ex1-collapse"
 					data-toggle="collapse" type="button">

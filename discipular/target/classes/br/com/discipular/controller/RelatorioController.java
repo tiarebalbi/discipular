@@ -27,8 +27,8 @@ import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
+import br.com.discipular.repository.ChamadaRepository;
 import br.com.discipular.service.CelulaService;
-import br.com.discipular.service.ChamadaService;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.utils.DataUtils;
@@ -64,7 +64,7 @@ public class RelatorioController extends AbstractController {
 	private MembroService membroService;
 
 	@Autowired
-	private ChamadaService chamadaService;
+	private ChamadaRepository chamadaRepository;
 	
 	@Autowired
 	private CelulaService celulaService;
@@ -86,9 +86,9 @@ public class RelatorioController extends AbstractController {
 			
 			marker = 0;
 			
-			Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
+			Celula celula = celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
 			
-			Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+			Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 			qtdePaginas = registros.getTotalPages();
 			registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 			view.addObject("registros", registros.getContent());
@@ -118,9 +118,9 @@ public class RelatorioController extends AbstractController {
 	
 	@RequestMapping(value = "editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Relatorio relatorio = service.buscarRegistro(id);
+		Relatorio relatorio = service.getRepositorio().findOne(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-		List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+		List<Chamada> chamada = (List<Chamada>) chamadaRepository.findAll(ChamadaPredicate.buscarPor(relatorio));
 		relatorio.setChamada(chamada);
 		view.addObject("membros", chamada);
 		view.addObject("chamadas", TipoChamada.values());
@@ -134,7 +134,7 @@ public class RelatorioController extends AbstractController {
 			view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
 
 			if(relatorio.getId() != null) {
-				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+				List<Chamada> chamada = (List<Chamada>) chamadaRepository.findAll(ChamadaPredicate.buscarPor(relatorio));
 				view.addObject("membros", chamada);
 				view.addObject("chamadas", TipoChamada.values());
 			} else {
@@ -153,19 +153,19 @@ public class RelatorioController extends AbstractController {
 				
 				Assert.isTrue(total > 0, "Nenhum membro esteve presente nesta célula!");
 				
-				chamadaService.salvar(relatorio.getChamada());
+				chamadaRepository.save(relatorio.getChamada());
 				
-				Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
+				Celula celula = celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
 				relatorio.setCelula(celula);
 				relatorio.setUsuario(getCurrentUser());
 				this.service.salvar(relatorio);
 				relatorio.getChamada().stream().parallel().forEach(chamada -> chamada.setRelatorio(relatorio));
-				chamadaService.salvar(relatorio.getChamada());
+				chamadaRepository.save(relatorio.getChamada());
 				
 				loadRedirectSuccessView(redirect, "Registro salvo com sucesso.");
 			} catch(Exception e) {
 				view = new ModelAndView(VIEW_FORM, "relatorio", relatorio);
-				List<Chamada> chamada = chamadaService.buscarTodos(ChamadaPredicate.buscarPor(relatorio));
+				List<Chamada> chamada = (List<Chamada>) chamadaRepository.findAll(ChamadaPredicate.buscarPor(relatorio));
 				view.addObject("membros", chamada);
 				view.addObject("chamadas", TipoChamada.values());
 				loadViewDangerView(view, e.getMessage());
@@ -179,7 +179,7 @@ public class RelatorioController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 
 		try {
-			this.service.excluir(id);
+			this.service.getRepositorio().delete(id);
 			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());
@@ -192,8 +192,8 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 	
-		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Celula celula = celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
+		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
@@ -204,8 +204,8 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Celula celula = celulaService.buscarRegistro(CelulaPredicate.buscarPorLider(getCurrentUser()));
-		Page<Relatorio> registros = service.buscarTodos(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Celula celula = celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
+		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
@@ -213,9 +213,9 @@ public class RelatorioController extends AbstractController {
 	}
 	
 	private ModelAndView carregarContexto(ModelAndView view) {
-		List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(getCurrentUser()));
+		List<Celula> celula = (List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(getCurrentUser()));
 		
-		List<Membro> membros = membroService.buscarTodos(MembroPredicate.buscarPor(celula.get(0)));
+		List<Membro> membros = (List<Membro>) membroService.getRepositorio().findAll(MembroPredicate.buscarPor(celula.get(0)));
 		membros.forEach(m -> m.setId(null));
 		
 		view.addObject("membros", membros);

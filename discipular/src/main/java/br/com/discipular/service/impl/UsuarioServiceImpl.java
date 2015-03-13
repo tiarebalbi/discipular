@@ -1,23 +1,20 @@
 package br.com.discipular.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import br.com.discipular.context.security.DiscipularPasswordEncoder;
+import br.com.discipular.domain.bo.UsuarioBO;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.UsuarioPredicate;
 import br.com.discipular.repository.UsuarioRepository;
 import br.com.discipular.service.UsuarioService;
-
-import com.mysema.query.types.Predicate;
 
 /**
  * Implementação dos métodos de consulta e manipulação do modelo {@link Usuario}
@@ -38,9 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario salvar(Usuario entidade) throws Exception {
 		
-		if(entidade.getSenha() != null && entidade.getId() == null) {
-			entidade.setSenha(new DiscipularPasswordEncoder().encode(entidade.getSenha()));
-		}
+		UsuarioBO.criptografarSenha(entidade);
 		
 		Assert.notNull(entidade.getArea(), "Favor preencher o campo área.");
 		
@@ -51,48 +46,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return this.repository.save(entidade);
 	}
 
-	@Override
-	public void excluir(Long id) {
-		this.repository.delete(id);
-	}
-
-	@Override
-	public Usuario buscarRegistro(Long id) {
-		return this.repository.findOne(id);
-	}
-
-	@Override
-	public Usuario buscarRegistro(Predicate condicao) {
-		return this.repository.findOne(condicao);
-	}
-
-	@Override
-	public List<Usuario> buscarTodos(Predicate condicao) {
-		return (List<Usuario>) this.repository.findAll(condicao);
-	}
-
-	@Override
-	public Page<Usuario> buscarTodos(Predicate condicao, Pageable paginacao) {
-		return this.repository.findAll(condicao, paginacao);
-	}
-
-	@Override
-	public long count(Predicate condicao) {
-		return this.repository.count(condicao);
-	}
 	
 	private boolean isLoginValido(Usuario usuario) {
-		if(usuario.getLogin().startsWith(" ")) {
-			usuario.setLogin(usuario.getLogin().substring(1, usuario.getLogin().length()));
-		}
+		usuario.setLogin(UsuarioBO.retirarEspacoBrancoDoInicio(usuario.getLogin()));
 		
-		long qtdeUsuarios = this.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
+		long qtdeUsuarios = this.repository.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 
-		if(qtdeUsuarios == 0) {
-			return true;
-		} 
+		if(qtdeUsuarios == 0) return true;
 		
-		Usuario retorno = this.buscarRegistro(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
+		Usuario retorno = this.repository.findOne(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 		
 		return usuario.getId() != null && usuario.getId().equals(retorno.getId());
 	}
@@ -103,23 +65,22 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 		if(celula.getUsuario() != null) {
 			lideres.add(celula.getUsuario());
-			lideres.addAll(this.buscarTodos(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
+			lideres.addAll((Collection<? extends Usuario>) this.repository.findAll(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
 		} else {
-			lideres.addAll(this.buscarTodos(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
+			lideres.addAll((Collection<? extends Usuario>) this.repository.findAll(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
 		}
 		
 		return lideres;
 	}
-	
+
+
 	@Override
-	public List<Usuario> buscarSupervisores(Celula celula) {
-		List<Usuario> supervisores = this.buscarTodos(UsuarioPredicate.buscarTipo(TipoUsuario.SUPERVISOR));
-		
-		if(celula.getSupervisor() != null) {
-			supervisores.removeIf(s -> s.getId() == celula.getSupervisor().getId());
-		}
-		
-		return supervisores;
+	public UsuarioRepository getRepositorio() {
+		return this.repository;
 	}
-	
+
+	public void setRepositorio(UsuarioRepository repository) {
+		this.repository = repository;
+	}
+
 }

@@ -76,10 +76,10 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 		
 		marker = 0;
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().forEach(u ->  {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
+			List<Celula> celula = (List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(u));
 			if(celula != null && celula.size() > 0) {
 				u.setCelula(celula.get(0).getNome());
 			}
@@ -103,7 +103,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable ("id") Long id) {
-		Usuario usuario = service.buscarRegistro(id);
+		Usuario usuario = service.getRepositorio().findOne(id);
 		ModelAndView view = new ModelAndView(VIEW_FORM, "usuario", usuario);
 		return view;
 	}
@@ -138,17 +138,17 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	public ModelAndView excluir(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
-			Usuario usuario = this.service.buscarRegistro(id);
+			Usuario usuario = this.service.getRepositorio().findOne(id);
 			
-			List<Celula> celulas = this.celulaService.buscarTodos(CelulaPredicate.buscarPorLider(usuario));
+			List<Celula> celulas = (List<Celula>) this.celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(usuario));
 			celulas.forEach(c -> c.setUsuario(null));
-			this.celulaService.salvar(celulas);
+			this.celulaService.getRepositorio().save(celulas);
 			
-			List<Relatorio> relatorios = this.relatorioService.buscarTodos(RelatorioPredicate.buscarPor(usuario));
+			List<Relatorio> relatorios = (List<Relatorio>) this.relatorioService.getRepositorio().findAll(RelatorioPredicate.buscarPor(usuario));
 			relatorios.forEach(r -> r.setUsuario(null));
 			this.relatorioService.salvar(relatorios);
 			
-			this.service.excluir(id);
+			this.service.getRepositorio().delete(id);
 			loadRedirectSuccessView(redirect, "Registro excluído com sucesso.");
 		} catch(Exception e) {
 			loadRedirectDangerView(redirect, e.getMessage());
@@ -161,8 +161,8 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	public ModelAndView apiPrevious() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u)).get(0).getNome()));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(u -> u.setCelula(((List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(u))).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -172,8 +172,8 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	public ModelAndView apiNext() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().forEach(u -> u.setCelula(celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u)).get(0).getNome()));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarTipoEArea(TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		registros.getContent().forEach(u -> u.setCelula(((List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(u))).get(0).getNome()));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -183,10 +183,10 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	public ModelAndView apiFind(@PathVariable ("condicao") String nome) {
 		ModelAndView view = new ModelAndView();
 
-		Page<Usuario> registros = service.buscarTodos(UsuarioPredicate.buscarPorNomeComFiltroTipoEArea(nome, TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
+		Page<Usuario> registros = service.getRepositorio().findAll(UsuarioPredicate.buscarPorNomeComFiltroTipoEArea(nome, TipoUsuario.LIDER, getCurrentUser()), UsuarioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		registros.getContent().forEach(u -> {
-			List<Celula> celula = celulaService.buscarTodos(CelulaPredicate.buscarPorLider(u));
+			List<Celula> celula = (List<Celula>) celulaService.getRepositorio().findAll(CelulaPredicate.buscarPorLider(u));
 			if(celula != null && celula.size() > 0) {
 				u.setCelula(celula.get(0).getNome());
 			} else {
@@ -204,7 +204,7 @@ public class UsuarioSupervisorController  extends AbstractAdminController {
 	public ModelAndView resetarSenha(@PathVariable ("id") Long id, RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_REDIRECT_INDEX);
 		try {
-			Usuario usuario = service.buscarRegistro(id);
+			Usuario usuario = service.getRepositorio().findOne(id);
 			usuario.setSenha(new DiscipularPasswordEncoder().encode(usuario.getLogin() + "123"));
 			service.salvar(usuario);
 			loadRedirectSuccessView(redirect, "Senha do líder " + usuario.getNome() + " foi alterada com sucesso.");

@@ -29,10 +29,10 @@ public class CustomCelulaEditor extends PropertiesEditor {
 		Celula registro;
 		if(StringUtils.isNumeric(text)) {
 			Long id = new Long(text);
-			registro = this.service.buscarRegistro(id);
+			registro = this.service.getRepositorio().findOne(id);
 			
 		}else {
-			registro = this.service.buscarRegistro(CelulaPredicate.buscarPorNome(text));
+			registro = this.service.getRepositorio().findOne(CelulaPredicate.buscarPorNome(text));
 		}
 		setValue(registro);
 	}

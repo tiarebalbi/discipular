@@ -34,6 +34,7 @@
 										<th>Célula</th>
 										<th>Responsável</th>
 										<th>Data</th>
+										<th>Menu</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -43,6 +44,7 @@
 											<td>${registro.celula.nome}</td>
 											<td>${registro.usuario.login}</td>
 											<td>${registro.dataFormat}</td>
+											<td><a class="btn btn-primary" href="${path}${modulo}/visualizar/${registro.id}">Visualizar</a></td>
 										</tr>
 									</c:forEach>
 								</tbody>

@@ -35,7 +35,7 @@ public class DiscipularUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = this.service.buscarRegistro(UsuarioPredicate.buscarPorLogin(username));
+		Usuario usuario = this.service.getRepositorio().findOne(UsuarioPredicate.buscarPorLogin(username));
 		if(usuario == null) {
 			String msg = getMessage("validation.auth.username.notfound", "Não foi possível identificar nenhum usuário com o login '{0}'", username);
 			throw new UsernameNotFoundException(msg);

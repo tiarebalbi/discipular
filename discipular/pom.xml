@@ -81,12 +81,12 @@
 
 
 			<plugin>
-        		<artifactId>maven-war-plugin</artifactId>
-        		<version>2.5</version>
-        		<configuration>
-          			<failOnMissingWebXml>false</failOnMissingWebXml>
-        		</configuration>
-      		</plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -143,6 +143,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<!-- Apache Tiles 3 -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -154,11 +155,14 @@
 			<artifactId>tiles-jsp</artifactId>
 			<version>3.0.3</version>
 		</dependency>
+		<!-- Fim Apache Tiles 3 -->
+
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901.jdbc4</version>
 		</dependency>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -232,13 +236,7 @@
 			<version>3.4.1</version>
 		</dependency>
 		<!-- Fim Banco de Dados -->
-		<!-- JUnit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-		</dependency>
-		<!-- Fim JUnit -->
+
 		<!-- JAXAX -->
 		<dependency>
 			<groupId>javax.annotation</groupId>
@@ -246,6 +244,7 @@
 			<version>1.2</version>
 		</dependency>
 		<!-- Fim JAXAX -->
+
 		<!-- BoneCP -->
 		<dependency>
 			<groupId>com.jolbox</groupId>
@@ -253,6 +252,7 @@
 			<version>0.8.0.RELEASE</version>
 		</dependency>
 		<!-- FIM BoneCP -->
+
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -279,8 +279,8 @@
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
-		
-		
+
+
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -293,7 +293,6 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>3.2.5.RELEASE</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -304,23 +303,41 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.2.5.RELEASE</version>
 		</dependency>
-		
-		
+		<!-- Fim Spring Security -->
+
+
 		<!-- Jodatime -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time-hibernate</artifactId>
 			<version>1.3</version>
 		</dependency>
+		<!-- Fim Jodatime -->
+
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.maven</groupId> -->
+		<!-- <artifactId>maven-plugin-api</artifactId> -->
+		<!-- <version>3.2.3</version> -->
+		<!-- </dependency> -->
+
+		<!-- Teste -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
 		
-		
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.maven</groupId> -->
-<!-- 			<artifactId>maven-plugin-api</artifactId> -->
-<!-- 			<version>3.2.3</version> -->
-<!-- 		</dependency> -->
-		
-		
-		
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.8</version>
+		</dependency>
+
+		<!-- Fim Teste -->
+
+
+
+
 	</dependencies>
 </project>

@@ -17,7 +17,7 @@ import br.com.discipular.model.Relatorio;
 import br.com.discipular.model.Usuario;
 import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
-import br.com.discipular.service.ChamadaService;
+import br.com.discipular.repository.ChamadaRepository;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.service.UsuarioService;
 import br.com.discipular.utils.DataUtils;
@@ -34,7 +34,7 @@ public class DashboardController extends AbstractController {
 	private RelatorioService relatorioService;
 	
 	@Autowired
-	private ChamadaService chamadaService;
+	private ChamadaRepository chamadaRepository;
 	
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -63,11 +63,11 @@ public class DashboardController extends AbstractController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		TemplateGraficoDTO dto = new TemplateGraficoDTO(); 
-		List<Relatorio> relatorios = relatorioService.buscarTodos(RelatorioPredicate.buscarPorPeriodoE(getCurrentUser(), LocalDate.now().minusMonths(2), LocalDate.now()));
+		List<Relatorio> relatorios = (List<Relatorio>) relatorioService.getRepositorio().findAll(RelatorioPredicate.buscarPorPeriodoE(getCurrentUser(), LocalDate.now().minusMonths(2), LocalDate.now()));
 	
 		for (Relatorio relatorio : relatorios) {
-			long total = chamadaService.count(ChamadaPredicate.buscarPor(relatorio));
-			long chamadas = chamadaService.count(ChamadaPredicate.buscarPorRelatorioEStatus(relatorio, TipoChamada.PRESENTE));
+			long total = chamadaRepository.count(ChamadaPredicate.buscarPor(relatorio));
+			long chamadas = chamadaRepository.count(ChamadaPredicate.buscarPorRelatorioEStatus(relatorio, TipoChamada.PRESENTE));
 			long porcentagem = chamadas * 100 / total;
 			
 			dto.getData().add(porcentagem);
