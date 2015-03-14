@@ -12,7 +12,6 @@ import br.com.discipular.service.UsuarioService;
 public class LoginController {
 
 	private final static String VIEW_LOGIN = "login/index";
-//	private final static String REDIRECT_VIEW_LOGIN = "redirect:/login";
 	
 	@Autowired
 	private UsuarioService usuarioService;
