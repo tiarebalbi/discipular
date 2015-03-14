@@ -82,7 +82,7 @@ public class RelatorioSupervisorController extends AbstractAdminController {
 		Relatorio relatorio = this.service.getRepositorio().findOne(id);
 		List<Chamada> chamadas = (List<Chamada>) chamadaRepository.findAll(ChamadaPredicate.buscarPor(relatorio));
 		relatorio.setChamada(chamadas);
-		
+		view.addObject("modulo", "supervisor/relatorio");
 		view.addObject("relatorio", relatorio);
 		view.addObject("chamadas", chamadas);
 		

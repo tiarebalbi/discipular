@@ -36,24 +36,24 @@
 								<thead>
 									<tr>
 										<th>Nome</th>
-										<th>Líder</th>
+										<th class="hidden-xs">Líder</th>
 										<th>Supervisor</th>
 										<th>Dia</th>
 										<th>Horário</th>
-										<th>Números de Membros</th>
-										<th>Menu</th>
+										<th class="hidden-xs">Números de Membros</th>
+										<th class="hidden-xs">Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
-											<td>${registro.usuario.nome}</td>
+											<td class="hidden-xs">${registro.usuario.nome}</td>
 											<td>${registro.supervisor.nome}</td>
 											<td>${registro.dia}</td>
 											<td>${registro.horario.horario}</td>
-											<td>${registro.qtdeMembros}</td>
-											<td>
+											<td class="hidden-xs">${registro.qtdeMembros}</td>
+											<td class="hidden-xs">
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
 														Opções <span class="caret"></span>

@@ -66,11 +66,11 @@
 				<form:textarea style="min-height:100px;" path="observacao" placeholder="Favor informar as ocorrências da células, como por exemplo: explicar a justificativas das faltas, citar as visitas da célula, etc." class="form-control" ></form:textarea>
 			</div>
 			<div class="main-box clearfix" style="background-color: #afc7c7;"> 
-				<div class="col-lg-12">
-					<div class="col-lg-6">
+				<div class="col-lg-12 col-xs-12">
+					<div class="col-lg-6 col-xs-6">
 						<label><span>Nome</span></label>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-6 col-xs-6">
 						<label><span>Chamada</span></label>
 					</div>
 				</div>
@@ -78,14 +78,14 @@
 					<c:if test="${membro.id != null}">
 						<form:hidden path="chamada[${i.count - 1}].id" value="${membro.id}"/>
 					</c:if>
-					<div class="col-lg-12">
-						<div class="col-lg-6">
+					<div class="col-lg-12 col-xs-12">
+						<div class="col-lg-6 col-xs-6">
 							<div class="form-group"> 
 								<input disabled value="${membro.nome}" class="form-control" />
 								<form:hidden path="chamada[${i.count - 1}].nome" value="${membro.nome}" />
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-6 col-xs-6">
 							<form:select path="chamada[${i.count - 1}].tipo" class="form-control" items="${chamadas}"> 
 							</form:select>
 						</div>

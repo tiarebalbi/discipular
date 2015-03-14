@@ -30,10 +30,6 @@ public class QMembro extends EntityPathBase<Membro> {
 
     public final DatePath<java.time.LocalDate> dataNascimento = createDate("dataNascimento", java.time.LocalDate.class);
 
-    public final StringPath email = createString("email");
-
-    public final StringPath endereco = createString("endereco");
-
     //inherited
     public final NumberPath<Long> id = _super.id;
 

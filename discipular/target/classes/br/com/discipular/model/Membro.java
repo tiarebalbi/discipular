@@ -38,14 +38,7 @@ public class Membro extends AbstractModel {
 	@Enumerated(EnumType.STRING)
 	private TipoMembro tipo;
 	
-	@Column(length = 50)
-	private String email;
-	
-	@Column(length = 20)
 	private String celular;
-	
-	@Column(length = 100)
-	private String endereco;
 	
 	@NotNull
 	@ManyToOne
@@ -62,28 +55,12 @@ public class Membro extends AbstractModel {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getCelular() {
 		return celular;
 	}
 
 	public void setCelular(String celular) {
 		this.celular = celular;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 
 	public TipoMembro getTipo() {

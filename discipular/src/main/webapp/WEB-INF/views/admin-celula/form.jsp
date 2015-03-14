@@ -17,7 +17,7 @@
 	</div>
 </div>
 
-<div class="main-box" style=" width: 50%; margin: 0 auto;">
+<div class="main-box">
 	<header class="main-box-header clearfix">
 		<h2>Formulário</h2>
 	</header>

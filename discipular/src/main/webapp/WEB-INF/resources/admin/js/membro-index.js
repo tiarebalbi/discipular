@@ -8,19 +8,16 @@ function addMenu(xhr) {
 				"<td>" +
 				value.nome +
 				"</td>" +
-				"<td>" +
+				"<td class='hidden-xs'>" +
 				value.celula.nome +
 				"</td>" +
-				"<td>" +
+				"<td class='hidden-xs'>" +
 				value.tipo +
 				"</td>" +
 				"<td>" +
 				value.celular +
 				"</td>" +
-				"<td>" +
-				value.email +
-				"</td>" +
-				"<td>" +
+				"<td class='hidden-xs'>" +
 				value.data +
 				"</td>" +
 				"</tr>");

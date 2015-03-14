@@ -30,9 +30,8 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>#Código</th>
 										<th>Célula</th>
-										<th>Responsável</th>
+										<th class="hidden-xs">Responsável</th>
 										<th>Data</th>
 										<th>Menu</th>
 									</tr>
@@ -40,9 +39,8 @@
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
-											<td>${registro.id}</td>
 											<td>${registro.celula.nome}</td>
-											<td>${registro.usuario.login}</td>
+											<td class="hidden-xs">${registro.usuario.login}</td>
 											<td>${registro.dataFormat}</td>
 											<td><a class="btn btn-primary" href="${path}${modulo}/visualizar/${registro.id}">Visualizar</a></td>
 										</tr>

@@ -11,16 +11,16 @@ function addMenu(xhr) {
 					"<td>" +
 					value.nome +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					value.login +
 					"</td>" +
 					"<td>" +
 					value.telefone +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					value.email +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					
 					'<div class="btn-group"><button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Opções <span class="caret"></span></button>' +
 					'<ul class="dropdown-menu" role="menu">' +

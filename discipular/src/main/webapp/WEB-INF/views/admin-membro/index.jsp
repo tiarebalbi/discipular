@@ -34,24 +34,31 @@
 								<thead>
 									<tr>
 										<th>Nome</th>
-										<th>Célula</th>
-										<th>Tipo</th>
+										<th class="hidden-xs">Célula</th>
+										<th class="hidden-xs">Tipo</th>
 										<th>Celular</th>
-										<th>Email</th>
-										<th>Data de Nascimento</th>
+										<th class="hidden-xs">Data de Nascimento</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${registros}" var="registro">
-										<tr>
-											<td>${registro.nome}</td>
-											<td>${registro.celula.nome}</td>
-											<td>${registro.tipo}</td>
-											<td>${registro.celular}</td>
-											<td>${registro.email}</td>
-											<td>${registro.data}</td>
-										</tr>
-									</c:forEach>
+									<c:choose>
+										<c:when test="${registros.size() == null}">
+											<tr>
+												<td><p class="label label-danger">Favor utilizar o filtro de busca.</p></td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${registros}" var="registro">
+												<tr>
+													<td>${registro.nome}</td>
+													<td class="hidden-xs">${registro.celula.nome}</td>
+													<td class="hidden-xs">${registro.tipo}</td>
+													<td>${registro.celular}</td>
+													<td class="hidden-xs">${registro.data}</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>

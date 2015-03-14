@@ -10,6 +10,7 @@ package br.com.discipular.enumerator;
  * 	08/09/2014 
  */
 public enum Horario {
+	OITO_E_MEIA("08:30"),
 	DUAS_E_MEIA("14:30"),
 	TRES_HORAS("15:00"),
 	SETE_E_MEIA("19:30"), 

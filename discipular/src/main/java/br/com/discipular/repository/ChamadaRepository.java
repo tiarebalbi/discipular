@@ -16,6 +16,6 @@ import br.com.discipular.model.Chamada;
  * 	06/10/2014 
  */
 @Repository
-public interface ChamadaRepository extends JpaRepository<Chamada, Long>, QueryDslPredicateExecutor<Chamada>{
+public interface ChamadaRepository extends JpaRepository<Chamada, Long>, QueryDslPredicateExecutor<Chamada> {
 
 }

@@ -41,9 +41,9 @@
 									<tr>
 										<th>Área</th>
 										<th>Nome</th>
-										<th>Login</th>
+										<th class="hidden-xs">Login</th>
 										<th>Telefone</th>
-										<th>Email</th>
+										<th class="hidden-xs">Email</th>
 										<th>Menu</th>
 									</tr>
 								</thead>
@@ -52,10 +52,10 @@
 										<tr>
 											<td>${registro.area}</td>
 											<td>${registro.nome}</td>
-											<td>${registro.login}</td>
+											<td class="hidden-xs">${registro.login}</td>
 											<td>${registro.telefone}</td>
-											<td>${registro.email}</td>
-											<td>
+											<td class="hidden-xs">${registro.email}</td>
+											<td class="hidden-xs">
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
 														Opções <span class="caret"></span>

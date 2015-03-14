@@ -32,22 +32,20 @@
 								<thead>
 									<tr>
 										<th>Nome</th>
-										<th>Tipo</th>
+										<th class="hidden-xs">Tipo</th>
 										<th>Celular</th>
-										<th>Email</th>
-										<th>Data de Nascimento</th>
-										<th>Menu</th>
+										<th class="hidden-xs">Data de Nascimento</th>
+										<th class="hidden-xs">Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
 											<td>${registro.nome}</td>
-											<td>${registro.tipo}</td>
+											<td class="hidden-xs">${registro.tipo}</td>
 											<td>${registro.celular}</td>
-											<td>${registro.email}</td>
-											<td>${registro.data}</td>
-											<td>
+											<td class="hidden-xs">${registro.data}</td>
+											<td class="hidden-xs">
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
 														Opções <span class="caret"></span>

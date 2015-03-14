@@ -6,18 +6,12 @@ function addMenu(xhr) {
 		$(response.registros).each(function (index, value) {
 			$('tbody').append("<tr>" +
 					"<td>" +
-					value.id +
-					"</td>" +
-					"<td>" +
 					value.usuario.nome +
-					"</td>" +
-					"<td>" +
-					value.usuario.login +
 					"</td>" +
 					"<td>" +
 					value.dataFormat +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					
 					'<div class="btn-group"><button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"> Opções <span class="caret"></span></button>' +
 					'<ul class="dropdown-menu" role="menu"><li><a href="' + urlBase + 'relatorio/editar/' + value.id + '"><i class="fa fa-pencil-square-o"></i> Editar</a></li><li class="divider"></li>' +

@@ -6,12 +6,9 @@ function addMenu(xhr) {
 		$(response.registros).each(function (index, value) {
 			$('tbody').append("<tr>" +
 					"<td>" +
-					value.id +
-					"</td>" +
-					"<td>" +
 					value.nome +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					value.login +
 					"</td>" +
 					"<td>" +
@@ -20,11 +17,10 @@ function addMenu(xhr) {
 					"<td>" +
 					value.telefone +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					value.email +
 					"</td>" +
-					
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					'<div class="btn-group"> <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"> Opções <span class="caret"></span> </button>' +
 					'<ul class="dropdown-menu" role="menu">' +
 					'<li><a href="' + urlBase + modulo + '/editar/' + value.id + '"><i class="fa fa-pencil-square-o"></i> Editar</a></li>' +

@@ -17,6 +17,6 @@ import br.com.discipular.model.Usuario;
  * 	10/09/2014 
  */
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>, QueryDslPredicateExecutor<Usuario>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>, QueryDslPredicateExecutor<Usuario> {
 
 }

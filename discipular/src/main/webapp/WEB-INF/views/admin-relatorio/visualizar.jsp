@@ -8,7 +8,7 @@
 	<div class="col-lg-12">
 		<ol class="breadcrumb">
 			<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-			<li><a href="${path}relatorio"><i class="fa fa-file-text-o"></i> Relatórios</a></li>
+			<li><a href="${path}${modulo}"><i class="fa fa-file-text-o"></i> Relatórios</a></li>
 		</ol>
 		<h1>
 			Visualizar <strong>Relatório</strong>
@@ -55,29 +55,29 @@
 				<textarea disabled style="min-height:100px;" placeholder="Favor informar as ocorrências da células, como por exemplo: explicar a justificativas das faltas, citar as visitas da célula, etc." class="form-control" ></textarea>
 			</div>
 			<div class="main-box clearfix" style="background-color: #afc7c7;"> 
-				<div class="col-lg-12">
-					<div class="col-lg-6">
+				<div class="col-lg-12 col-xs-12">
+					<div class="col-lg-6 col-xs-6">
 						<label><span>Nome</span></label>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-6 col-xs-6">
 						<label><span>Chamada</span></label>
 					</div>
 				</div>
 				<c:forEach items="${chamadas}" var="membro" varStatus="i">
-					<div class="col-lg-12">
-						<div class="col-lg-6">
+					<div class="col-lg-12 col-xs-12">
+						<div class="col-lg-6 col-xs-6">
 							<div class="form-group"> 
 								<input disabled value="${membro.nome}" class="form-control" />
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-6 col-xs-6">
 							<input disabled value="${membro.tipo}" class="form-control" />
 						</div>
 					</div>
 				</c:forEach>
 			</div>
 			<div class="col-lg-12">
-				<a type="button" href="${path}relatorio" class="btn btn-danger btn-lg pull-right">Voltar</a>
+				<a type="button" href="${path}${modulo}" class="btn btn-danger btn-lg pull-right">Voltar</a>
 			</div>
 		</form>
 	</div>

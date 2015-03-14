@@ -32,14 +32,6 @@
 				<form:errors path="nome" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="email">Email</form:label>
-				<form:input type="email" path="email" class="form-control" />
-			</div>
-			<div class="form-group">
-				<form:label path="endereco">Endereco</form:label>
-				<form:input path="endereco" class="form-control" />
-			</div>
-			<div class="form-group">
 				<form:label path="celular">Celular</form:label>
 				<form:input id="maskedPhone" placeholder="99999-9999" path="celular" class="form-control" />
 			</div>

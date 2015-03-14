@@ -28,21 +28,17 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>#Código</th>
 										<th>Nome</th>
-										<th>Responsável</th>
 										<th>Data</th>
-										<th>Menu</th>
+										<th class="hidden-xs">Menu</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${registros}" var="registro">
 										<tr>
-											<td>${registro.id}</td>
 											<td>${registro.usuario.nome}</td>
-											<td>${registro.usuario.login}</td>
 											<td>${registro.dataFormat}</td>
-											<td>
+											<td class="hidden-xs">
 												<div class="btn-group">
 													<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
 														Opções <span class="caret"></span>

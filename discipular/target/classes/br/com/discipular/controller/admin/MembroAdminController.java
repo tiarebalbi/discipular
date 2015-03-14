@@ -47,11 +47,7 @@ public class MembroAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		marker = 0;
-		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		
-		view.addObject("registros", registros.getContent());
-		view.addObject("pagina", registros.getTotalPages());
 		view.addObject("modulo", "admin/membro");
 		
 		return view;

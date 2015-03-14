@@ -7,12 +7,9 @@ function addMenu(xhr) {
 			var responsavel = (value.usuario == "null" ? value.usuario.login : "");
 			$('tbody').append("<tr>" +
 					"<td>" +
-					value.id +
-					"</td>" +
-					"<td>" +
 					value.celula.nome +
 					"</td>" +
-					"<td>" +
+					"<td class='hidden-xs'>" +
 					responsavel +
 					"</td>" +
 					"<td>" +
