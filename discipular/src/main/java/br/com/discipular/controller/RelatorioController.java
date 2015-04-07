@@ -106,13 +106,26 @@ public class RelatorioController extends AbstractController {
 	public ModelAndView novo(RedirectAttributes redirect) {
 		ModelAndView view = new ModelAndView(VIEW_FORM, "relatorio", new Relatorio());
 		
-		if(!haveCelula()) {
-			view = new ModelAndView(REDIRECT_INDEX);
-			loadRedirectDangerView(redirect, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
-			return view;
+		try {
+			Celula celula = this.celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
+			
+			long total = membroService.getRepositorio().count(MembroPredicate.buscarPor(celula));
+
+			if (total == 0) {
+				throw new Exception("Nenhum membro cadastrado nesta célula, favor cadastrar os membros antes de fazer o relatório.");
+			}
+			
+			if (!haveCelula()) {
+				view = new ModelAndView(REDIRECT_INDEX);
+				loadRedirectDangerView(redirect, "Seu usuário não tem vínculo com nenhuma célula, favor entrar em contato com o seu supervisor.");
+				return view;
+			}
+			
+			carregarContexto(view);
+		} catch (Exception e) {
+			view = new ModelAndView(VIEW_INDEX);
+			loadViewDangerView(view, "Você ainda não cadastrou nenhum membro.");
 		}
-		
-		carregarContexto(view);
 		return view;
 	}
 	
