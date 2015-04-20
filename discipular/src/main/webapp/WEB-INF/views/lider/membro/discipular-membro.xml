@@ -5,9 +5,9 @@
 
 <tiles-definitions>
 	<definition name="membro/index" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/membro/index.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/lider/membro/index.jsp" />
 	</definition>
 	<definition name="membro/form" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/membro/form.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/lider/membro/form.jsp" />
 	</definition>
 </tiles-definitions>

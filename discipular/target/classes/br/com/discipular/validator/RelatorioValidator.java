@@ -26,34 +26,34 @@ public class RelatorioValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask1", "campo.obrigatorio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask2", "campo.obrigatorio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask3", "campo.obrigatorio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask4", "campo.obrigatorio", "Este campo é obrigatório");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ask5", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "geral", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "e5", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "participacao", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tempo", "campo.obrigatorio", "Este campo é obrigatório");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "conteudo", "campo.obrigatorio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tema", "campo.obrigatorio", "Este campo é obrigatório");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "data", "campo.obrigatorio", "Este campo é obrigatório");
 
 		Relatorio relatorio = (Relatorio) target;
 		
-		if(relatorio.getAsk1() > 5 || relatorio.getAsk1() < 0) {
-			errors.rejectValue("ask1", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		if(relatorio.getGeral() > 5 || relatorio.getGeral() < 0) {
+			errors.rejectValue("geral", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
 		}
 		
-		if(relatorio.getAsk2() > 5 || relatorio.getAsk2() < 0) {
-			errors.rejectValue("ask2", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		if(relatorio.getE5() > 5 || relatorio.getE5() < 0) {
+			errors.rejectValue("e5", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
 		}
 		
-		if(relatorio.getAsk3() > 5 || relatorio.getAsk3() < 0) {
-			errors.rejectValue("ask3", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		if(relatorio.getParticipacao() > 5 || relatorio.getParticipacao() < 0) {
+			errors.rejectValue("participacao", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
 		}
 		
-		if(relatorio.getAsk4() > 5 || relatorio.getAsk4() < 0) {
-			errors.rejectValue("ask4", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		if(relatorio.getTempo() > 5 || relatorio.getTempo() < 0) {
+			errors.rejectValue("tempo", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
 		}
 		
-		if(relatorio.getAsk5() > 5 || relatorio.getAsk5() < 0) {
-			errors.rejectValue("ask5", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
+		if(relatorio.getConteudo() > 5 || relatorio.getConteudo() < 0) {
+			errors.rejectValue("conteudo", "campo.valor.invalido", "Este campo permite valores apenas de 0 a 5.");
 		}
 		
 	}

@@ -12,9 +12,12 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.enumerator.TipoRede;
+import br.com.discipular.serializer.LocalDateSerializer;
 
 
 /**
@@ -46,6 +49,7 @@ public class Celula extends AbstractModel {
 	private Horario horario;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dataNascimento;
 	
 	@Enumerated(EnumType.STRING)

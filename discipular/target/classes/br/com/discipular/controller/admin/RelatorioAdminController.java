@@ -19,7 +19,6 @@ import br.com.discipular.predicate.ChamadaPredicate;
 import br.com.discipular.predicate.RelatorioPredicate;
 import br.com.discipular.repository.ChamadaRepository;
 import br.com.discipular.service.RelatorioService;
-import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
 
 @Controller
@@ -57,7 +56,6 @@ public class RelatorioAdminController extends AbstractAdminController {
 		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
 		qtdePaginas = registros.getTotalPages();
-		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);
 		view.addObject("modulo", "admin/relatorio");
@@ -84,7 +82,6 @@ public class RelatorioAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		
 		view.addObject("registros", registros.getContent());
 		
@@ -96,7 +93,6 @@ public class RelatorioAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		
 		view.addObject("registros", registros.getContent());
 		
@@ -108,7 +104,6 @@ public class RelatorioAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPor(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);

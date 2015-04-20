@@ -15,7 +15,6 @@ import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
-import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
 @Controller
@@ -58,7 +57,6 @@ public class MembroAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());
 		
@@ -70,7 +68,6 @@ public class MembroAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());
 		
@@ -82,7 +79,6 @@ public class MembroAdminController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPorCelulaComFiltro(nome), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);

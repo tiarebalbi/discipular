@@ -8,12 +8,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import br.com.discipular.serializer.LocalDateSerializer;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Modelo que representa os relatórios das células
@@ -27,44 +28,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Relatorio extends AbstractModel {
 	
-	@NotNull
-	private int ask1;
+	private int geral;
 	
-	@NotNull
-	private int ask2;
+	private int e5;
 	
-	@NotNull
-	private int ask3;
+	private int participacao;
 	
-	@NotNull
-	private int ask4;
+	private int tempo;
 	
-	@NotNull
-	private int ask5;
+	private int conteudo;
 	
-	@Column(length = 50)
-	@NotNull
 	private String tema;
 	
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate data;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dataCriacao;
 	
-	public String getDataFormat() {
-		return dataFormat;
-	}
-
-	public void setDataFormat(String dataFormat) {
-		this.dataFormat = dataFormat;
-	}
-
 	@Column(length = 500)
 	private String observacao;
 	
-	@NotNull
 	@ManyToOne
 	private Celula celula;
 	
@@ -74,60 +60,61 @@ public class Relatorio extends AbstractModel {
 	
 	@ManyToOne
 	private Usuario usuario;
-	
-	@Transient
-	private String dataFormat;
-	
-	public int getAsk1() {
-		return ask1;
+
+	public int getGeral() {
+		return geral;
 	}
 
-	public void setAsk1(int ask1) {
-		this.ask1 = ask1;
+	public void setGeral(int geral) {
+		this.geral = geral;
 	}
 
-	public int getAsk2() {
-		return ask2;
+	public int getE5() {
+		return e5;
 	}
 
-	public void setAsk2(int ask2) {
-		this.ask2 = ask2;
+	public void setE5(int e5) {
+		this.e5 = e5;
 	}
 
-	public int getAsk3() {
-		return ask3;
+	public int getParticipacao() {
+		return participacao;
 	}
 
-	public void setAsk3(int ask3) {
-		this.ask3 = ask3;
+	public void setParticipacao(int participacao) {
+		this.participacao = participacao;
 	}
 
-	public int getAsk4() {
-		return ask4;
+	public int getTempo() {
+		return tempo;
 	}
 
-	public void setAsk4(int ask4) {
-		this.ask4 = ask4;
+	public void setTempo(int tempo) {
+		this.tempo = tempo;
 	}
 
-	public int getAsk5() {
-		return ask5;
+	public int getConteudo() {
+		return conteudo;
 	}
 
-	public void setAsk5(int ask5) {
-		this.ask5 = ask5;
+	public void setConteudo(int conteudo) {
+		this.conteudo = conteudo;
 	}
 
-	public String getObservacao() {
-		return observacao;
+	public String getTema() {
+		return tema;
 	}
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 
 	public LocalDate getData() {
 		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
 	public LocalDate getDataCriacao() {
@@ -138,16 +125,12 @@ public class Relatorio extends AbstractModel {
 		this.dataCriacao = dataCriacao;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public String getObservacao() {
+		return observacao;
 	}
 
-	public String getTema() {
-		return tema;
-	}
-
-	public void setTema(String tema) {
-		this.tema = tema;
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	public Celula getCelula() {
@@ -173,5 +156,5 @@ public class Relatorio extends AbstractModel {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
+	
 }

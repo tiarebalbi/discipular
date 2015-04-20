@@ -29,8 +29,6 @@ public class QChamada extends EntityPathBase<Chamada> {
 
     public final StringPath nome = createString("nome");
 
-    public final StringPath observacao = createString("observacao");
-
     public final QRelatorio relatorio;
 
     public final EnumPath<br.com.discipular.enumerator.TipoChamada> tipo = createEnum("tipo", br.com.discipular.enumerator.TipoChamada.class);

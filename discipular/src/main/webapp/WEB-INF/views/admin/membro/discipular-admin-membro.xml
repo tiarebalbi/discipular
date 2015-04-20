@@ -5,6 +5,6 @@
 
 <tiles-definitions>
 	<definition name="admin/membro/index" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/admin-membro/index.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/admin/membro/index.jsp" />
 	</definition>
 </tiles-definitions>

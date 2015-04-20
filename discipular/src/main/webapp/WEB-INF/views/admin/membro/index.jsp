@@ -9,10 +9,13 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><a href="${path}"><i class="fa fa-home"></i> Home</a></li>
-					<li class="active"><i class="fa fa-file-text-o"></i> Relatórios</li>
+					<li class="active"><i class="fa fa-child"></i> Membros</li>
 				</ol>
 			</div>
 		</div>
+		<h1>
+			<strong>Membros</strong>
+		</h1>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="main-box clearfix">
@@ -20,8 +23,8 @@
 						<h2 class="pull-left"><i class="fa fa-list"></i> Lista de registros</h2>
 						<div class="filter-block pull-right">
 							<div class="form-group pull-left">
-								<input id="condicao" type="text" class="form-control" placeholder="Buscar Por Célula...">
-								<a href="javascript:void(0);" id="#buscar" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
+								<input type="text" class="form-control" id="condicao" placeholder="Buscar Por Célula...">
+								<a href="javascript:void(0);" onclick="buscar()"><i class="fa fa-search search-icon"></i></a>
 							</div>
 						</div>
 					</header>
@@ -30,21 +33,32 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>Célula</th>
-										<th class="hidden-xs">Responsável</th>
-										<th>Data</th>
-										<th>Menu</th>
+										<th>Nome</th>
+										<th class="hidden-xs">Célula</th>
+										<th class="hidden-xs">Tipo</th>
+										<th>Celular</th>
+										<th class="hidden-xs">Data de Nascimento</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${registros}" var="registro">
-										<tr>
-											<td>${registro.celula.nome}</td>
-											<td class="hidden-xs">${registro.usuario.login}</td>
-											<td>${registro.dataFormat}</td>
-											<td><a class="btn btn-primary" href="${path}${modulo}/visualizar/${registro.id}">Visualizar</a></td>
-										</tr>
-									</c:forEach>
+									<c:choose>
+										<c:when test="${registros.size() == null}">
+											<tr>
+												<td><p class="label label-danger">Favor utilizar o filtro de busca.</p></td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${registros}" var="registro">
+												<tr>
+													<td>${registro.nome}</td>
+													<td class="hidden-xs">${registro.celula.nome}</td>
+													<td class="hidden-xs">${registro.tipo}</td>
+													<td>${registro.celular}</td>
+													<td class="hidden-xs">${registro.dataNascimento.toString("MM/dd/yyyy")}</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>
@@ -55,4 +69,4 @@
 	</div>
 </div>
 <script src="${path}resources/admin/js/busca-paginacao.js"></script>
-<script src="${path}resources/admin/js/relatorio-index.js"></script>
+<script src="${path}resources/admin/js/membro-index.js"></script>

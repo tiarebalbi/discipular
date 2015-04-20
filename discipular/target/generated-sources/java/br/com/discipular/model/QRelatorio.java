@@ -24,30 +24,30 @@ public class QRelatorio extends EntityPathBase<Relatorio> {
 
     public final QAbstractModel _super = new QAbstractModel(this);
 
-    public final NumberPath<Integer> ask1 = createNumber("ask1", Integer.class);
-
-    public final NumberPath<Integer> ask2 = createNumber("ask2", Integer.class);
-
-    public final NumberPath<Integer> ask3 = createNumber("ask3", Integer.class);
-
-    public final NumberPath<Integer> ask4 = createNumber("ask4", Integer.class);
-
-    public final NumberPath<Integer> ask5 = createNumber("ask5", Integer.class);
-
     public final QCelula celula;
 
     public final ListPath<Chamada, QChamada> chamada = this.<Chamada, QChamada>createList("chamada", Chamada.class, QChamada.class, PathInits.DIRECT2);
 
+    public final NumberPath<Integer> conteudo = createNumber("conteudo", Integer.class);
+
     public final DatePath<java.time.LocalDate> data = createDate("data", java.time.LocalDate.class);
 
     public final DatePath<java.time.LocalDate> dataCriacao = createDate("dataCriacao", java.time.LocalDate.class);
+
+    public final NumberPath<Integer> e5 = createNumber("e5", Integer.class);
+
+    public final NumberPath<Integer> geral = createNumber("geral", Integer.class);
 
     //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final StringPath observacao = createString("observacao");
 
+    public final NumberPath<Integer> participacao = createNumber("participacao", Integer.class);
+
     public final StringPath tema = createString("tema");
+
+    public final NumberPath<Integer> tempo = createNumber("tempo", Integer.class);
 
     public final QUsuario usuario;
 

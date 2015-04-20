@@ -16,7 +16,6 @@ import br.com.discipular.model.Membro;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
-import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
 @Controller
@@ -50,7 +49,6 @@ public class MembroSupervisorController extends AbstractAdminController {
 		marker = 0;
 
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", registros.getTotalPages());
@@ -65,7 +63,6 @@ public class MembroSupervisorController extends AbstractAdminController {
 		
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 		
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -76,7 +73,6 @@ public class MembroSupervisorController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPorArea(getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());
 		
@@ -88,7 +84,6 @@ public class MembroSupervisorController extends AbstractAdminController {
 		ModelAndView view = new ModelAndView();
 		
 		Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPorAreaECelulaFiltro(nome, getCurrentUser().getArea()), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
 
 		view.addObject("registros", registros.getContent());
 		view.addObject("pagina", qtdePaginas);

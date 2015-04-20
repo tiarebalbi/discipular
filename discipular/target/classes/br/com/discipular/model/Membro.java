@@ -1,5 +1,6 @@
 package br.com.discipular.model;
 
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -7,12 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.discipular.enumerator.TipoMembro;
+import br.com.discipular.serializer.LocalDateSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Modelo que representa os integrantes da célula
@@ -26,27 +28,21 @@ import br.com.discipular.enumerator.TipoMembro;
 @Entity
 public class Membro extends AbstractModel {
 
-	@NotNull
 	@Column(length = 50)
 	private String nome;
 	
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dataNascimento;
 	
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoMembro tipo;
 	
 	private String celular;
 	
-	@NotNull
 	@ManyToOne
 	private Celula celula;
 	
-	@Transient
-	private String data;
-
 	public String getNome() {
 		return nome;
 	}
@@ -71,6 +67,7 @@ public class Membro extends AbstractModel {
 		this.tipo = tipo;
 	}
 	
+	@JsonSerialize(using = LocalDateSerializer.class)
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
@@ -87,12 +84,4 @@ public class Membro extends AbstractModel {
 		this.celula = celula;
 	}
 
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-	
 }

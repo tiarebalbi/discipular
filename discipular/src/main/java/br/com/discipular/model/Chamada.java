@@ -1,10 +1,10 @@
 package br.com.discipular.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import br.com.discipular.enumerator.TipoChamada;
 
@@ -20,14 +20,11 @@ import br.com.discipular.enumerator.TipoChamada;
 @Entity
 public class Chamada extends AbstractModel {
 	
-	@NotNull
+	@Column(length = 70)
 	private String nome;
 	
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoChamada tipo;
-	
-	private String observacao;
 	
 	@ManyToOne
 	private Relatorio relatorio;
@@ -46,14 +43,6 @@ public class Chamada extends AbstractModel {
 
 	public void setTipo(TipoChamada tipo) {
 		this.tipo = tipo;
-	}
-
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
 	}
 
 	public Relatorio getRelatorio() {

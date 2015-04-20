@@ -5,10 +5,10 @@
 
 <tiles-definitions>
 	<definition name="supervisor-usuario/index" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/supervisor-usuario/index.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/supervisor/usuario/index.jsp" />
 	</definition>
 	
 	<definition name="supervisor-usuario/form" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/supervisor-usuario/form.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/supervisor/usuario/form.jsp" />
 	</definition>
 </tiles-definitions>

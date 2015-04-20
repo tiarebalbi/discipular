@@ -37,34 +37,34 @@
 				<form:errors path="data" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="ask1"><span>1) De um modo geral como foi a Célula "HOJE"?*</span></form:label>
-				<form:input path="ask1" id="ask1" type="range" max="5" min="0" oninput="amount1.value=ask1.value"/>
-				<output name="amount1" for="ask1">0</output>
-				<form:errors path="ask1" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="geral"><span>1) De um modo geral como foi a Célula "HOJE"?*</span></form:label>
+				<form:input path="geral" type="range" max="5" min="0" oninput="amount1.value=geral.value"/>
+				<output name="amount1" for="geral">0</output>
+				<form:errors path="geral" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="ask2"><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega)* </span></form:label>
-				<form:input path="ask2" type="range" max="5" min="0" oninput="amount2.value=ask2.value" />
-				<output name="amount2" for="ask2">0</output>
-				<form:errors path="ask2" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="e5"><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega)* </span></form:label>
+				<form:input path="e5" type="range" max="5" min="0" oninput="amount2.value=e5.value" />
+				<output name="amount2" for="e5">0</output>
+				<form:errors path="e5" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="ask3"><span>3) Como foi a participação dos membros?*</span></form:label>
-				<form:input path="ask3" type="range" max="5" min="0" oninput="amount3.value=ask3.value" />
-				<output name="amount3" for="ask3">0</output>
-				<form:errors path="ask3" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="participacao"><span>3) Como foi a participação dos membros?*</span></form:label>
+				<form:input path="participacao" type="range" max="5" min="0" oninput="amount3.value=participacao.value" />
+				<output name="amount3" for="participacao">0</output>
+				<form:errors path="participacao" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="ask4"><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?*</span></form:label>
-				<form:input path="ask4" type="range" max="5" min="0" oninput="amount4.value=ask4.value" />
-				<output name="amount4" for="ask4">0</output>
-				<form:errors path="ask4" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="tempo"><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?*</span></form:label>
+				<form:input path="tempo" type="range" max="5" min="0" oninput="amount4.value=tempo.value" />
+				<output name="amount4" for="tempo">0</output>
+				<form:errors path="tempo" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
-				<form:label path="ask5"><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?*</span></form:label>
-				<form:input path="ask5" type="range" max="5" min="0" oninput="amount5.value=ask5.value" />
-				<output name="amount5" for="ask5">0</output>
-				<form:errors path="ask5" style="color:#FFF" cssClass="label label-danger" element="span" />
+				<form:label path="conteudo"><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?*</span></form:label>
+				<form:input path="conteudo" type="range" max="5" min="0" oninput="amount5.value=conteudo.value" />
+				<output name="amount5" for="conteudo">0</output>
+				<form:errors path="conteudo" style="color:#FFF" cssClass="label label-danger" element="span" />
 			</div>
 			<div class="form-group">
 				<form:label path="observacao"><span>Observação</span></form:label>

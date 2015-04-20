@@ -1,5 +1,6 @@
 package br.com.discipular.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,6 @@ import br.com.discipular.predicate.CelulaPredicate;
 import br.com.discipular.predicate.MembroPredicate;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
-import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.MembroValidator;
 
 /**
@@ -74,8 +74,7 @@ public class MembroController extends AbstractController {
 			
 			Page<Membro> registros = service.getRepositorio().findAll(MembroPredicate.buscarPor(celula.get(0)), MembroPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 			
-			registros.getContent().stream().parallel().forEach(membro -> membro.setData(DataUtils.formatDataPtBr(membro.getDataNascimento())));
-			
+			view.addObject("format", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			view.addObject("registros", registros.getContent());
 			view.addObject("celula", celula.get(0).getNome());
 		} catch (Exception e) {

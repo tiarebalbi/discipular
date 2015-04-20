@@ -5,10 +5,10 @@
 
 <tiles-definitions>
 	<definition name="relatorio/index" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/relatorio/index.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/lider/relatorio/index.jsp" />
 	</definition>
 	
 	<definition name="relatorio/form" extends="novo">
-		<put-attribute name="conteudo" value="/WEB-INF/views/relatorio/form.jsp" />
+		<put-attribute name="conteudo" value="/WEB-INF/views/lider/relatorio/form.jsp" />
 	</definition>
 </tiles-definitions>

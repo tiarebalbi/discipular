@@ -31,7 +31,6 @@ import br.com.discipular.repository.ChamadaRepository;
 import br.com.discipular.service.CelulaService;
 import br.com.discipular.service.MembroService;
 import br.com.discipular.service.RelatorioService;
-import br.com.discipular.utils.DataUtils;
 import br.com.discipular.validator.RelatorioValidator;
 
 /**
@@ -90,7 +89,6 @@ public class RelatorioController extends AbstractController {
 			
 			Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(0, QUANTIDADE_ELEMENTOS_POR_PAGINA));
 			qtdePaginas = registros.getTotalPages();
-			registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 			view.addObject("registros", registros.getContent());
 			view.addObject("pagina", qtdePaginas);
 		} catch (Exception e) {
@@ -207,7 +205,6 @@ public class RelatorioController extends AbstractController {
 	
 		Celula celula = celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
 		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(--marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;
@@ -219,7 +216,6 @@ public class RelatorioController extends AbstractController {
 		
 		Celula celula = celulaService.getRepositorio().findOne(CelulaPredicate.buscarPorLider(getCurrentUser()));
 		Page<Relatorio> registros = service.getRepositorio().findAll(RelatorioPredicate.buscarPorUsuarioECelula(celula), RelatorioPredicate.buscarPaginacao(++marker, QUANTIDADE_ELEMENTOS_POR_PAGINA));
-		registros.getContent().stream().parallel().forEach(relatorio -> relatorio.setDataFormat(DataUtils.formatDataPtBr(relatorio.getData())));
 		view.addObject("registros", registros.getContent());
 		
 		return view;

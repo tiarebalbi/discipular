@@ -32,23 +32,23 @@
 			</div>
 			<div class="form-group">
 				<label><span>1) De um modo geral como foi a Célula "HOJE"?</span></label>
-				<input disabled class="form-control" value="${relatorio.ask5}" />
+				<input disabled class="form-control" value="${relatorio.geral}" />
 			</div>
 			<div class="form-group">
 				<label><span>2) A Célula PASSOU pelos 5 E's? (Encontro, Exaltação, Edificação, Evangelização e Entrega) </span></label>
-				<input disabled class="form-control" value="${relatorio.ask2}" />
+				<input disabled class="form-control" value="${relatorio.e5}" />
 			</div>
 			<div class="form-group">
 				<label><span>3) Como foi a participação dos membros?</span></label>
-				<input disabled class="form-control" value="${relatorio.ask3}" />
+				<input disabled class="form-control" value="${relatorio.participacao}" />
 			</div>
 			<div class="form-group">
 				<label><span>4) O "Início" e "Término" da Célula deu-se no horário determinado e cumpriu 1h30 de duração?</span></label>
-				<input disabled class="form-control" value="${relatorio.ask4}" />
+				<input disabled class="form-control" value="${relatorio.tempo}" />
 			</div>
 			<div class="form-group">
 				<label><span>5) O que os membros acharam do CONTEÚDO do roteiro HOJE apresentado?</span></label>
-				<input disabled class="form-control" value="${relatorio.ask5}" />
+				<input disabled class="form-control" value="${relatorio.conteudo}" />
 			</div>
 			<div class="form-group">
 				<label for="observacao"><span>Observação</span></label>

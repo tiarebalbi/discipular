@@ -35,7 +35,6 @@ public class Usuario extends AbstractModel implements Serializable {
 	@Column(length = 50)
 	private String nome;
 	
-	@NotNull
 	@Column(length = 22)
 	private String login;
 	
@@ -48,7 +47,6 @@ public class Usuario extends AbstractModel implements Serializable {
 	
 	private String telefone;
 	
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
 	
