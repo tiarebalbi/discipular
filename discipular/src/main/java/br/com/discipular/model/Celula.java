@@ -8,16 +8,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.com.discipular.enumerator.DiaSemana;
 import br.com.discipular.enumerator.Horario;
 import br.com.discipular.enumerator.TipoRede;
 import br.com.discipular.serializer.LocalDateSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 /**
@@ -32,19 +31,15 @@ import br.com.discipular.serializer.LocalDateSerializer;
 @Entity
 public class Celula extends AbstractModel {
 	
-	@NotNull
 	@Column(length = 50)
 	private String nome;
 
-	@NotNull
 	@Column(length = 100)
 	private String endereco;
 	
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private DiaSemana dia;
 	
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Horario horario;
 

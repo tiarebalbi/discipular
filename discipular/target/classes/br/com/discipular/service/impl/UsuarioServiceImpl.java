@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import br.com.discipular.domain.bo.UsuarioBO;
 import br.com.discipular.enumerator.TipoUsuario;
 import br.com.discipular.model.Celula;
 import br.com.discipular.model.Usuario;
@@ -33,22 +32,25 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	
 	@Override
-	public Usuario salvar(Usuario entidade) throws Exception {
+	public Usuario salvar(Usuario usuario) throws Exception {
+		Assert.notNull(usuario.getArea(), "Favor preencher o campo área.");
 		
-		UsuarioBO.criptografarSenha(entidade);
-		
-		Assert.notNull(entidade.getArea(), "Favor preencher o campo área.");
-		
-		if(!isLoginValido(entidade)) {
+		if(!isLoginValido(usuario)) {
 			throw new Exception("Já existe um líder/supervisor cadastrado com este login, favor utilizar outro login.");
 		}
 		
-		return this.repository.save(entidade);
+		if(usuario.getSenha() != null && usuario.getId() == null) {
+			usuario.criptografarSenha();
+		}
+		
+		usuario.setEmail(usuario.getEmail().toLowerCase());
+		
+		return this.repository.save(usuario);
 	}
 
 	
 	private boolean isLoginValido(Usuario usuario) {
-		usuario.setLogin(UsuarioBO.retirarEspacoBrancoDoInicio(usuario.getLogin()));
+		usuario.setLogin(usuario.getLogin().trim());
 		
 		long qtdeUsuarios = this.repository.count(UsuarioPredicate.buscarPorLogin(usuario.getLogin()));
 

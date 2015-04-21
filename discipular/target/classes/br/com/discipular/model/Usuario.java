@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import br.com.discipular.context.security.DiscipularPasswordEncoder;
 import br.com.discipular.enumerator.TipoUsuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -133,6 +134,12 @@ public class Usuario extends AbstractModel implements Serializable {
 	 */
 	public void setCelula(String celula) {
 		this.celula = celula;
+	}
+	
+	public Usuario criptografarSenha() {
+		this.setSenha(new DiscipularPasswordEncoder().encode(this.getSenha()));
+
+		return this;
 	}
 
 }
