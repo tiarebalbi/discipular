@@ -12,9 +12,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.com.discipular.model.Celula;
-import br.com.discipular.model.Usuario;
-import br.com.discipular.repository.CelulaRepository;
+import br.com.discipular.domain.model.Celula;
+import br.com.discipular.domain.model.Usuario;
+import br.com.discipular.domain.repository.CelulaRepository;
 import br.com.discipular.service.impl.CelulaServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)

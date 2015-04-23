@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import br.com.discipular.enumerator.TipoUsuario;
-import br.com.discipular.model.Celula;
-import br.com.discipular.model.Usuario;
-import br.com.discipular.predicate.UsuarioPredicate;
-import br.com.discipular.repository.UsuarioRepository;
+import br.com.discipular.domain.enumetator.TipoUsuario;
+import br.com.discipular.domain.model.Celula;
+import br.com.discipular.domain.model.Usuario;
+import br.com.discipular.domain.predicate.UsuarioPredicate;
+import br.com.discipular.domain.repository.UsuarioRepository;
 import br.com.discipular.service.UsuarioService;
 
 /**

@@ -1,7 +1,7 @@
 package br.com.discipular.service;
 
-import br.com.discipular.model.Celula;
-import br.com.discipular.repository.CelulaRepository;
+import br.com.discipular.domain.model.Celula;
+import br.com.discipular.domain.repository.CelulaRepository;
 
 /**
  * Métodos de consulta e manipulação do modelo {@link Celula}

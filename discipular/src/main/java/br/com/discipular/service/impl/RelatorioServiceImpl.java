@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import br.com.discipular.model.Relatorio;
-import br.com.discipular.query.RelatorioQuery;
-import br.com.discipular.repository.RelatorioRepository;
+import br.com.discipular.domain.model.Relatorio;
+import br.com.discipular.domain.query.RelatorioQuery;
+import br.com.discipular.domain.repository.RelatorioRepository;
 import br.com.discipular.service.RelatorioService;
 
 /**

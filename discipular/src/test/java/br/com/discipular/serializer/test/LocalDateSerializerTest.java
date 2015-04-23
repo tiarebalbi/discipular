@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.discipular.model.Membro;
+import br.com.discipular.domain.model.Membro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

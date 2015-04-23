@@ -1,7 +1,7 @@
 package br.com.discipular.service;
 
-import br.com.discipular.model.Membro;
-import br.com.discipular.repository.MembroRepository;
+import br.com.discipular.domain.model.Membro;
+import br.com.discipular.domain.repository.MembroRepository;
 
 /**
  * Métodos de consulta e manipulação do modelo {@link Membro}

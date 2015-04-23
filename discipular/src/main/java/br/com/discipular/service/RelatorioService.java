@@ -2,9 +2,9 @@ package br.com.discipular.service;
 
 import java.util.List;
 
-import br.com.discipular.model.Relatorio;
-import br.com.discipular.query.RelatorioQuery;
-import br.com.discipular.repository.RelatorioRepository;
+import br.com.discipular.domain.model.Relatorio;
+import br.com.discipular.domain.query.RelatorioQuery;
+import br.com.discipular.domain.repository.RelatorioRepository;
 	
 /**
  * Métodos de consulta e manipulação do modelo {@link Relatorio}

@@ -3,8 +3,8 @@ package br.com.discipular.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.discipular.model.Celula;
-import br.com.discipular.repository.CelulaRepository;
+import br.com.discipular.domain.model.Celula;
+import br.com.discipular.domain.repository.CelulaRepository;
 import br.com.discipular.service.CelulaService;
 
 /**

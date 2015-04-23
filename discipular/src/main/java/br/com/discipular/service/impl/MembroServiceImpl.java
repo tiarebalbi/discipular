@@ -4,9 +4,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import br.com.discipular.model.Membro;
-import br.com.discipular.predicate.MembroPredicate;
-import br.com.discipular.repository.MembroRepository;
+import br.com.discipular.domain.model.Membro;
+import br.com.discipular.domain.predicate.MembroPredicate;
+import br.com.discipular.domain.repository.MembroRepository;
 import br.com.discipular.service.MembroService;
 
 /**
