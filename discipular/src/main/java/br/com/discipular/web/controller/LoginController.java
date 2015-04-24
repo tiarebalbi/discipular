@@ -11,7 +11,7 @@ import br.com.discipular.service.UsuarioService;
 @Controller
 public class LoginController {
 
-	private final static String VIEW_LOGIN = "login/index";
+	private final static String VIEW_LOGIN = "compartilhado/login/index";
 	
 	@Autowired
 	private UsuarioService usuarioService;
