@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Discipular</title>
-
-	<link rel="stylesheet" href="/compartilhado/css/login-bootstrap.css" />
-	<link rel="stylesheet" href="/compartilhado/css/login-layout.css" />
-	<link rel="stylesheet" href="/compartilhado/css/login-elements.css" />
-	<link rel="stylesheet" href="/compartilhado/css/font-awesome.min.css" />
-	
+	<link rel="stylesheet" th:href="@{compartilhado/css/login-bootstrap.css}" type="text/css" />
+	<link rel="stylesheet" th:href="@{compartilhado/css/login-layout.css}" type="text/css" />
+	<link rel="stylesheet" th:href="@{compartilhado/css/login-elements.css}" type="text/css" />
+	<link rel="stylesheet" th:href="@{compartilhado/css/font-awesome.min.css}" type="text/css" />
 <!-- 	<link type="image/x-icon" href="${path}resources/imagens/logo-discipular.png" rel="shortcut icon" /> -->
 </head>
 <body id="login-page">
