@@ -26,7 +26,7 @@ import br.com.discipular.web.controller.lider.AbstractController;
 @Controller
 public class DashboardController extends AbstractController {
 	
-	private final static String VIEW_INDEX = "dashboard/index";
+	private final static String VIEW_INDEX = "lider/dashboard/index";
 	
 	@Autowired
 	private UsuarioService usuarioService;

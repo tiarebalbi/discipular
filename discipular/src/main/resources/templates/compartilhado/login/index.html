@@ -1,14 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Discipular</title>
-	<link rel="stylesheet" th:href="@{compartilhado/css/login-bootstrap.css}" type="text/css" />
-	<link rel="stylesheet" th:href="@{compartilhado/css/login-layout.css}" type="text/css" />
-	<link rel="stylesheet" th:href="@{compartilhado/css/login-elements.css}" type="text/css" />
-	<link rel="stylesheet" th:href="@{compartilhado/css/font-awesome.min.css}" type="text/css" />
-<!-- 	<link type="image/x-icon" href="${path}resources/imagens/logo-discipular.png" rel="shortcut icon" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<head th:include="compartilhado/fragmentos/cabecalho :: headerFragment">
 </head>
 <body id="login-page">
 	<div class="container">
@@ -23,7 +15,9 @@
 								</div>
 							</header>
 							<div id="login-box-inner">
-								<form method="post" role="form" action="logar">
+<!-- 								<form method="post" role="form" action="logar"> -->
+								<form method="post" role="form" th:action="@{/login/processing}">
+								
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
 										<input class="form-control" name="username" required="required" type="text" placeholder="Login" />
