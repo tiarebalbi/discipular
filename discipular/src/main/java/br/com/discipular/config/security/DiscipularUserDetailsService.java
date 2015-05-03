@@ -16,7 +16,7 @@ import br.com.discipular.domain.predicate.UsuarioPredicate;
 import br.com.discipular.service.UsuarioService;
 
 @Component
-public class CustomUserDetailsService implements UserDetailsService  {
+public class DiscipularUserDetailsService implements UserDetailsService  {
 
 	@Autowired
 	private UsuarioService service;

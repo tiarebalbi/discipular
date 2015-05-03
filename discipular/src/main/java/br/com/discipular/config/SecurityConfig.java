@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import br.com.discipular.config.security.CustomUserDetailsService;
-import br.com.discipular.config.security.SuporteAuthenticationSuccessHandler;
+import br.com.discipular.config.security.DiscipularAuthenticationSuccessHandler;
+import br.com.discipular.config.security.DiscipularUserDetailsService;
 
 /**
  * Configuração do Spring Security
@@ -23,10 +23,10 @@ import br.com.discipular.config.security.SuporteAuthenticationSuccessHandler;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private DiscipularUserDetailsService userDetailsService;
 
     @Autowired
-    private SuporteAuthenticationSuccessHandler suporteAuthenticationSuccessHandler;
+    private DiscipularAuthenticationSuccessHandler suporteAuthenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

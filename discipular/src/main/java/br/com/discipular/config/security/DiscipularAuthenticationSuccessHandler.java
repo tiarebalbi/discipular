@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 @Component
-public class SuporteAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class DiscipularAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication arg2) throws IOException, ServletException {
