@@ -1,0 +1,3 @@
+(function(){angular.module("app",["ngRoute","app.controller"]).config(["$routeProvider",function(e){return e.when("/",{controller:"HomeCtrl",templateUrl:"/app/components/home/index.html"}).otherwise({redirectTo:"/"})}])}).call(this);
+(function(){angular.module("app.controller",[])}).call(this);
+(function(){angular.module("app.controller").controller("HomeCtrl",["$scope","$routeParams",function(o){return o.model=!1,o.fecharModel=function(){return o.model=!1},o.abrirModel=function(){return o.model=!0}}])}).call(this);

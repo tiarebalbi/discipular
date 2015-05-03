@@ -1,5 +1,7 @@
 package br.com.discipular.web.controller;
 
+import br.com.discipular.domain.enumetator.TipoUsuario;
+import br.com.discipular.domain.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,8 @@ import br.com.discipular.service.UsuarioService;
 public class LoginController {
 
 	private final static String VIEW_LOGIN = "compartilhado/login/index";
-	
+	private static final String REDIRECT_VIEW_LOGIN = "redirect:/";
+
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -22,7 +25,7 @@ public class LoginController {
 		return view;
 	}
 	
-	/*
+
 	@RequestMapping(value = "/login/install", method = RequestMethod.GET)
 	public ModelAndView adm() {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_LOGIN);
@@ -31,6 +34,7 @@ public class LoginController {
 			
 			usuario.setNome("Lucas Campos");
 			usuario.setLogin("admin");
+			usuario.setEmail("teste@teset.com");
 			usuario.setSenha("123");
 			usuario.setArea(0);
 			usuario.setTipo(TipoUsuario.ADMINISTRADOR);
@@ -42,6 +46,6 @@ public class LoginController {
 		
 		return view;
 	}
-	*/
+
 	
 }
