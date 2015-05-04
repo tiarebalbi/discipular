@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" ng-app="app">
 <head th:include="compartilhado/fragmentos/cabecalho :: headerFragment">
 </head>
 <body>
-	<div th:include="compartilhado/fragmentos/cabecalho :: menu-top-lateral"></div>
-	<div style="height: 1000px; width:100%; background-color:#fff"></div>
-	<div th:include="compartilhado/fragmentos/cabecalho :: menu-footer"></div>
+
+<div ng-view="">
+</div>
+<div th:include="compartilhado/fragmentos/cabecalho :: javascript"></div>
 </body>
 </html>

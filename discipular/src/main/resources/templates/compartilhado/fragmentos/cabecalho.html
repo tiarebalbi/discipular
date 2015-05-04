@@ -6,17 +6,20 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<link rel="stylesheet" href="/discipular/compartilhado/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/discipular/compartilhado/css/layout.css" />
-	<link rel="stylesheet" href="/discipular/compartilhado/css/elements.css" />
-	<link rel="stylesheet" href="/discipular/compartilhado/font-awesome-4.1.0/css/font-awesome.min.css" />
-	
+	<link rel="stylesheet" href="/css/theme.css" />
+
 	<link type="image/x-icon" href="/discipular/compartilhado/imagens/logo-discipular.png" rel="shortcut icon" />
-	<script src="/discipular/compartilhado/js/jquery.js"></script>
-	
+
 	<title>Católicos Em Células</title>
 </head>
 <body>
+<div th:fragment="javascript">
+	<script src="/vendor/jquery.js"></script>
+	<script src="/vendor/bootstrap.js"></script>
+	<script src="/vendor/angular.js"></script>
+	<script src="/vendor/angular-route.js"></script>
+	<script src="/js/application.js"></script>
+</div>
 <div th:fragment="menu-top-lateral">
 	<header class="navbar" id="header-navbar">
 		<div class="container">
