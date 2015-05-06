@@ -2,12 +2,7 @@ package br.com.discipular.domain.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,10 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * Modelo que representa as células da paróquia
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
 @Entity
 public class Celula extends AbstractModel {
@@ -58,8 +50,8 @@ public class Celula extends AbstractModel {
 	@Transient
 	private long qtdeMembros;
 	
-	@ManyToOne
-	private Usuario usuario;
+	@OneToOne(mappedBy = "celula")
+	private Lider lider;
 	
 	private int area;
 	
@@ -106,14 +98,6 @@ public class Celula extends AbstractModel {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getHorarioFormatado() {
-		return horarioFormatado;
-	}
-
-	public void setHorarioFormatado(String horarioFormatado) {
-		this.horarioFormatado = horarioFormatado;
-	}
-
 	public TipoRede getTipoRede() {
 		return tipoRede;
 	}
@@ -130,7 +114,7 @@ public class Celula extends AbstractModel {
 		this.supervisor = supervisor;
 	}
 
-	public boolean getApagada() {
+	public boolean isApagada() {
 		return apagada;
 	}
 
@@ -146,20 +130,27 @@ public class Celula extends AbstractModel {
 		this.qtdeMembros = qtdeMembros;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Lider getLider() {
+		return lider;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setLider(Lider lider) {
+		this.lider = lider;
 	}
 
-	public Integer getArea() {
+	public int getArea() {
 		return area;
 	}
 
 	public void setArea(int area) {
 		this.area = area;
 	}
-	
+
+	public String getHorarioFormatado() {
+		return horarioFormatado;
+	}
+
+	public void setHorarioFormatado(String horarioFormatado) {
+		this.horarioFormatado = horarioFormatado;
+	}
 }

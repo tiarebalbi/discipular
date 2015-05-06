@@ -21,10 +21,9 @@ import br.com.discipular.domain.predicate.RelatorioPredicate;
 import br.com.discipular.domain.repository.ChamadaRepository;
 import br.com.discipular.service.RelatorioService;
 import br.com.discipular.service.UsuarioService;
-import br.com.discipular.web.controller.lider.AbstractController;
 
 @Controller
-public class DashboardController extends AbstractController {
+public class DashboardController  {
 	
 	private final static String VIEW_INDEX = "dashboard/index";
 	
@@ -46,15 +45,15 @@ public class DashboardController extends AbstractController {
 	@RequestMapping(value = "/trocar-senha/{senha}/{confirm}")
 	public ModelAndView trocarSenha(@PathVariable ("senha") String senha, @PathVariable ("confirm") String confirm) {
 		ModelAndView view = new ModelAndView();
-		Usuario usuario = this.usuarioService.getRepositorio().findOne(getCurrentUser().getId());
-		try {
-			if(senha.equals(confirm)) {
-				usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
-				usuarioService.salvar(usuario);
-			}
-		} catch (Exception e) {
-			view.addObject("mensagem", e.getMessage());
-		}
+//		Usuario usuario = this.usuarioService.getRepositorio().findOne(getCurrentUser().getId());
+//		try {
+//			if(senha.equals(confirm)) {
+//				usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
+//				usuarioService.salvar(usuario);
+//			}
+//		} catch (Exception e) {
+//			view.addObject("mensagem", e.getMessage());
+//		}
 		
 		return view;
 	}
@@ -63,20 +62,20 @@ public class DashboardController extends AbstractController {
 	public ModelAndView graficoFalta() {
 		ModelAndView view = new ModelAndView(VIEW_INDEX);
 		
-		TemplateGraficoDTO dto = new TemplateGraficoDTO(); 
-		List<Relatorio> relatorios = (List<Relatorio>) relatorioService.getRepositorio().findAll(RelatorioPredicate.buscarPorPeriodoE(getCurrentUser().getId(), LocalDate.now().minusMonths(2), LocalDate.now()));
-	
-		for (Relatorio relatorio : relatorios) {
-			long total = chamadaRepository.count(ChamadaPredicate.buscarPor(relatorio));
-			long chamadas = chamadaRepository.count(ChamadaPredicate.buscarPorRelatorioEStatus(relatorio, TipoChamada.PRESENTE));
-			long porcentagem = chamadas * 100 / total;
-			
-			dto.getData().add(porcentagem);
-			dto.getLabel().add(DataUtils.formatDataPtBr(relatorio.getData()));
-			
-			view.addObject("dados", dto.getData());
-			view.addObject("labels", dto.getLabel());
-		}
+//		TemplateGraficoDTO dto = new TemplateGraficoDTO(); 
+//		List<Relatorio> relatorios = (List<Relatorio>) relatorioService.getRepositorio().findAll(RelatorioPredicate.buscarPorPeriodoE(getCurrentUser().getId(), LocalDate.now().minusMonths(2), LocalDate.now()));
+//	
+//		for (Relatorio relatorio : relatorios) {
+//			long total = chamadaRepository.count(ChamadaPredicate.buscarPor(relatorio));
+//			long chamadas = chamadaRepository.count(ChamadaPredicate.buscarPorRelatorioEStatus(relatorio, TipoChamada.PRESENTE));
+//			long porcentagem = chamadas * 100 / total;
+//			
+//			dto.getData().add(porcentagem);
+//			dto.getLabel().add(DataUtils.formatDataPtBr(relatorio.getData()));
+//			
+//			view.addObject("dados", dto.getData());
+//			view.addObject("labels", dto.getLabel());
+//		}
 		
 		return view;
 	}

@@ -3,14 +3,10 @@ package br.com.discipular.domain.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import br.com.discipular.domain.enumetator.TipoRede;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.com.discipular.domain.enumetator.TipoUsuario;
@@ -21,44 +17,45 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Modelo que representa os usuários do sistema
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
 @Entity
-public class Usuario extends AbstractModel implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -665605079063752910L;
+public class Usuario extends AbstractModel {
 
 	@Column(length = 50)
 	private String nome;
 	
-	@Column(length = 22)
+	@Column(length = 25)
 	private String login;
-	
-	@NotNull
+
+	@Column(length = 70)
 	private String senha;
 	
 	private Integer area;
-	
+
+	@Column(length = 30)
 	private String email;
-	
-	private String telefone;
+
+	@Column(length = 35)
+	private String celular;
 	
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipo;
+
+	@Enumerated(EnumType.STRING)
+	private TipoRede rede;
+
+	@OneToOne(mappedBy = "usuario")
+	private Lider lider;
+
+	@OneToOne(mappedBy = "usuario")
+	private Supervisor supervisor;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "usuario")
-	private List<Celula> celulas;
-	
-	@Transient
-	private String celula;
-	
+	public Usuario criptografarSenha() {
+		this.setSenha(new BCryptPasswordEncoder().encode(this.getSenha()));
+		return this;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -82,7 +79,7 @@ public class Usuario extends AbstractModel implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
 	public Integer getArea() {
 		return area;
 	}
@@ -99,12 +96,12 @@ public class Usuario extends AbstractModel implements Serializable {
 		this.email = email;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getCelular() {
+		return celular;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 
 	public TipoUsuario getTipo() {
@@ -115,32 +112,27 @@ public class Usuario extends AbstractModel implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public List<Celula> getCelulas() {
-		return celulas;
+	public TipoRede getRede() {
+		return rede;
 	}
 
-	public void setCelulas(List<Celula> celulas) {
-		this.celulas = celulas;
+	public void setRede(TipoRede rede) {
+		this.rede = rede;
 	}
 
-	/**
-	 * @return the celula
-	 */
-	public String getCelula() {
-		return celula;
+	public Lider getLider() {
+		return lider;
 	}
 
-	/**
-	 * @param celula the celula to set
-	 */
-	public void setCelula(String celula) {
-		this.celula = celula;
-	}
-	
-	public Usuario criptografarSenha() {
-		BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
-		this.setSenha(crypt.encode(this.getSenha()));
-		return this;
+	public void setLider(Lider lider) {
+		this.lider = lider;
 	}
 
+	public Supervisor getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(Supervisor supervisor) {
+		this.supervisor = supervisor;
+	}
 }

@@ -1,6 +1,6 @@
 var gulp = require('gulp');
-var concat = require('gulp-concat');
 var less = require('gulp-less');
+var concat = require('gulp-concat');
 var coffee = require('gulp-coffee');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
@@ -26,9 +26,28 @@ var locations = {
         "src/main/resources/static/app/components/ControllerProvider.coffee",
         "src/main/resources/static/app/components/**/*.coffee"
     ],
+    fontsGlyphicons: [
+        "bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2",
+        "bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff",
+        "bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf",
+    ],
+    fontsAwesome: [
+        "bower_components/font-awesome/fonts/fontawesome-webfont.ttf",
+        "bower_components/font-awesome/fonts/fontawesome-webfont.woff",
+        "bower_components/font-awesome/fonts/fontawesome-webfont.woff2",
+    ],
     asserts: "src/main/resources/static/"
 
 };
+
+gulp.task('fonts', function () {
+    gulp.src(locations.fontsGlyphicons)
+        .pipe(gulp.dest(locations.asserts + "fonts/glyphicons"))
+        .pipe(notify("Fonts Glyphicons Compiladas"))
+    gulp.src(locations.fontsAwesome)
+        .pipe(gulp.dest(locations.asserts + "fonts/font-awesome"))
+        .pipe(notify("Fonts Awesome Compiladas"))
+});
 
 gulp.task('vendor', function () {
     gulp.src(locations.vendor)
@@ -67,4 +86,4 @@ gulp.task('application', function () {
 });
 
 
-gulp.task('default', ['vendor', 'styles', 'application']);
+gulp.task('default', ['vendor', 'styles', 'application', 'fonts']);

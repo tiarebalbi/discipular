@@ -65,9 +65,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> buscarLideresSemCelula(Celula celula) {
 		List<Usuario> lideres = new ArrayList<>();
 		
-		if(celula.getUsuario() != null) {
-			lideres.add(celula.getUsuario());
-			lideres.addAll((Collection<? extends Usuario>) this.repository.findAll(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getUsuario())));
+		if(celula.getLider() != null) {
+			lideres.add(celula.getLider().getUsuario());
+			lideres.addAll((Collection<? extends Usuario>) this.repository.findAll(UsuarioPredicate.buscarLiderSemCelulaDiferente(celula.getLider().getUsuario())));
 		} else {
 			lideres.addAll((Collection<? extends Usuario>) this.repository.findAll(UsuarioPredicate.buscarPorTipoSemCelula(TipoUsuario.LIDER)));
 		}
