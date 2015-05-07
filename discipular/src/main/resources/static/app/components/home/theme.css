@@ -19840,8 +19840,6 @@ body.sb-r-o #toggle_sidemenu_r span.glyphicons {
       Requires ".alt" class on #topbar
 ================================================= */
 #topbar.alt {
-  min-height: 70px;
-  padding: 20px 22px;
   background: #e8e8e8;
   border-bottom: 1px solid #ddd;
 }
