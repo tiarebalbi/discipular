@@ -40,7 +40,7 @@ public class RelatorioPredicate {
 
 	public static Predicate buscarPorUsuarioECelula(Celula celula) {
 		QRelatorio condicao = QRelatorio.relatorio;
-		return condicao.usuario.id.eq(celula.getUsuario().getId()).and(condicao.celula.eq(celula));
+		return condicao.usuario.id.eq(celula.getLider().getId()).and(condicao.celula.eq(celula));
 	}
 
 	public static Predicate buscarPorPeriodoE(Long idUsuario, LocalDate inicio, LocalDate fim) {

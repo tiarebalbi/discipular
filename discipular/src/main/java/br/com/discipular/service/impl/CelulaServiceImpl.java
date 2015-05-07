@@ -43,7 +43,7 @@ public class CelulaServiceImpl implements CelulaService {
 	public void excluir(Long id) throws Exception {
 		Celula celula = this.repository.findOne(id);
 		celula.setSupervisor(null);
-		celula.setUsuario(null);
+		celula.setLider(null);
 		celula.setApagada(true);
 		this.salvar(celula);
 	}

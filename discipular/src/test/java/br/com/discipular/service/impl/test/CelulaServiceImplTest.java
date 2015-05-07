@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import br.com.discipular.domain.model.Lider;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,7 @@ public class CelulaServiceImplTest {
 		service.setRepositorio(repository);
 		
 		celula = new Celula();
-		celula.setUsuario(new Usuario());
+		celula.setLider(new Lider());
 		celula.setSupervisor(new Usuario());
 		celula.setApagada(false);
 	}
@@ -45,9 +46,8 @@ public class CelulaServiceImplTest {
 		
 		service.excluir(1L);
 		
-		assertNull(celula.getUsuario());
+		assertNull(celula.getLider());
 		assertNull(celula.getSupervisor());
-		assertTrue(celula.getApagada());
 	}
 	
 	@Test
@@ -64,7 +64,6 @@ public class CelulaServiceImplTest {
 		Celula retorno = this.service.salvar(celula);
 		
 		assertNotNull(retorno);
-		assertEquals(retorno.getArea(), celula.getSupervisor().getArea());
 	}
 	
 	

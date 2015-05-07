@@ -20,7 +20,7 @@ import br.com.discipular.domain.enumetator.TipoChamada;
 @Entity
 public class Chamada extends AbstractModel {
 	
-	@Column(length = 70)
+	@Column(length = 50)
 	private String nome;
 	
 	@Enumerated(EnumType.STRING)

@@ -16,7 +16,7 @@ public class DiscipularAuthenticationSuccessHandler implements AuthenticationSuc
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication arg2) throws IOException, ServletException {
 		//TODO Colocar regra de redirecionamento da primeira página
-		resp.sendRedirect("/discipular");
+		resp.sendRedirect("/");
 	}
 	
 }
