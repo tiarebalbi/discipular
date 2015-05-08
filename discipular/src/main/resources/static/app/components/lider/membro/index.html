@@ -1,5 +1,80 @@
-<section class="conteiner-fluid" ng-controller="HomeCtrl" style="margin: 15px">
-    <div class="row-fluid">
-        <button class="btn btn-primary">asdfasdfa</button>
+<section id="content" class="table-layout">
+    <div class="tray tray-center">
+        <div class="admin-form mw1000 center-block theme-primary" style="padding-bottom: 175px;">
+            <div class="panel heading-border panel-primary">
+                <form method="post" action="/" id="admin-form" novalidate="novalidate">
+                    <div class="panel-body bg-light">
+                        <div class="section-divider mt20 mb40">
+                            <span> Normal validation rules </span>
+                        </div>
+                        <div class="section row" id="spy1">
+                            <div class="col-md-6">
+                                <label for="firstname" class="field prepend-icon">
+                                    <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="Nome">
+                                    <label for="firstname" class="field-icon">
+                                        <i class="fa fa-user"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastname" class="field prepend-icon">
+                                    <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Celular">
+                                    <label for="lastname" class="field-icon">
+                                        <i class="fa fa-phone"></i>
+                                    </label>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="section row" id="spy11">
+                            <div class="col-md-4">
+                                <label class="field select">
+                                    <select id="language3" name="language">
+                                        <option value="">Select language...</option>
+                                        <option value="EN">English</option>
+                                        <option value="FR">French</option>
+                                        <option value="SP">Spanish</option>
+                                        <option value="CH">Chinese</option>
+                                        <option value="JP">Japanese</option>
+                                    </select>
+                                    <i class="arrow double"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="field select">
+                                    <select id="language2" name="language">
+                                        <option value="">Select language...</option>
+                                        <option value="EN">English</option>
+                                        <option value="FR">French</option>
+                                        <option value="SP">Spanish</option>
+                                        <option value="CH">Chinese</option>
+                                        <option value="JP">Japanese</option>
+                                    </select>
+                                    <i class="arrow double"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="field select">
+                                    <select id="language4" name="language">
+                                        <option value="">Select language...</option>
+                                        <option value="EN">English</option>
+                                        <option value="FR">French</option>
+                                        <option value="SP">Spanish</option>
+                                        <option value="CH">Chinese</option>
+                                        <option value="JP">Japanese</option>
+                                    </select>
+                                    <i class="arrow double"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <button type="submit" class="button btn-primary"> Validate Form </button>
+                        <button type="reset" class="button btn-primary"> Cancel </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </section>
