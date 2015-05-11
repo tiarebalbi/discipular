@@ -2814,7 +2814,7 @@
   overflow: hidden;
   position: relative;
   height: auto;
-  padding: 19px 22px 18px;
+  /*padding: 19px 22px 18px;*/
   color: #999;
   border-radius: 0;
   border-top: 1px solid transparent;
@@ -2841,8 +2841,8 @@
 }
 .admin-form .panel-title {
   text-align: left;
-  font-weight: 300;
-  font-size: 26px;
+  /*font-weight: 300;*/
+  /*font-size: 26px;*/
   padding: 0;
   margin: 0;
   background: transparent;

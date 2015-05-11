@@ -1,3 +1,3 @@
 (function(){angular.module("app",["ngRoute","app.controller"]).config(["$routeProvider",function(e){return e.when("/membro",{controller:"HomeCtrl",templateUrl:"/app/components/lider/membro/index.html"}).otherwise({redirectTo:"/"})}])}).call(this);
 (function(){angular.module("app.controller",[])}).call(this);
-(function(){angular.module("app.controller").controller("HomeCtrl",["$scope","$routeParams",function(o){return o.model=!1,o.fecharModel=function(){return o.model=!1},o.abrirModel=function(){return o.model=!0}}])}).call(this);
+(function(){angular.module("app.controller").controller("HomeCtrl",["$scope","$routeParams",function(o){return o.form=!1,o.continueSaving=!1,o.membro={},o.membros=[],o.showForm=function(){return o.form=!0},o.hiddenForm=function(){return o.form=!1},o.salvar=function(){return o.continueSaving?void 0:(o.hiddenForm(),o.membros.push(o.membro))}}])}).call(this);

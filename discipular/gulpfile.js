@@ -13,13 +13,21 @@ var locations = {
         "bower_components/angular/angular.js",
         "bower_components/angular-route/angular-route.js",
 
-        "bower_components/bootstrap/dist/js/bootstrap.js"
+        "bower_components/bootstrap/dist/js/bootstrap.js",
+    ],
+    jsTheme: [
+        "src/main/resources/static/app/resources/js/jquery-1.11.1.min.js",
+        "src/main/resources/static/app/resources/js/jquery-ui.min.js",
+        "src/main/resources/static/app/resources/js/main.js",
+        "src/main/resources/static/app/resources/js/utility.js"
     ],
     css: [
         "bower_components/bootstrap/dist/css/bootstrap.css",
         "bower_components/font-awesome/css/font-awesome.css",
-        "src/main/resources/static/compartilhado/css/elements.css",
-        "src/main/resources/static/compartilhado/css/layouts.css"
+
+        //tema
+        "src/main/resources/static/app/resources/css/theme.css",
+        "src/main/resources/static/app/resources/css/admin-forms.css"
     ],
     app: [
         "src/main/resources/static/app/app.coffee",
@@ -70,6 +78,8 @@ gulp.task('watch', function () {
     gulp.watch(locations.css, ['styles']);
     gulp.watch(locations.vendor, ['vendor']);
     gulp.watch(locations.app, ['application']);
+    gulp.watch(locations.jsTheme, ['themejs']);
+    gulp.watch(locations.fontsAwesome, ['fonts']);
     gulp.src(locations.css)
         .pipe(notify("Iniciando monitoramento de alterações"));
 });
@@ -85,5 +95,14 @@ gulp.task('application', function () {
         .pipe(notify("Application Compilados"));
 });
 
+gulp.task('themejs', function () {
+    gulp.src(locations.jsTheme)
+        .pipe(uglify({
+            outSourceMap: true
+        }))
+        .pipe(concat('theme.js'))
+        .pipe(gulp.dest(locations.asserts + "js"))
+        .pipe(notify("Theme js Compilados"));
+});
 
-gulp.task('default', ['vendor', 'styles', 'application', 'fonts']);
+gulp.task('default', ['vendor', 'styles', 'application', 'fonts', 'themejs']);
