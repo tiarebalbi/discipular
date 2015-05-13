@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
  * @author Lucas Campos
  * @date 05/05/15
  */
-@Entity
+//@Entity
 public class Lider extends AbstractModel {
 
     @OneToOne(cascade = CascadeType.ALL)

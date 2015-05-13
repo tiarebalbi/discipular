@@ -17,7 +17,7 @@ import br.com.discipular.domain.enumetator.TipoChamada;
  *
  * 	08/09/2014 
  */
-@Entity
+//@Entity
 public class Chamada extends AbstractModel {
 	
 	@Column(length = 50)

@@ -18,12 +18,12 @@ import br.com.discipular.service.UsuarioService;
 @Component
 public class DiscipularUserDetailsService implements UserDetailsService  {
 
-	@Autowired
-	private UsuarioService service;
+//	@Autowired
+//	private UsuarioService service;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = this.service.getRepositorio().findOne(UsuarioPredicate.buscarPorLogin(username));
+		Usuario usuario = new Usuario(); //this.service.getRepositorio().findOne(UsuarioPredicate.buscarPorLogin(username));
 		if(usuario == null) {
 			throw new UsernameNotFoundException("");
 		}

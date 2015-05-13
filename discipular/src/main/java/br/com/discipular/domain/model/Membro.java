@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  *
  * 	08/09/2014 
  */
-@Entity
+//@Entity
 public class Membro extends AbstractModel {
 
 	@Column(length = 50)

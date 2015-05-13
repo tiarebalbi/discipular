@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Lucas Campos
  * @date 08/09/2014
  */
-@Entity
+//@Entity
 public class Usuario extends AbstractModel {
 
 	@Column(length = 50)
@@ -45,12 +45,6 @@ public class Usuario extends AbstractModel {
 	@Enumerated(EnumType.STRING)
 	private TipoRede rede;
 
-	@OneToOne(mappedBy = "usuario")
-	private Lider lider;
-
-	@OneToOne(mappedBy = "usuario")
-	private Supervisor supervisor;
-	
 	public Usuario criptografarSenha() {
 		this.setSenha(new BCryptPasswordEncoder().encode(this.getSenha()));
 		return this;
@@ -120,19 +114,4 @@ public class Usuario extends AbstractModel {
 		this.rede = rede;
 	}
 
-	public Lider getLider() {
-		return lider;
-	}
-
-	public void setLider(Lider lider) {
-		this.lider = lider;
-	}
-
-	public Supervisor getSupervisor() {
-		return supervisor;
-	}
-
-	public void setSupervisor(Supervisor supervisor) {
-		this.supervisor = supervisor;
-	}
 }

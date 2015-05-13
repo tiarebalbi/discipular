@@ -20,43 +20,34 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author Lucas Campos
  * @date 08/09/2014
  */
-@Entity
+//@Entity
 public class Celula extends AbstractModel {
-	
+
 	@Column(length = 50)
 	private String nome;
 
 	@Column(length = 100)
 	private String endereco;
-	
+
 	@Enumerated(EnumType.STRING)
 	private DiaSemana dia;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Horario horario;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dataNascimento;
-	
+
 	@Enumerated(EnumType.STRING)
 	private TipoRede tipoRede;
-	
+
 	@ManyToOne
 	private Usuario supervisor;
-	
+
 	private boolean apagada;
 
-	@Transient
-	private long qtdeMembros;
-	
-	@OneToOne(mappedBy = "celula")
-	private Lider lider;
-	
 	private int area;
-	
-	@Transient
-	private String horarioFormatado;
 
 	public String getNome() {
 		return nome;
@@ -122,22 +113,6 @@ public class Celula extends AbstractModel {
 		this.apagada = apagada;
 	}
 
-	public long getQtdeMembros() {
-		return qtdeMembros;
-	}
-
-	public void setQtdeMembros(long qtdeMembros) {
-		this.qtdeMembros = qtdeMembros;
-	}
-
-	public Lider getLider() {
-		return lider;
-	}
-
-	public void setLider(Lider lider) {
-		this.lider = lider;
-	}
-
 	public int getArea() {
 		return area;
 	}
@@ -146,11 +121,4 @@ public class Celula extends AbstractModel {
 		this.area = area;
 	}
 
-	public String getHorarioFormatado() {
-		return horarioFormatado;
-	}
-
-	public void setHorarioFormatado(String horarioFormatado) {
-		this.horarioFormatado = horarioFormatado;
-	}
 }
