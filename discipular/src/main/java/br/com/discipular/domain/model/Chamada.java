@@ -15,8 +15,7 @@ import javax.persistence.Enumerated;
  *
  * 	08/09/2014 
  */
-@Document
-public class Chamada  {
+public class Chamada {
 
 	private String nome;
 

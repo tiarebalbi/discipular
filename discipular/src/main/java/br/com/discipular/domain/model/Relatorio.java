@@ -18,7 +18,7 @@ import java.util.List;
  * 	08/09/2014 
  */
 @Document
-public class Relatorio {
+public class Relatorio extends AbstractDocument {
 
 	private int geral;
 	

@@ -15,7 +15,7 @@ import javax.persistence.Enumerated;
  * @date 08/09/2014
  */
 @Document
-public class Usuario {
+public class Usuario extends AbstractDocument {
 
 	private String nome;
 	

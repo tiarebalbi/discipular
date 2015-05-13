@@ -17,7 +17,7 @@ import java.util.Date;
  * @date 08/09/2014
  */
 @Document
-public class Membro {
+public class Membro extends AbstractDocument {
 
 	private String nome;
 	

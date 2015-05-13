@@ -21,7 +21,7 @@ import java.util.List;
  * @date 08/09/2014
  */
 @Document
-public class Celula {
+public class Celula extends AbstractDocument {
 
 	private String nome;
 
