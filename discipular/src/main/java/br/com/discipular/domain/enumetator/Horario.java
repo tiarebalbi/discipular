@@ -4,10 +4,7 @@ package br.com.discipular.domain.enumetator;
  * Possíveis horários de célula
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
 public enum Horario {
 	OITO_E_MEIA("08:30"),

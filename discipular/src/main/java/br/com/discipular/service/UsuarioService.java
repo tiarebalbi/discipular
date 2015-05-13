@@ -1,10 +1,7 @@
 package br.com.discipular.service;
 
-import br.com.discipular.domain.model.Celula;
 import br.com.discipular.domain.model.Usuario;
 import br.com.discipular.domain.repository.UsuarioRepository;
-
-import java.util.List;
 
 /**
  * Métodos de consulta e manipulação do modelo {@link Usuario}

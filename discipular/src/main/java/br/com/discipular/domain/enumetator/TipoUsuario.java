@@ -1,5 +1,11 @@
 package br.com.discipular.domain.enumetator;
 
+/**
+ * Tipos de {@link br.com.discipular.domain.model.Usuario} existentes no sistema
+ *
+ * @author Lucas Campos
+ * @date 08/09/2014
+ */
 public enum TipoUsuario {
 	
 	LIDER("ROLE_LIDER", "Líder"), 

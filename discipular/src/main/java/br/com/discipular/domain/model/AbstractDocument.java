@@ -1,5 +1,7 @@
 package br.com.discipular.domain.model;
 
+import org.springframework.data.annotation.Id;
+
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -9,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class AbstractDocument {
 
+    @Id
     private String id;
 
     public String getId() {

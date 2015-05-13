@@ -1,10 +1,8 @@
 package br.com.discipular.domain.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,10 +10,7 @@ import java.util.List;
  * Modelo que representa os relatórios das células
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
 @Document
 public class Relatorio extends AbstractDocument {
@@ -40,8 +35,6 @@ public class Relatorio extends AbstractDocument {
 	
 	private String observacao;
 	
-	private Celula celula;
-
 	private List<Chamada> chamada;
 	
 	private Usuario usuario;
@@ -116,14 +109,6 @@ public class Relatorio extends AbstractDocument {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public Celula getCelula() {
-		return celula;
-	}
-
-	public void setCelula(Celula celula) {
-		this.celula = celula;
 	}
 
 	public List<Chamada> getChamada() {

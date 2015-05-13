@@ -29,8 +29,6 @@ public class Membro extends AbstractDocument {
 	
 	private String celular;
 	
-	private Celula celula;
-
 	public String getNome() {
 		return nome;
 	}
@@ -63,11 +61,4 @@ public class Membro extends AbstractDocument {
 		this.celular = celular;
 	}
 
-	public Celula getCelula() {
-		return celula;
-	}
-
-	public void setCelula(Celula celula) {
-		this.celula = celula;
-	}
 }

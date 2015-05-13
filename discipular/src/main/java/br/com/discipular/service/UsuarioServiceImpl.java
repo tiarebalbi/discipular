@@ -1,12 +1,8 @@
 package br.com.discipular.service;
 
-import br.com.discipular.domain.model.Celula;
-import br.com.discipular.domain.model.Usuario;
 import br.com.discipular.domain.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Lucas Campos

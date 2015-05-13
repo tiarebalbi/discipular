@@ -10,10 +10,7 @@ import javax.persistence.Enumerated;
  * Modelo que representa a chamada da célula
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
 public class Chamada {
 
