@@ -3,12 +3,11 @@ package br.com.discipular.domain.model;
 import br.com.discipular.domain.enumetator.DiaSemana;
 import br.com.discipular.domain.enumetator.Horario;
 import br.com.discipular.domain.enumetator.TipoRede;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.Date;
 import java.util.List;
 
@@ -20,22 +19,22 @@ import java.util.List;
  * @date 08/09/2014
  */
 @Document
-public class Celula extends AbstractDocument {
+public class Celula {
+
+	@Id
+	private String id;
 
 	private String nome;
 
 	private String endereco;
 
-	@Enumerated(value = EnumType.STRING)
 	private DiaSemana dia;
 
-	@Enumerated(value = EnumType.STRING)
 	private Horario horario;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
-	@Enumerated(value = EnumType.STRING)
 	private TipoRede tipoRede;
 
 	private Usuario lider;
@@ -49,6 +48,14 @@ public class Celula extends AbstractDocument {
 
 	@DBRef
 	private List<Membro> membros;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

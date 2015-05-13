@@ -2,12 +2,10 @@ package br.com.discipular.domain.model;
 
 
 import br.com.discipular.domain.enumetator.TipoMembro;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -17,18 +15,28 @@ import java.util.Date;
  * @date 08/09/2014
  */
 @Document
-public class Membro extends AbstractDocument {
+public class Membro {
+
+	@Id
+	private String id;
 
 	private String nome;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
-	@Enumerated(value = EnumType.STRING)
 	private TipoMembro tipo;
 	
 	private String celular;
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -60,5 +68,4 @@ public class Membro extends AbstractDocument {
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
-
 }

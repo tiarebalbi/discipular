@@ -21,7 +21,7 @@ public class DiscipularUserDetailsService implements UserDetailsService  {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = new Usuario(); //this.service.getRepositorio().findOne(UsuarioPredicate.buscarPorLogin(username));
+		Usuario usuario = this.service.getRepository().findByLogin(username);
 		if(usuario == null) {
 			throw new UsernameNotFoundException("");
 		}

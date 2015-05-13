@@ -16,4 +16,6 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
  */
 public interface UsuarioRepository extends MongoRepository<Usuario, Long> {
 
+    Usuario findByLogin(String login);
+
 }

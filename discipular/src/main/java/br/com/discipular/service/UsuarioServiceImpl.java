@@ -15,7 +15,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository repository;
 
     @Override
-    public UsuarioRepository getRepositorio() {
+    public UsuarioRepository getRepository() {
         return this.repository;
     }
 

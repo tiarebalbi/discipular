@@ -1,5 +1,6 @@
 package br.com.discipular.domain.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,7 +14,10 @@ import java.util.List;
  * @date 08/09/2014
  */
 @Document
-public class Relatorio extends AbstractDocument {
+public class Relatorio {
+
+	@Id
+	private String id;
 
 	private int geral;
 	
@@ -38,6 +42,14 @@ public class Relatorio extends AbstractDocument {
 	private List<Chamada> chamada;
 	
 	private Usuario usuario;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public int getGeral() {
 		return geral;

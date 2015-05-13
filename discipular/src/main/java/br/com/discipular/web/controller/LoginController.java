@@ -39,9 +39,9 @@ public class LoginController {
 			usuario.setSenha("123");
 			usuario.setArea(0);
 			usuario.setTipo(TipoUsuario.ADMINISTRADOR);
-			List<Usuario> usuarios = usuarioService.getRepositorio().findAll();System.out.print(usuarios);
-//			usuarioService.salvar(usuario);System.out.print(usuarios);
-			System.out.print(usuarios);} catch (Exception e) {
+			usuario.criptografarSenha();
+			usuarioService.getRepository().save(usuario);
+		} catch (Exception e) {
 			System.out.println("Deu erro.");
 		}
 		

@@ -1,10 +1,6 @@
 package br.com.discipular.domain.model;
 
 import br.com.discipular.domain.enumetator.TipoChamada;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 /**
  * Modelo que representa a chamada da célula
@@ -16,7 +12,6 @@ public class Chamada {
 
 	private String nome;
 
-	@Enumerated(value = EnumType.STRING)
 	private TipoChamada tipo;
 
 	public String getNome() {

@@ -14,6 +14,6 @@ import br.com.discipular.domain.repository.UsuarioRepository;
  */
 public interface UsuarioService {
 	
-	UsuarioRepository getRepositorio();
+	UsuarioRepository getRepository();
 
 }

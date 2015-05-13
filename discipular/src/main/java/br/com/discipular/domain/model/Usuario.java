@@ -2,11 +2,9 @@ package br.com.discipular.domain.model;
 
 import br.com.discipular.domain.enumetator.TipoRede;
 import br.com.discipular.domain.enumetator.TipoUsuario;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 /**
  * Modelo que representa os usuários do sistema
@@ -15,7 +13,10 @@ import javax.persistence.Enumerated;
  * @date 08/09/2014
  */
 @Document
-public class Usuario extends AbstractDocument {
+public class Usuario {
+
+	@Id
+	private String id;
 
 	private String nome;
 	
@@ -29,15 +30,21 @@ public class Usuario extends AbstractDocument {
 
 	private String celular;
 
-	@Enumerated(value = EnumType.STRING)
 	private TipoUsuario tipo;
 
-	@Enumerated(value = EnumType.STRING)
 	private TipoRede rede;
 
 	public Usuario criptografarSenha() {
 		this.setSenha(new BCryptPasswordEncoder().encode(this.getSenha()));
 		return this;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getNome() {

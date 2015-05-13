@@ -12,6 +12,7 @@ var locations = {
 
         "bower_components/angular/angular.js",
         "bower_components/angular-route/angular-route.js",
+        "bower_components/restangular/dist/restangular.js",
 
         "bower_components/bootstrap/dist/js/bootstrap.js",
     ],
