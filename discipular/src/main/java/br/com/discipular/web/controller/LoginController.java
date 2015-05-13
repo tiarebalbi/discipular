@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class LoginController {
 
 	private final static String VIEW_LOGIN = "login/index";
 	private static final String REDIRECT_VIEW_LOGIN = "redirect:/";
 
-//	@Autowired
-//	private UsuarioService usuarioService;
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView index() {
@@ -37,9 +39,9 @@ public class LoginController {
 			usuario.setSenha("123");
 			usuario.setArea(0);
 			usuario.setTipo(TipoUsuario.ADMINISTRADOR);
-	
-//			usuarioService.salvar(usuario);
-		} catch (Exception e) {
+			List<Usuario> usuarios = usuarioService.getRepositorio().findAll();System.out.print(usuarios);
+//			usuarioService.salvar(usuario);System.out.print(usuarios);
+			System.out.print(usuarios);} catch (Exception e) {
 			System.out.println("Deu erro.");
 		}
 		

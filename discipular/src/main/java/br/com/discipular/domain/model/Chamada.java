@@ -1,12 +1,10 @@
 package br.com.discipular.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import br.com.discipular.domain.enumetator.TipoChamada;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-
-import br.com.discipular.domain.enumetator.TipoChamada;
 
 /**
  * Modelo que representa a chamada da célula
@@ -17,17 +15,13 @@ import br.com.discipular.domain.enumetator.TipoChamada;
  *
  * 	08/09/2014 
  */
-//@Entity
-public class Chamada extends AbstractModel {
-	
-	@Column(length = 50)
+@Document
+public class Chamada  {
+
 	private String nome;
-	
-	@Enumerated(EnumType.STRING)
+
+	@Enumerated(value = EnumType.STRING)
 	private TipoChamada tipo;
-	
-	@ManyToOne
-	private Relatorio relatorio;
 
 	public String getNome() {
 		return nome;
@@ -44,13 +38,4 @@ public class Chamada extends AbstractModel {
 	public void setTipo(TipoChamada tipo) {
 		this.tipo = tipo;
 	}
-
-	public Relatorio getRelatorio() {
-		return relatorio;
-	}
-
-	public void setRelatorio(Relatorio relatorio) {
-		this.relatorio = relatorio;
-	}
-	
 }

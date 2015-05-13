@@ -1,10 +1,10 @@
 package br.com.discipular.service;
 
-import java.util.List;
-
 import br.com.discipular.domain.model.Celula;
 import br.com.discipular.domain.model.Usuario;
 import br.com.discipular.domain.repository.UsuarioRepository;
+
+import java.util.List;
 
 /**
  * Métodos de consulta e manipulação do modelo {@link Usuario}
@@ -18,9 +18,5 @@ import br.com.discipular.domain.repository.UsuarioRepository;
 public interface UsuarioService {
 	
 	UsuarioRepository getRepositorio();
-
-	Usuario salvar(Usuario usuario) throws Exception;
-
-	List<Usuario> buscarLideresSemCelula(Celula celula);
 
 }

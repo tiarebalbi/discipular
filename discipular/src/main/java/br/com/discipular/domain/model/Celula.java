@@ -1,17 +1,17 @@
 package br.com.discipular.domain.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.*;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import br.com.discipular.domain.enumetator.DiaSemana;
 import br.com.discipular.domain.enumetator.Horario;
 import br.com.discipular.domain.enumetator.TipoRede;
-import br.com.discipular.domain.serialize.LocalDateSerializer;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -20,34 +20,36 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author Lucas Campos
  * @date 08/09/2014
  */
-//@Entity
-public class Celula extends AbstractModel {
+@Document
+public class Celula {
 
-	@Column(length = 50)
 	private String nome;
 
-	@Column(length = 100)
 	private String endereco;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(value = EnumType.STRING)
 	private DiaSemana dia;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(value = EnumType.STRING)
 	private Horario horario;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate dataNascimento;
+	private Date dataNascimento;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(value = EnumType.STRING)
 	private TipoRede tipoRede;
 
-	@ManyToOne
+	private Usuario lider;
+
 	private Usuario supervisor;
 
-	private boolean apagada;
-
 	private int area;
+
+	@DBRef
+	private List<Relatorio> relatorios;
+
+	@DBRef
+	private List<Membro> membros;
 
 	public String getNome() {
 		return nome;
@@ -81,11 +83,11 @@ public class Celula extends AbstractModel {
 		this.horario = horario;
 	}
 
-	public LocalDate getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -97,20 +99,20 @@ public class Celula extends AbstractModel {
 		this.tipoRede = tipoRede;
 	}
 
+	public Usuario getLider() {
+		return lider;
+	}
+
+	public void setLider(Usuario lider) {
+		this.lider = lider;
+	}
+
 	public Usuario getSupervisor() {
 		return supervisor;
 	}
 
 	public void setSupervisor(Usuario supervisor) {
 		this.supervisor = supervisor;
-	}
-
-	public boolean isApagada() {
-		return apagada;
-	}
-
-	public void setApagada(boolean apagada) {
-		this.apagada = apagada;
 	}
 
 	public int getArea() {
@@ -121,4 +123,19 @@ public class Celula extends AbstractModel {
 		this.area = area;
 	}
 
+	public List<Relatorio> getRelatorios() {
+		return relatorios;
+	}
+
+	public void setRelatorios(List<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}
+
+	public List<Membro> getMembros() {
+		return membros;
+	}
+
+	public void setMembros(List<Membro> membros) {
+		this.membros = membros;
+	}
 }

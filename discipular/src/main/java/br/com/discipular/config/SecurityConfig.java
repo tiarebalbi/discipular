@@ -1,5 +1,7 @@
 package br.com.discipular.config;
 
+import br.com.discipular.config.security.DiscipularAuthenticationSuccessHandler;
+import br.com.discipular.config.security.DiscipularUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import br.com.discipular.config.security.DiscipularAuthenticationSuccessHandler;
-import br.com.discipular.config.security.DiscipularUserDetailsService;
 
 /**
  * Configuração do Spring Security

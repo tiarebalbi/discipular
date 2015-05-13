@@ -1,17 +1,12 @@
 package br.com.discipular.domain.model;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import br.com.discipular.domain.enumetator.TipoRede;
+import br.com.discipular.domain.enumetator.TipoUsuario;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import br.com.discipular.domain.enumetator.TipoUsuario;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 /**
  * Modelo que representa os usuários do sistema
@@ -19,30 +14,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Lucas Campos
  * @date 08/09/2014
  */
-//@Entity
-public class Usuario extends AbstractModel {
+@Document
+public class Usuario {
 
-	@Column(length = 50)
 	private String nome;
 	
-	@Column(length = 25)
 	private String login;
 
-	@Column(length = 70)
 	private String senha;
 	
 	private Integer area;
 
-	@Column(length = 30)
 	private String email;
 
-	@Column(length = 35)
 	private String celular;
-	
-	@Enumerated(EnumType.STRING)
+
+	@Enumerated(value = EnumType.STRING)
 	private TipoUsuario tipo;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(value = EnumType.STRING)
 	private TipoRede rede;
 
 	public Usuario criptografarSenha() {
@@ -113,5 +103,4 @@ public class Usuario extends AbstractModel {
 	public void setRede(TipoRede rede) {
 		this.rede = rede;
 	}
-
 }
