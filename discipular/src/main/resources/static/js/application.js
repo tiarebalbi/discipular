@@ -1,3 +1,5 @@
 (function(){angular.module("app",["ngRoute","app.controller"]).config(["$routeProvider",function(e){return e.when("/membro",{controller:"HomeCtrl",templateUrl:"/app/components/lider/membro/index.html"}).otherwise({redirectTo:"/"})}])}).call(this);
 (function(){angular.module("app.controller",[])}).call(this);
-(function(){angular.module("app.controller").controller("HomeCtrl",["$scope","$routeParams",function(o){return o.form=!1,o.continueSaving=!1,o.membro={},o.membros=[],o.showForm=function(){return o.form=!0},o.hiddenForm=function(){return o.form=!1},o.salvar=function(){return o.continueSaving?void 0:(o.hiddenForm(),o.membros.push(o.membro))}}])}).call(this);
+(function(){angular.module("app.service",["restangular"])}).call(this);
+(function(){angular.module("app.service").service("MembroService",function(e){return e.all("membros")})}).call(this);
+(function(){angular.module("app.controller").controller("HomeCtrl",["$scope","MembroService",function(r,n){return r.form=!1,r.continueSaving=!1,r.membro={},r.membros=[],r.showForm=function(){return r.form=!0},r.hiddenForm=function(){return r.form=!1},r.listar=function(){return n._getList().then(function(n){return console.log(n),r.membros=n})},r.salvar=function(){return r.continueSaving?void 0:(r.hiddenForm(),r.membros.push(r.membro))},r.listar()}])}).call(this);

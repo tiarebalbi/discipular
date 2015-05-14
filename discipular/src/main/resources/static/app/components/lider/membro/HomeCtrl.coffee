@@ -12,7 +12,8 @@ angular.module 'app.controller'
     $scope.form = false
 
   $scope.listar = ->
-    membroService._getList().then(response) ->
+    membroService._getList().then (response) ->
+      console.log response
       $scope.membros = response
 
   $scope.salvar = ->
@@ -21,7 +22,7 @@ angular.module 'app.controller'
       $scope.hiddenForm()
       $scope.membros.push $scope.membro
 
-  $scope.listar();
+  $scope.listar()
 
 
 ]

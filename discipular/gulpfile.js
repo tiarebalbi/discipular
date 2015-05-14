@@ -33,6 +33,8 @@ var locations = {
     app: [
         "src/main/resources/static/app/app.coffee",
         "src/main/resources/static/app/components/ControllerProvider.coffee",
+        "src/main/resources/static/app/components/ServiceProvider.coffee",
+        "src/main/resources/static/app/components/lider/membro/MembroService.coffee",
         "src/main/resources/static/app/components/**/*.coffee"
     ],
     fontsGlyphicons: [

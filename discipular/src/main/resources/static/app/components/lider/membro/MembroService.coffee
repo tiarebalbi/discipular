@@ -1,4 +1,3 @@
 angular.module 'app.service'
-.service 'MembroService', ['restangular', (Restangular) ->
+.service 'MembroService', (Restangular) ->
   Restangular.all('membros')
-]

@@ -1,1 +1,1 @@
-angular.module 'app.service', []
+angular.module 'app.service', ['restangular']
