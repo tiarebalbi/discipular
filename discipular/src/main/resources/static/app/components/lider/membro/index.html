@@ -1,4 +1,4 @@
-<section id="content" class="table-layout">
+<section id="content" class="table-layout" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="tray tray-center">
         <div class="admin-form mw1000 center-block theme-primary" style="padding-bottom: 175px;">
             <div class="panel heading-border panel-primary"  ng-show="form">
@@ -77,37 +77,15 @@
                             <table class="table table-bordered mbn">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
+                                    <th>Nome</th>
+                                    <th>Celular</th>
                                     <th><button ng-click="showForm()">Editar</button></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td><button ng-click="showForm()">Editar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td><button ng-click="showForm()">Editar</button></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
+                                <tr th:each="membro : ${membros}">
+                                    <td th:text="${membro.nome}"></td>
+                                    <td th:text="${membro.celular}"></td>
                                     <td><button ng-click="showForm()">Editar</button></td>
                                 </tr>
                                 </tbody>

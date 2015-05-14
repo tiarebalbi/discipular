@@ -1,6 +1,7 @@
-package br.com.discipular.service;
+package br.com.discipular.service.impl;
 
 import br.com.discipular.domain.repository.UsuarioRepository;
+import br.com.discipular.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

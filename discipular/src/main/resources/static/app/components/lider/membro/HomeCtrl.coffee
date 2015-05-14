@@ -1,5 +1,5 @@
 angular.module 'app.controller'
-.controller 'HomeCtrl', ['$scope', '$routeParams', ($scope) ->
+.controller 'HomeCtrl', ['$scope', 'MembroService', ($scope, membroService) ->
   $scope.form = false
   $scope.continueSaving = false
   $scope.membro = {}
@@ -11,15 +11,17 @@ angular.module 'app.controller'
   $scope.hiddenForm = ->
     $scope.form = false
 
+  $scope.listar = ->
+    membroService._getList().then(response) ->
+      $scope.membros = response
+
   $scope.salvar = ->
 
     if !$scope.continueSaving
       $scope.hiddenForm()
-
-      #validar
-
       $scope.membros.push $scope.membro
 
-      #salvar
+  $scope.listar();
+
 
 ]
