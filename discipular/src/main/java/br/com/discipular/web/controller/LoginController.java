@@ -12,22 +12,22 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/login")
 public class LoginController {
 
 	private final static String VIEW_LOGIN = "login/index";
-	private static final String REDIRECT_VIEW_LOGIN = "redirect:/";
+	private final static String REDIRECT_VIEW_LOGIN = "redirect:/";
 
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView index() {
 		ModelAndView view = new ModelAndView(VIEW_LOGIN);
 		return view;
 	}
-	
 
-	@RequestMapping(value = "/login/install", method = RequestMethod.GET)
+	@RequestMapping(value = "/install", method = RequestMethod.GET)
 	public ModelAndView adm() {
 		ModelAndView view = new ModelAndView(REDIRECT_VIEW_LOGIN);
 		try {
