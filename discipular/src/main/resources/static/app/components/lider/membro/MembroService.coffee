@@ -1,3 +1,4 @@
 angular.module 'app.service'
-.service 'MembroService', (Restangular) ->
-  Restangular.all('membros')
+.service 'MembroService', ['Restangular', (Restangular) ->
+  Restangular.all('membros');
+]
