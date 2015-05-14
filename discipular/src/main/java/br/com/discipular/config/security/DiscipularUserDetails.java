@@ -1,9 +1,9 @@
 package br.com.discipular.config.security;
 
-import java.util.Collection;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+
+import java.util.Collection;
 
 public class DiscipularUserDetails extends User {
 	
@@ -12,7 +12,7 @@ public class DiscipularUserDetails extends User {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private String id;
 	
 	private String nome;
 	
@@ -52,11 +52,11 @@ public class DiscipularUserDetails extends User {
 		return false;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

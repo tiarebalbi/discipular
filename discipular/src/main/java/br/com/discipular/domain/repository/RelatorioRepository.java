@@ -1,9 +1,8 @@
 package br.com.discipular.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-
 import br.com.discipular.domain.model.Relatorio;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 /**
  * Repositório do modelo {@link Relatorio}
@@ -14,6 +13,6 @@ import br.com.discipular.domain.model.Relatorio;
  *
  * 	08/09/2014 
  */
-public interface RelatorioRepository extends JpaRepository<Relatorio, Long>, QueryDslPredicateExecutor<Relatorio> {
+public interface RelatorioRepository extends MongoRepository<Relatorio, Long> {
 
 }

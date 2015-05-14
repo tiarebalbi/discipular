@@ -1,48 +1,42 @@
 package br.com.discipular.domain.model;
 
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-
+import br.com.discipular.domain.enumetator.TipoMembro;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.com.discipular.domain.enumetator.TipoMembro;
-import br.com.discipular.domain.serialize.LocalDateSerializer;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Date;
 
 /**
  * Modelo que representa os integrantes da célula
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
-@Entity
-public class Membro extends AbstractModel {
+@Document
+public class Membro {
 
-	@Column(length = 50)
+	@Id
+	private String id;
+
 	private String nome;
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate dataNascimento;
-	
-	@Enumerated(EnumType.STRING)
+	private Date dataNascimento;
+
 	private TipoMembro tipo;
 	
 	private String celular;
-	
-	@ManyToOne
-	private Celula celula;
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -51,12 +45,12 @@ public class Membro extends AbstractModel {
 		this.nome = nome;
 	}
 
-	public String getCelular() {
-		return celular;
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
 
-	public void setCelular(String celular) {
-		this.celular = celular;
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public TipoMembro getTipo() {
@@ -66,22 +60,12 @@ public class Membro extends AbstractModel {
 	public void setTipo(TipoMembro tipo) {
 		this.tipo = tipo;
 	}
-	
-	@JsonSerialize(using = LocalDateSerializer.class)
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
+
+	public String getCelular() {
+		return celular;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
-
-	public Celula getCelula() {
-		return celula;
-	}
-
-	public void setCelula(Celula celula) {
-		this.celula = celula;
-	}
-
 }

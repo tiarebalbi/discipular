@@ -2,18 +2,19 @@ package br.com.discipular.web.controller;
 
 import br.com.discipular.domain.enumetator.TipoUsuario;
 import br.com.discipular.domain.model.Usuario;
+import br.com.discipular.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.discipular.service.UsuarioService;
+import java.util.List;
 
 @Controller
 public class LoginController {
 
-	private final static String VIEW_LOGIN = "compartilhado/login/index";
+	private final static String VIEW_LOGIN = "login/index";
 	private static final String REDIRECT_VIEW_LOGIN = "redirect:/";
 
 	@Autowired
@@ -38,8 +39,8 @@ public class LoginController {
 			usuario.setSenha("123");
 			usuario.setArea(0);
 			usuario.setTipo(TipoUsuario.ADMINISTRADOR);
-	
-			usuarioService.salvar(usuario);
+			usuario.criptografarSenha();
+			usuarioService.getRepository().save(usuario);
 		} catch (Exception e) {
 			System.out.println("Deu erro.");
 		}

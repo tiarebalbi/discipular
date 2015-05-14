@@ -1,10 +1,9 @@
 package br.com.discipular.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-
 import br.com.discipular.domain.model.Membro;
 import br.com.discipular.domain.model.Usuario;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 /**
  * Repositório do modelo {@link Membro}
@@ -15,6 +14,8 @@ import br.com.discipular.domain.model.Usuario;
  *
  * 	10/09/2014 
  */
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>, QueryDslPredicateExecutor<Usuario> {
+public interface UsuarioRepository extends MongoRepository<Usuario, Long> {
+
+    Usuario findByLogin(String login);
 
 }

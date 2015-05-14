@@ -1,0 +1,100 @@
+<section id="content" class="table-layout" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="tray tray-center">
+        <div class="admin-form mw1000 center-block theme-primary" style="padding-bottom: 175px;">
+            <div class="panel heading-border panel-primary"  ng-show="form">
+                <form method="post" action="/" id="admin-form" novalidate="novalidate">
+                    <div class="panel-body bg-light">
+                        <div class="section-divider mt20 mb40">
+                            <span> Normal validation rules </span>
+                        </div>
+                        <div class="section row" id="spy1">
+                            <div class="col-md-6">
+                                <label for="firstname" class="field prepend-icon">
+                                    <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="Nome" ng-model="membro.nome">
+                                    <label for="firstname" class="field-icon">
+                                        <i class="fa fa-user"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastname" class="field prepend-icon">
+                                    <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Celular" ng-model="membro.celular">
+                                    <label for="lastname" class="field-icon">
+                                        <i class="fa fa-phone"></i>
+                                    </label>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="section row" id="spy11">
+                            <div class="col-md-6">
+                                <label class="field select">
+                                    <select id="language3" name="language" ng-model="membro.tipo">
+                                        <option value="MEMBRO">Membro</option>
+                                        <option value="LIDER">Líder</option>
+                                        <option value="AUXILIAR">Auxiliar</option>
+                                    </select>
+                                    <i class="arrow double"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="field select">
+                                    <select id="language2" name="language">
+                                        <option value="">Select language...</option>
+                                        <option value="EN">English</option>
+                                        <option value="FR">French</option>
+                                        <option value="SP">Spanish</option>
+                                        <option value="CH">Chinese</option>
+                                        <option value="JP">Japanese</option>
+                                    </select>
+                                    <i class="arrow double"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <label class="option option-primary">
+                            <input type="checkbox" name="checked" ng-checked="continueSaving" ng-model="continueSaving">
+                            <span class="checkbox"></span>Deseja continuar salvando novos membros?
+                        </label>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        <button type="submit" class="button btn-primary" ng-click="salvar()"> Salvar </button>
+                        <button type="reset" class="button btn-primary" ng-click="hiddenForm()"> Cancel </button>
+                        <a class="button btn-primary" ng-click="salvar()"> Testar Form </a>
+                    </div>
+                </form>
+            </div>
+            <div class="panel" id="spy4">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <span class="fa fa-table"></span>Responsive Table
+                    </span>
+                </div>
+                <div class="panel-body pn">
+                    <div class="table-responsive">
+                        <div class="bs-component">
+                            <table class="table table-bordered mbn">
+                                <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Celular</th>
+                                    <th><button ng-click="showForm()">Editar</button></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="membro : ${membros}">
+                                    <td th:text="${membro.nome}"></td>
+                                    <td th:text="${membro.celular}"></td>
+                                    <td><button ng-click="showForm()">Editar</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

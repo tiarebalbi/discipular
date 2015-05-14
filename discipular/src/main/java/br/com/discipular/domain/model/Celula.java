@@ -1,70 +1,61 @@
 package br.com.discipular.domain.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import br.com.discipular.domain.enumetator.DiaSemana;
 import br.com.discipular.domain.enumetator.Horario;
 import br.com.discipular.domain.enumetator.TipoRede;
-import br.com.discipular.domain.serialize.LocalDateSerializer;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Date;
+import java.util.List;
 
 
 /**
  * Modelo que representa as células da paróquia
  * 
  * @author Lucas Campos
- * @version 1.0.0
- * @since 1.0.0
- *
- * 	08/09/2014 
+ * @date 08/09/2014
  */
-@Entity
-public class Celula extends AbstractModel {
-	
-	@Column(length = 50)
+@Document
+public class Celula {
+
+	@Id
+	private String id;
+
 	private String nome;
 
-	@Column(length = 100)
 	private String endereco;
-	
-	@Enumerated(EnumType.STRING)
+
 	private DiaSemana dia;
-	
-	@Enumerated(EnumType.STRING)
+
 	private Horario horario;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate dataNascimento;
-	
-	@Enumerated(EnumType.STRING)
-	private TipoRede tipoRede;
-	
-	@ManyToOne
-	private Usuario supervisor;
-	
-	private boolean apagada;
+	private Date dataNascimento;
 
-	@Transient
-	private long qtdeMembros;
-	
-	@ManyToOne
-	private Usuario usuario;
-	
+	private TipoRede tipoRede;
+
+	private Usuario lider;
+
+	private Usuario supervisor;
+
 	private int area;
-	
-	@Transient
-	private String horarioFormatado;
+
+	@DBRef
+	private List<Relatorio> relatorios;
+
+	@DBRef
+	private List<Membro> membros;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -98,20 +89,12 @@ public class Celula extends AbstractModel {
 		this.horario = horario;
 	}
 
-	public LocalDate getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public String getHorarioFormatado() {
-		return horarioFormatado;
-	}
-
-	public void setHorarioFormatado(String horarioFormatado) {
-		this.horarioFormatado = horarioFormatado;
 	}
 
 	public TipoRede getTipoRede() {
@@ -122,6 +105,14 @@ public class Celula extends AbstractModel {
 		this.tipoRede = tipoRede;
 	}
 
+	public Usuario getLider() {
+		return lider;
+	}
+
+	public void setLider(Usuario lider) {
+		this.lider = lider;
+	}
+
 	public Usuario getSupervisor() {
 		return supervisor;
 	}
@@ -130,36 +121,27 @@ public class Celula extends AbstractModel {
 		this.supervisor = supervisor;
 	}
 
-	public boolean getApagada() {
-		return apagada;
-	}
-
-	public void setApagada(boolean apagada) {
-		this.apagada = apagada;
-	}
-
-	public long getQtdeMembros() {
-		return qtdeMembros;
-	}
-
-	public void setQtdeMembros(long qtdeMembros) {
-		this.qtdeMembros = qtdeMembros;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Integer getArea() {
+	public int getArea() {
 		return area;
 	}
 
 	public void setArea(int area) {
 		this.area = area;
 	}
-	
+
+	public List<Relatorio> getRelatorios() {
+		return relatorios;
+	}
+
+	public void setRelatorios(List<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}
+
+	public List<Membro> getMembros() {
+		return membros;
+	}
+
+	public void setMembros(List<Membro> membros) {
+		this.membros = membros;
+	}
 }

@@ -1,9 +1,8 @@
 package br.com.discipular.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-
 import br.com.discipular.domain.model.Membro;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 /**
  * Repositório do modelo {@link Membro}
@@ -14,6 +13,6 @@ import br.com.discipular.domain.model.Membro;
  *
  * 	08/09/2014 
  */
-public interface MembroRepository extends JpaRepository<Membro, Long>, QueryDslPredicateExecutor<Membro> {
+public interface MembroRepository extends MongoRepository<Membro, Long> {
 
 }

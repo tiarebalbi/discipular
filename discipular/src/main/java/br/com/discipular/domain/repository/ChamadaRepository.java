@@ -1,9 +1,8 @@
 package br.com.discipular.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-
 import br.com.discipular.domain.model.Chamada;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 /**
  * Repositório do modelo {@link Chamada}
@@ -14,6 +13,6 @@ import br.com.discipular.domain.model.Chamada;
  *
  * 	06/10/2014 
  */
-public interface ChamadaRepository extends JpaRepository<Chamada, Long>, QueryDslPredicateExecutor<Chamada> {
+public interface ChamadaRepository extends MongoRepository<Chamada, Long> {
 
 }
